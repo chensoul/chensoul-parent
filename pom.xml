@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.chensoul</groupId>
-    <artifactId>chensoul-parent-pom</artifactId>
+    <artifactId>chensoul-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>ChenSoul™: Parent POM</name>
     <description>${project.name}</description>
     <inceptionYear>2023</inceptionYear>
-    <url>https://chensoul.github.io/chensoul-parent/</url>
+    <url>https://chensoul.github.io/${project.artifactId}/</url>
 
     <organization>
         <name>ChenSoul™</name>
@@ -43,15 +43,15 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git@github.com:chensoul/chensoul-parent.git</connection>
-        <developerConnection>scm:git:git@github.com:chensoul/chensoul-parent.git</developerConnection>
-        <url>https://github.com/chensoul/chensoul-parent/</url>
+        <connection>scm:git:git@github.com:chensoul/${project.artifactId}.git</connection>
+        <developerConnection>scm:git:git@github.com:chensoul/${project.artifactId}.git</developerConnection>
+        <url>https://github.com/chensoul/${project.artifactId}/</url>
         <tag>HEAD</tag>
     </scm>
 
     <issueManagement>
         <system>Github</system>
-        <url>https://github.com/chensoul/chensoul-parent/issues</url>
+        <url>https://github.com/chensoul/${project.artifactId}/issues</url>
     </issueManagement>
 
     <properties>
