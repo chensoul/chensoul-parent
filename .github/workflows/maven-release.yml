@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       releaseVersion:
-        description: "Define the release version, eg: 1.0.0"
+        description: "Define the RELEASE version"
         required: false
         default: ""
       developmentVersion:
-        description: "Define the snapshot version, eg: 1.0.1-SNAPSHOT"
+        description: "Define the SNAPSHOT version"
         required: false
         default: ""
 
@@ -46,7 +46,8 @@ jobs:
       - name: Artifact Version
         shell: bash
         run: |
-          echo "artifact_version=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)" >> "$GITHUB_ENV"
+          # remove '-SNAPSHOT'
+          echo "artifact_version=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout | sed 's/-SNAPSHOT$//')" >> "$GITHUB_ENV"
       - name: Release With Maven
         run: |
           if [ "${{ env.auto_release }}" == "true" ]; then
@@ -81,7 +82,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.artifact_name }}-${{ env.artifact_version }}
-          path: ./target/${{ env.artifact_name }}-${{ env.artifact_version }}.pom
+          path: ./target/${{ env.artifact_name }}-${{ env.artifact_version }}.jar
       - name: Workflow Release Notes
         uses: peter-evans/repository-dispatch@v2
         if: ${{ github.event.inputs.releaseVersion }} != "" && ${{ github.event.inputs.developmentVersion }} != ""
