@@ -190,7 +190,7 @@
                             <!-- For pre 2021 legacy projects you may use https://oss.sonatype.org -->
                             <!-- See https://central.sonatype.org/publish/release/#login-into-ossrh for details -->
                             <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                            <autoReleaseAfterClose>${env.AUTO_RELEASE_AFTER_CLOSE}</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
                     <!-- https://blog.sonatype.com/2010/01/how-to-generate-pgp-signatures-with-maven/-->

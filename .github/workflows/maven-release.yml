@@ -11,6 +11,10 @@ on:
         description: "Define the SNAPSHOT version"
         required: false
         default: ""
+      autoReleaseAfterClose:
+        description: "Auto release after close"
+        required: false
+        default: "false"
 
 jobs:
   build:
@@ -39,18 +43,26 @@ jobs:
         shell: bash
         run: |
           if [ "${{ github.event.inputs.releaseVersion }}" != "" ] && [ "${{ github.event.inputs.developmentVersion }}" != "" ]; then
+            echo "auto_version=false" >> $GITHUB_ENV
+          else
+            echo "auto_version=true" >> $GITHUB_ENV
+          fi
+          if [ "${{ github.event.inputs.autoReleaseAfterClose }}" == "true" ] ; then
             echo "auto_release=true" >> $GITHUB_ENV
           else
             echo "auto_release=false" >> $GITHUB_ENV
           fi
-      - name: Artifact Version
+      - name: Fetch Artifact Information
         shell: bash
         run: |
           # remove '-SNAPSHOT'
           echo "artifact_version=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout | sed 's/-SNAPSHOT$//')" >> "$GITHUB_ENV"
+          echo "artifact_name=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q -DforceStdout)" >> "$GITHUB_ENV"
+          echo "artifact_packaging=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.packaging -q -DforceStdout)" >> "$GITHUB_ENV"
+          echo "${{ env.artifact_name }} ${{ env.artifact_version }} ${{ env.artifact_packaging }}"
       - name: Release With Maven
         run: |
-          if [ "${{ env.auto_release }}" == "true" ]; then
+          if [ "${{ env.auto_version }}" == "true" ]; then
             mvn -B -U \
               release:prepare \
               release:perform \
@@ -69,23 +81,18 @@ jobs:
             -Prelease \
             -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}
           fi
+          ls -al ./target/
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
-      - name: Artifact Name
-        shell: bash
-        run: |
-          echo "artifact_name=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q -DforceStdout)" >> "$GITHUB_ENV"
-          echo "${{ env.artifact_name }} ${{ env.artifact_version }}"
-          ls -al ./target/
+          AUTO_RELEASE_AFTER_CLOSE: ${{ env.auto_release }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.artifact_name }}-${{ env.artifact_version }}
-          path: ./target/${{ env.artifact_name }}-${{ env.artifact_version }}.pom
+          path: ./target/${{ env.artifact_name }}-${{ env.artifact_version }}.${{ env.artifact_packaging }}
       - name: Workflow Release Notes
         uses: peter-evans/repository-dispatch@v2
-        if: ${{ github.event.inputs.releaseVersion }} != "" && ${{ github.event.inputs.developmentVersion }} != ""
         with:
-          event-type: release-notes
-          client-payload: '{"auto_release": "true", "artifact": "${{ env.artifact_name }}-${{ env.artifact_version }}"}'
+          event-type: github-release
+          client-payload: '{"auto_release": "${{ env.auto_release }}", "artifact": "${{ env.artifact_name }}-${{ env.artifact_version }}"}'
