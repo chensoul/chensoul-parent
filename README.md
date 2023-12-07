@@ -76,7 +76,7 @@ Check your maven settings file `～/.m2/settings.xml`:
     </server>
 ```
 
-Release and deploy to maven repository:
+Release and deploy to maven repository, and push tag to github using username and password:
 
 ```bash
 mvn -B release:clean release:prepare release:perform
