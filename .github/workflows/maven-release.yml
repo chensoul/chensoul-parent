@@ -50,7 +50,7 @@ jobs:
       - name: Release With Maven
         run: |
           if [ "${{ env.auto_release }}" == "true" ]; then
-            mvn -X -e -B -U \
+            mvn -B -U \
               release:prepare \
               release:perform \
               -DreleaseVersion=${{ github.event.inputs.releaseVersion }} \
@@ -60,7 +60,7 @@ jobs:
               -Prelease \
               -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}
           else
-            mvn -X -e -B -U \
+            mvn -B -U \
             release:prepare \
             release:perform \
             deploy \
