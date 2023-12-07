@@ -81,7 +81,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.artifact_name }}-${{ env.artifact_version }}
-          path: ./target/${{ env.artifact_name }}-${{ env.artifact_version }}.jar
+          path: ./target/${{ env.artifact_name }}-${{ env.artifact_version }}.pom
       - name: Workflow Release Notes
         uses: peter-evans/repository-dispatch@v2
         if: ${{ github.event.inputs.releaseVersion }} != "" && ${{ github.event.inputs.developmentVersion }} != ""
