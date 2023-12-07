@@ -5,11 +5,11 @@ on:
     inputs:
       releaseVersion:
         description: "Define the RELEASE version"
-        required: true
+        required: false
         default: ""
       developmentVersion:
         description: "Define the SNAPSHOT version"
-        required: true
+        required: false
         default: ""
 
 jobs:
@@ -49,19 +49,28 @@ jobs:
           echo "artifact_version=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)" >> "$GITHUB_ENV"
       - name: Release With Maven
         run: |
-          mvn -B -U \
+          if [ "${{ env.auto_release }}" == "true" ]; then
+            mvn -B -U \
+              release:prepare \
+              release:perform \
+              -DreleaseVersion=${{ github.event.inputs.releaseVersion }} \
+              -DdevelopmentVersion=${{ github.event.inputs.developmentVersion }} \
+              deploy \
+              -s settings.xml \
+              -Prelease \
+              -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}
+          else
+            mvn -B -U \
             release:prepare \
             release:perform \
-            -DreleaseVersion=${{ github.event.inputs.releaseVersion }} \
-            -DdevelopmentVersion=${{ github.event.inputs.developmentVersion }} \
             deploy \
             -s settings.xml \
             -Prelease \
             -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}
+          fi
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
-          AUTO_RELEASE_AFTER_CLOSE: ${{ env.auto_release }}
       - name: Artifact Name
         shell: bash
         run: |
@@ -78,4 +87,4 @@ jobs:
         if: ${{ github.event.inputs.releaseVersion }} != "" && ${{ github.event.inputs.developmentVersion }} != ""
         with:
           event-type: release-notes
-          client-payload: '{"auto_release": "${{ env.auto_release }}", "artifact": "${{ env.artifact_name }}-${{ env.artifact_version }}"}'
+          client-payload: '{"auto_release": "true", "artifact": "${{ env.artifact_name }}-${{ env.artifact_version }}"}'
