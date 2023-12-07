@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       releaseVersion:
-        description: "Define the release version"
+        description: "Define the RELEASE version"
         required: true
         default: ""
       developmentVersion:
-        description: "Define the snapshot version"
+        description: "Define the SNAPSHOT version"
         required: true
         default: ""
 

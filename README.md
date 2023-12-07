@@ -17,10 +17,10 @@ Login to your [sonatype](https://s01.oss.sonatype.org/) account to release the v
 ## Secrets
 
 * **MAVEN_GPG_PRIVATE_KEY** - Take it from the private.gpg
-* **OSSRH_USERNAME** - Created [here](https://issues.sonatype.org/)
-* **OSSRH_TOKEN** - Created [here](https://issues.sonatype.org/)
 * **MAVEN_GPG_PASSPHRASE** - Create [here](https://central.sonatype.org/publish/requirements/gpg/#generating-a-key-pair)
     * This passphrase and your private key are all that is needed to sign artifacts with your signature.
+* **OSSRH_USERNAME** - Created [here](https://issues.sonatype.org/)
+* **OSSRH_TOKEN** - Created [here](https://issues.sonatype.org/)
 * **GITHUB_TOKEN** - Github token
 
 ## Demo
