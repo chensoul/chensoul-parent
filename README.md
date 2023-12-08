@@ -12,7 +12,7 @@ Login to your [sonatype](https://s01.oss.sonatype.org/) account to release the v
 |:---------|:------------------------------------------------------------------------------------------------------|:------------------|
 | Snapshot | [sonatype](https://s01.oss.sonatype.org/content/repositories/snapshots/com/chensoul/chensoul-parent/) | Snapshot versions |
 | Release  | [sonatype](https://repo.maven.apache.org/maven2/com/chensoul/chensoul-parent/)                        | Release versions  |
-| Release  | [central-sonatype](https://central.sonatype.com/artifact/com.chensoul/chensoul-parent/1.0.0/versions) | Release versions  |
+| Release  | [central-sonatype](https://central.sonatype.com/artifact/com.chensoul/chensoul-parent) | Release versions  |
 
 ## Secrets
 
@@ -36,7 +36,7 @@ Manually:\
 
 Automatically:\
 Push to Github will create a release and a snapshot but it won't publish the release.\
-Snapshot will be available through [here](https://central.sonatype.com/artifact/com.chensoul/chensoul-parent/1.0.0)
+Snapshot will be available through [here](https://central.sonatype.com/artifact/com.chensoul/chensoul-parent)
 
 ## GPG
 
