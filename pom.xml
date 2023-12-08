@@ -57,6 +57,9 @@
         <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
         <maven.compiler.showWarnings>true</maven.compiler.showWarnings>
 
+        <!-- maven-resource-plugin properties -->
+        <maven.resource.escapeString>\</maven.resource.escapeString>
+
         <!-- maven-release-plugin properties -->
         <goals>deploy</goals>
         <scmCommentPrefix>[maven-release-plugin]</scmCommentPrefix>
@@ -65,12 +68,15 @@
         <releaseProfiles>release</releaseProfiles>
         <useReleaseProfile>false</useReleaseProfile>
 
-        <!-- maven-resource-plugin properties -->
-        <maven.resource.escapeString>\</maven.resource.escapeString>
-
         <!-- nexus-staging-maven-plugin properties -->
         <!-- See https://github.com/sonatype/nexus-maven-plugins/blob/0aee3defb33cb133ff536aba59b11d32a368b1e6/staging/maven-plugin/src/main/java/org/sonatype/nexus/maven/staging/AbstractStagingMojo.java#L169-L175 -->
         <stagingProgressTimeoutMinutes>10</stagingProgressTimeoutMinutes>
+
+        <!-- maven-scm-publish-plugin properties;
+         see https://maven.apache.org/plugins/maven-scm-publish-plugin/publish-scm-mojo.html -->
+        <scmpublish.content>${project.reporting.outputDirectory}</scmpublish.content>
+        <scmpublish.pubScmUrl>${project.scm.developerConnection}</scmpublish.pubScmUrl>
+        <scmpublish.scm.branch>gh-pages</scmpublish.scm.branch>
 
         <!-- Other properties -->
         <project.build.sourceEncoding>UTF8</project.build.sourceEncoding>
