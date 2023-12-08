@@ -115,11 +115,20 @@ Publish to github pages:
 mvn site scm-publish:publish-scm
 ```
 
-## Authors
+# Installation
 
-- [@chensoul](https://www.github.com/chensoul)
+ChenSoul™ Parent is, or will be, available on [Maven Central](https://search.maven.org/artifact/com.chensoul/chensoul-parent).  Include ChenSoul™ Parent as a Maven pom:
 
-## Thanks
+```xml
+<parent>
+    <groupId>com.chensoul</groupId>
+    <artifactId>chensoul-parent</artifactId>
+    <!-- Always check https://search.maven.org/artifact/com.chensoul/chensoul-parent for up-to-date available versions. -->
+    <version>1.0.10</version>
+    <relativePath/>
+</parent>
+```
 
-- https://github.com/microbean/microbean-parent
-- https://github.com/naturalett/maven-hello-world
+# Documentation
+
+Full documentation is, or will be, available at [chensoul.github.io/chensoul-parent](https://chensoul.github.io/chensoul-parent/).
