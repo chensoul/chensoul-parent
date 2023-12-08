@@ -88,13 +88,13 @@ Create new branch with next version, it won't update the working copy version:
 mvn -B release:branch -DbranchName=my-branch -DupdateBranchVersions=true -DupdateWorkingCopyVersions=false
 ```
 
-Release and snapshot to local staging, and push tag to github using username and password:
+Release to local staging (push tag to github using username and password):
 
 ```bash
 mvn -B release:clean release:prepare release:perform
 ```
 
-GPG to sign and deploy to sonatype repository using release profile:
+GPG to sign and release to sonatype using release profile:
 
 ```bash
 mvn -B clean deploy -Prelease -Dgpg.passphrase=<PASSPHRASE_GPG> -Dusername=<OSSRH_USERNAME> -Dpassword=<OSSRH_TOKEN>
@@ -103,7 +103,9 @@ mvn -B clean deploy -Prelease -Dgpg.passphrase=<PASSPHRASE_GPG> -Dusername=<OSSR
 mvn -B clean deploy -Prelease
 ```
 
-Release and snapshot to local staging, sign and release to sonatype:
+Release to sonatype (push tag to github using username and password); sign and snapshot to local staging:
+
+```bash
 
 ```bash
 export AUTO_RELEASE_AFTER_CLOSE=true
