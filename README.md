@@ -79,7 +79,7 @@ Check your maven settings file `～/.m2/settings.xml`:
 Release and deploy to maven repository, and push tag to github using username and password:
 
 ```bash
-mvn -B release:clean release:prepare release:perform -Dusername=<GITHUB_USERNAME> -Dpassword=<GITHUB_TOKEN>
+mvn -B release:clean release:prepare release:perform -Dusername=<GITHUB_USERNAME> -Dpassword=<GITHUB_TOKEN> -DAUTO_RELEASE_AFTER_CLOSE=true
 ```
 
 Update pom version:
