@@ -4,120 +4,21 @@
 
 This project houses the parent Project Object Model (POM) for most ChenSoul™ projects.
 
-## Links
+# Status
 
-Login to your [sonatype](https://s01.oss.sonatype.org/) account to release the version
+This project is currently experimental, in a pre-alpha state, and unsuitable for production use.
 
-| Type     | URL                                                                                                   | Description       |
-|:---------|:------------------------------------------------------------------------------------------------------|:------------------|
-| Snapshot | [sonatype](https://s01.oss.sonatype.org/content/repositories/snapshots/com/chensoul/chensoul-parent/) | Snapshot versions |
-| Release  | [sonatype](https://repo.maven.apache.org/maven2/com/chensoul/chensoul-parent/)                        | Release versions  |
-| Release  | [central-sonatype](https://central.sonatype.com/artifact/com.chensoul/chensoul-parent) | Release versions  |
+# Compatibility
 
-## Secrets
+**Until further notice, this project's APIs are subject to frequent backwards-incompatible signature and behavior changes, regardless of project version and without notice.**
 
-* **MAVEN_GPG_PRIVATE_KEY** - Take it from the private.gpg
-* **MAVEN_GPG_PASSPHRASE** - Create [here](https://central.sonatype.org/publish/requirements/gpg/#generating-a-key-pair)
-    * This passphrase and your private key are all that is needed to sign artifacts with your signature.
-* **OSSRH_USERNAME** - Created [here](https://issues.sonatype.org/)
-* **OSSRH_TOKEN** - Created [here](https://issues.sonatype.org/)
-* **GITHUB_TOKEN** - Github token
+# Requirements
 
-## Demo
-
-How do you release a version?
-
-Manually:\
-&nbsp;&nbsp;&nbsp;1. Check the version in the pom.xml\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* **<version>1.0.0-SNAPSHOT</version>**\
-&nbsp;&nbsp;&nbsp;2. Go to Github action -> Run workflow\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* **Release:** 1.0.0\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* **Snapshot:** 1.0.1-SNAPSHOT
-
-Automatically:\
-Push to Github will create a release and a snapshot but it won't publish the release.\
-Snapshot will be available through [here](https://central.sonatype.com/artifact/com.chensoul/chensoul-parent)
-
-## GPG
-
-After generating gpg key following by [here](https://central.sonatype.org/publish/requirements/gpg/#generating-a-key-pair)
-
-```bash
-gpg --gen-key
-```
-
-You can list the local key that you created:
-
-```bash
-gpg --list-secret-keys --keyid-format=long
-```
-
-Then you can export the private key to your local machine in order to upload it later to Github secret:
-
-```bash
-gpg --armor --export-secret-keys <YOUR_KEY> > private.gpg
-```
-
-* YOUR_KEY='long number'
-
-## Local commands
-
-Check your maven settings file `～/.m2/settings.xml`:
-
-```bash
-    <server>
-        <id>gpg.passphrase</id>
-        <passphrase><PASSPHRASE_GPG></passphrase>
-    </server>
-    <server>
-        <id>ossrh</id>
-        <username><OSSRH_USERNAME></username>
-        <password><OSSRH_TOKEN></password>
-    </server>
-```
-
-Update pom version:
-
-```bash
-mvn -B build-helper:parse-version versions:set -DnewVersion=0.0.2-SNAPSHOT versions:commit 
-```
-
-Create new branch with next version, it won't update the working copy version:
-
-```bash
-mvn -B release:branch -DbranchName=my-branch -DupdateBranchVersions=true -DupdateWorkingCopyVersions=false
-```
-
-Release to local staging (push tag to github using username and password):
-
-```bash
-mvn -B release:clean release:prepare release:perform
-```
-
-GPG to sign and release to sonatype using release profile:
-
-```bash
-mvn -B clean deploy -Prelease -Dgpg.passphrase=<PASSPHRASE_GPG> -Dusername=<OSSRH_USERNAME> -Dpassword=<OSSRH_TOKEN>
-
-# reading gpg.passphrase, username and password from settings.xml
-mvn -B clean deploy -Prelease
-```
-
-Release to sonatype (push tag to github using username and password); sign and snapshot to local staging:
-
-```bash
-export AUTO_RELEASE_AFTER_CLOSE=true
-mvn -B release:clean release:prepare release:perform deploy -Prelease
-```
-
-Publish to github pages:
-```bash
-mvn site scm-publish:publish-scm
-```
+ChenSoul™ Parent POM requires a Java runtime of version 1.8 or higher.
 
 # Installation
 
-ChenSoul™ Parent is, or will be, available on [Maven Central](https://search.maven.org/artifact/com.chensoul/chensoul-parent).  Include ChenSoul™ Parent as a Maven pom:
+ChenSoul™ Parent POM is, or will be, available on [Maven Central](https://search.maven.org/artifact/com.chensoul/chensoul-parent).  Using ChenSoul™ Parent POM as a Maven pom:
 
 ```xml
 <parent>
