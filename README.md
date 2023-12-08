@@ -79,7 +79,7 @@ Check your maven settings file `～/.m2/settings.xml`:
 Release and deploy to maven repository, and push tag to github using username and password:
 
 ```bash
-mvn -B release:clean release:prepare release:perform
+mvn -B release:clean release:prepare release:perform -Dusername=<GITHUB_USERNAME> -Dpassword=<GITHUB_TOKEN>
 ```
 
 Update pom version:
@@ -91,7 +91,7 @@ mvn -B build-helper:parse-version versions:set -DnewVersion=1.0.0-SNAPSHOT versi
 Create new branch with next version, it won't update the working copy version:
 
 ```bash
-mvn -B release:branch -DbranchName=my-branch -DupdateBranchVersions=true -DupdateWorkingCopyVersions=false
+mvn -B release:branch -DbranchName=my-branch -DupdateBranchVersions=true -DupdateWorkingCopyVersions=false -Dusername=<GITHUB_USERNAME> -Dpassword=<GITHUB_TOKEN>
 ```
 
 GPG to sign and deploy to sonatype repository using release profile:
