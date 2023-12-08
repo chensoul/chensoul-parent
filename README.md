@@ -30,6 +30,56 @@ ChenSoul™ Parent POM is, or will be, available on [Maven Central](https://sear
 </parent>
 ```
 
+# Usage
+
+Check your maven settings file `～/.m2/settings.xml`:
+
+```bash
+    <server>
+        <id>gpg.passphrase</id>
+        <passphrase><PASSPHRASE_GPG></passphrase>
+    </server>
+    <server>
+        <id>ossrh</id>
+        <username><OSSRH_USERNAME></username>
+        <password><OSSRH_TOKEN></password>
+    </server>
+```
+
+Update pom version:
+
+```bash
+mvn -B build-helper:parse-version versions:set -DnewVersion=0.0.2-SNAPSHOT versions:commit 
+```
+
+Create new branch with next version, it won't update the working copy version:
+
+```bash
+mvn -B release:branch -DbranchName=my-branch -DupdateBranchVersions=true -DupdateWorkingCopyVersions=false
+```
+
+Release to local staging (push tag to github using username and password):
+
+```bash
+mvn -B release:clean release:prepare release:perform
+```
+
+GPG to sign and release to sonatype using release profile:
+
+```bash
+mvn -B clean deploy -Prelease -Dgpg.passphrase=<PASSPHRASE_GPG> -Dusername=<OSSRH_USERNAME> -Dpassword=<OSSRH_TOKEN>
+
+# reading gpg.passphrase, username and password from settings.xml
+mvn -B clean deploy -Prelease
+```
+
+Release to sonatype (push tag to github using username and password); sign and snapshot to local staging:
+
+```bash
+export AUTO_RELEASE_AFTER_CLOSE=true
+mvn -B release:clean release:prepare release:perform deploy -Prelease
+```
+
 # Documentation
 
 Full documentation is, or will be, available at [chensoul.github.io/chensoul-parent](https://chensoul.github.io/chensoul-parent/).
