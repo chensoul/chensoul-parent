@@ -76,7 +76,7 @@ mvn -B clean deploy -Prelease
 Release to sonatype (push tag to github using username and password); sign and release to Release Staging Area:
 
 ```bash
-mvn -B clean release:prepare release:perform deploy -Prelease -DautoReleaseAfterClose=false
+mvn -B clean release:prepare release:perform -Prelease -DautoReleaseAfterClose=false
 ```
 
 Publish to github pages:
