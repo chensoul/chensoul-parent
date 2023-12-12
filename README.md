@@ -73,7 +73,7 @@ mvn -B clean deploy -Prelease -Dgpg.passphrase=<PASSPHRASE_GPG> -Dusername=<OSSR
 mvn -B clean deploy -Prelease
 ```
 
-Release to sonatype (push tag to github using username and password); sign and snapshot to local staging:
+Release to sonatype (push tag to github using username and password); sign and release to Release Staging Area:
 
 ```bash
 mvn -B clean release:prepare post-site scm-publish:publish-scm release:perform deploy -Prelease -DautoReleaseAfterClose=true
