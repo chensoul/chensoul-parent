@@ -79,6 +79,12 @@ Release to sonatype (push tag to github using username and password); sign and r
 mvn -B clean release:prepare release:perform deploy -Prelease -DautoReleaseAfterClose=false
 ```
 
+Publish to github pages:
+
+```bash
+mvn site scm-publish:publish-scm
+```
+
 # Links
 
 Login to your [sonatype](https://s01.oss.sonatype.org/) account to release the version

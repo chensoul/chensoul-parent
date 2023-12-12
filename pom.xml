@@ -82,7 +82,7 @@
         <relativizeDecorationLinks>false</relativizeDecorationLinks>
 
         <!-- maven-release-plugin properties -->
-        <goals>deploy</goals>
+        <goals>deploy site:site scm-publish:publish-scm</goals>
         <!-- See http://central.sonatype.org/pages/apache-maven.html#performing-a-release-deployment-with-the-maven-release-plugin -->
         <releaseProfiles>release</releaseProfiles>
         <useReleaseProfile>false</useReleaseProfile>
