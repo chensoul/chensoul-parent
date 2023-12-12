@@ -76,7 +76,7 @@ mvn -B clean deploy -Prelease
 Release to sonatype (push tag to github using username and password); sign and snapshot to local staging:
 
 ```bash
-mvn -B release:clean release:prepare release:perform deploy -Prelease -DautoReleaseAfterClose=true
+mvn -B clean release:prepare post-site scm-publish:publish-scm release:perform deploy -Prelease -DautoReleaseAfterClose=true
 ```
 
 # Documentation
