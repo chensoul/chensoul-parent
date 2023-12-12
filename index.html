@@ -28,7 +28,7 @@
         <div id="breadcrumbs">
           <ul class="breadcrumb">
         <li id="publishDate">Last Published: 2023-12-12</li>
-      <li id="projectVersion" class="pull-right">Version: 1.0.21-SNAPSHOT</li>
+      <li id="projectVersion" class="pull-right">Version: 1.0.14</li>
           </ul>
         </div>
       </header>
@@ -120,7 +120,7 @@ mvn -B clean deploy -Prelease
 </code></pre></div>
 <p>Release to sonatype (push tag to github using username and password); sign and release to Release Staging Area:</p>
 
-<div class="source"><pre class="prettyprint"><code class="language-bash">mvn -B clean release:prepare post-site scm-publish:publish-scm release:perform deploy -Prelease -DautoReleaseAfterClose=true
+<div class="source"><pre class="prettyprint"><code class="language-bash">mvn -B clean release:prepare release:perform deploy -Prelease -DautoReleaseAfterClose=false
 </code></pre></div>
 <h1>Documentation</h1>
 <p>Full documentation is, or will be, available at <a class="externalLink" href="https://chensoul.github.io/chensoul-parent/">chensoul.github.io/chensoul-parent</a>.</p>
