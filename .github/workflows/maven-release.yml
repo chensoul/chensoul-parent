@@ -57,7 +57,8 @@ jobs:
       - name: Release With Maven
         run: |
           echo "${{ env.artifact_name }} ${{ env.artifact_version }} ${{ env.artifact_packaging }}"
-          mvn -B -U \
+          if [ "${{ env.auto_release }}" == "true" ] ; then
+            mvn -B -U \
             release:prepare \
             post-site scm-publish:publish-scm \
             release:perform \
@@ -68,6 +69,19 @@ jobs:
             -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}  \
             -DautoReleaseAfterClose=${{ env.auto_release }}  \
             -s settings.xml
+          else
+            mvn -B -U \
+            release:prepare \
+            release:perform \
+            -DreleaseVersion=${{ github.event.inputs.releaseVersion }} \
+            -DdevelopmentVersion=${{ github.event.inputs.developmentVersion }} \
+            deploy \
+            -Prelease \
+            -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}  \
+            -DautoReleaseAfterClose=${{ env.auto_release }}  \
+            -s settings.xml
+          fi
+
           ls -al ./target/
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
