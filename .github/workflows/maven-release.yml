@@ -63,10 +63,10 @@ jobs:
             -DreleaseVersion=${{ github.event.inputs.releaseVersion }} \
             -DdevelopmentVersion=${{ github.event.inputs.developmentVersion }} \
             deploy \
-            -s settings.xml \
             -Prelease \
-            -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}
-            -DAUTO_RELEASE_AFTER_CLOSE=${{ env.auto_release }}
+            -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}  \
+            -DautoReleaseAfterClose=${{ env.auto_release }}  \
+            -s settings.xml
           ls -al ./target/
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
