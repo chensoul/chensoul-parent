@@ -1,8 +1,23 @@
 name: 'Maven Verify'
 
+#see https://github.com/eclipse/microprofile-config/blob/main/.github/workflows/build.yml#L5
 on:
-  - 'pull_request'
-  - 'push'
+  push:
+    paths-ignore:
+      - 'editorconfig'
+      - '.gitattributes'
+      - '.gitignore'
+      - 'LICENSE'
+      - 'README*'
+      - 'settings.xml'
+  pull_request:
+    paths-ignore:
+      - 'editorconfig'
+      - '.gitattributes'
+      - '.gitignore'
+      - 'LICENSE'
+      - 'README*'
+      - 'settings.xml'
 
 jobs:
   job-mvn-verify:
