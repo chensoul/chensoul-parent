@@ -28,13 +28,13 @@ jobs:
     steps:
       - id: 'checkout'
         name: 'Step: Checkout'
-        uses: 'actions/checkout@v4'
+        uses: actions/checkout@v4
         with:
           fetch-depth: 1
           persist-credentials: false
       - id: 'setup-java'
         name: 'Step: Set Up Java and Maven'
-        uses: 'actions/setup-java@v4'
+        uses: actions/setup-java@v4
         with:
           cache: 'maven'
           distribution: 'temurin'
