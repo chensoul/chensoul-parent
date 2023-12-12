@@ -14,7 +14,7 @@
 
     <scm>
         <connection>scm:git:https://github.com/chensoul/chensoul-parent.git</connection>
-        <developerConnection>scm:git:git@github.com:chensoul/chensoul-parent.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/chensoul/chensoul-parent.git</developerConnection>
         <url>https://github.com/chensoul/chensoul-parent</url>
         <tag>HEAD</tag>
     </scm>
