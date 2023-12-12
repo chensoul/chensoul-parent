@@ -5,6 +5,7 @@ on:
   push:
     paths-ignore:
       - 'editorconfig'
+      - '.github/**'
       - '.gitattributes'
       - '.gitignore'
       - 'LICENSE'
@@ -13,6 +14,7 @@ on:
   pull_request:
     paths-ignore:
       - 'editorconfig'
+      - '.github/**'
       - '.gitattributes'
       - '.gitignore'
       - 'LICENSE'
