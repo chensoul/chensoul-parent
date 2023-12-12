@@ -59,6 +59,7 @@ jobs:
           echo "${{ env.artifact_name }} ${{ env.artifact_version }} ${{ env.artifact_packaging }}"
           mvn -B -U \
             release:prepare \
+            post-site scm-publish:publish-scm \
             release:perform \
             -DreleaseVersion=${{ github.event.inputs.releaseVersion }} \
             -DdevelopmentVersion=${{ github.event.inputs.developmentVersion }} \
