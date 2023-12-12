@@ -1,6 +1,5 @@
 name: 'Maven Verify'
 
-#see https://github.com/eclipse/microprofile-config/blob/main/.github/workflows/build.yml#L5
 on:
   push:
     paths-ignore:
@@ -22,7 +21,7 @@ on:
       - 'settings.xml'
 
 jobs:
-  job-mvn-verify:
+  build:
     name: 'Job: Maven Verify'
     permissions:
       contents: 'read'
@@ -46,4 +45,4 @@ jobs:
         # -U force updates just to make sure we are using latest dependencies
         # -B Batch mode (do not ask for user input), just in case
         # -P activate profile
-        run: 'mvn -U -B -e -ntp verify'
+        run: 'mvn -U -B -e -ntp verify checkstyle:check -Pquality-checks'

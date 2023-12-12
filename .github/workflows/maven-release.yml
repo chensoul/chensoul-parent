@@ -66,11 +66,11 @@ jobs:
             -s settings.xml \
             -Prelease \
             -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}
+            -DAUTO_RELEASE_AFTER_CLOSE=${{ env.auto_release }}
           ls -al ./target/
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
-          AUTO_RELEASE_AFTER_CLOSE: ${{ env.auto_release }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:

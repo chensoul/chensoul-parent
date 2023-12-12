@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.chensoul</groupId>
@@ -10,34 +11,37 @@
     <name>ChenSoul™: Parent POM</name>
     <description>${project.name}</description>
     <inceptionYear>2023</inceptionYear>
-    <url>https://chensoul.github.io/${project.artifactId}/</url>
+    <url>https://chensoul.github.io/chensoul-parent/</url>
 
     <scm>
-        <url>https://github.com/chensoul/${project.artifactId}/</url>
-        <connection>scm:git:https://github.com/chensoul/${project.artifactId}.git</connection>
-        <developerConnection>scm:git:https://github.com/chensoul/${project.artifactId}.git</developerConnection>
+        <connection>scm:git:https://github.com/chensoul/chensoul-parent.git</connection>
+        <developerConnection>scm:git:git@github.com:chensoul/chensoul-parent.git</developerConnection>
+        <url>https://github.com/chensoul/chensoul-parent</url>
         <tag>HEAD</tag>
     </scm>
 
     <issueManagement>
         <system>Github</system>
-        <url>https://github.com/chensoul/${project.artifactId}/issues</url>
+        <url>https://github.com/chensoul/chensoul-parent/issues</url>
     </issueManagement>
 
     <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
         <repository>
             <id>ossrh</id>
+            <name>Sonatype OSSRH - Release Staging Area</name>
             <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <name>Sonatype OSSRH Snapshots</name>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+            <uniqueVersion>true</uniqueVersion>
+        </snapshotRepository>
 
         <site>
             <id>site</id>
-            <name>${project.artifactId}</name>
-            <url>https://chensoul.github.io/${project.artifactId}/</url>
+            <name>chensoul-parent</name>
+            <url>https://chensoul.github.io/chensoul-parent/</url>
         </site>
     </distributionManagement>
 
@@ -62,10 +66,10 @@
 
     <licenses>
         <license>
-            <comments>The Apache License, Version 2.0</comments>
-            <distribution>repo</distribution>
             <name>Apache License 2.0</name>
             <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <comments>The Apache License, Version 2.0</comments>
+            <distribution>repo</distribution>
         </license>
     </licenses>
 
@@ -74,30 +78,14 @@
         <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
         <maven.compiler.showWarnings>true</maven.compiler.showWarnings>
 
-        <!-- maven-resource-plugin properties -->
-        <maven.resource.escapeString>\</maven.resource.escapeString>
-
-        <!-- maven-javadoc-plugin properties -->
-        <bottom><![CDATA[Copyright &copy; ${project.inceptionYear}&ndash;{currentYear}, <a href="${project.organization.url}" target="_parent">${project.organization.name}</a>. All rights reserved.]]></bottom>
-        <detectLinks>false</detectLinks>
-        <doctitle>&lt;a href="${project.url}" target="_top"&gt;&lt;span style="font-family:Lobster, cursive;"&gt;µb&lt;/span&gt; ${project.artifactId}&lt;/a&gt; ${project.version}</doctitle>
-        <sourcetab>2</sourcetab>
-
         <!-- maven-site-plugin properties -->
         <maven.site.deploy.skip>true</maven.site.deploy.skip>
         <relativizeDecorationLinks>false</relativizeDecorationLinks>
 
         <!-- maven-release-plugin properties -->
-        <goals>deploy</goals>
-        <scmCommentPrefix>[maven-release-plugin]</scmCommentPrefix>
-        <tagNameFormat>v@{project.version}</tagNameFormat>
         <!-- See http://central.sonatype.org/pages/apache-maven.html#performing-a-release-deployment-with-the-maven-release-plugin -->
         <releaseProfiles>release</releaseProfiles>
         <useReleaseProfile>false</useReleaseProfile>
-
-        <!-- nexus-staging-maven-plugin properties -->
-        <!-- See https://github.com/sonatype/nexus-maven-plugins/blob/0aee3defb33cb133ff536aba59b11d32a368b1e6/staging/maven-plugin/src/main/java/org/sonatype/nexus/maven/staging/AbstractStagingMojo.java#L169-L175 -->
-        <stagingProgressTimeoutMinutes>10</stagingProgressTimeoutMinutes>
 
         <!-- maven-scm-publish-plugin properties;
          see https://maven.apache.org/plugins/maven-scm-publish-plugin/publish-scm-mojo.html -->
@@ -108,6 +96,8 @@
         <!-- Other properties -->
         <project.build.sourceEncoding>UTF8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF8</project.reporting.outputEncoding>
+
+        <skipChecks>false</skipChecks>
     </properties>
 
     <build>
@@ -115,45 +105,18 @@
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-clean-plugin</artifactId>
-                    <version>3.3.2</version>
-                    <configuration>
-                        <filesets>
-                            <fileset>
-                                <directory>${basedir}</directory>
-                                <includes>
-                                    <include>src/**/*~</include>
-                                    <include>*~</include>
-                                </includes>
-                            </fileset>
-                        </filesets>
-                    </configuration>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.10.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <version>3.1.1</version>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-install-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.3.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <artifactId>maven-dependency-plugin</artifactId>
                     <version>3.5.0</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <version>3.0.1</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>3.12.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -176,64 +139,253 @@
                         <additionalJOptions combine.children="append">
                             <additionalJOption>-J-Dhttp.agent=maven-javadoc-plugin</additionalJOption>
                         </additionalJOptions>
-                        <docfilessubdirs>true</docfilessubdirs>
+                        <attach>true</attach>
+                        <doclint>none</doclint>
+                        <doctitle>&lt;a href="${project.url}" target="_top"&gt;&lt;span style="font-family:Lobster,
+                            cursive;"&gt;µb&lt;/span&gt;${project.artifactId}&lt;/a&gt; ${project.version}
+                        </doctitle>
+                        <windowtitle>${project.name}</windowtitle>
+                        <header><![CDATA[<br>${project.name} v${project.version}]]></header>
+                        <bottom>
+                            <![CDATA[Copyright &copy; ${project.inceptionYear}&ndash;{currentYear}, <a href="${project.organization.url}" target="_parent">${project.organization.name}</a>. All rights reserved.]]>
+                        </bottom>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>3.1.1</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>3.1.1</version>
+                </plugin>
+
+                <!-- Release -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>3.0.1</version>
+                    <configuration>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                        <tagNameFormat>v{project.version}</tagNameFormat>
+                        <preparationGoals>verify</preparationGoals>
+                        <localCheckout>true</localCheckout>
+                    </configuration>
+                </plugin>
+                <!-- https://blog.sonatype.com/2010/01/how-to-generate-pgp-signatures-with-maven/-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <configuration>
+                        <gpgArguments>
+                            <arg>--pinentry-mode</arg>
+                            <arg>loopback</arg>
+                        </gpgArguments>
+                    </configuration>
+                </plugin>
+
+                <!-- site -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.5.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.12.1</version>
+                </plugin>
+
+                <!-- quality-checks -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>3.2.1</version>
+                    <configuration>
+                        <skip>${skipChecks}</skip>
+                        <inputEncoding>UTF-8</inputEncoding>
+                        <sourceDirectories>
+                            <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
+                            <sourceDirectory>${project.build.testSourceDirectory}</sourceDirectory>
+                        </sourceDirectories>
+                        <failOnViolation>false</failOnViolation>
+                        <failsOnError>false</failsOnError>
+                        <linkXRef>true</linkXRef>
+                        <consoleOutput>true</consoleOutput>
+                        <logViolationsToConsole>true</logViolationsToConsole>
+                        <checkstyleRules>
+                            <module name="Checker">
+                                <module name="LineLength">
+                                    <property name="max" value="150"/>
+                                    <!--suppress UnresolvedMavenProperty -->
+                                    <property name="ignorePattern" value="@version|@see"/>
+                                </module>
+                                <module name="FileLength">
+                                    <property name="max" value="3500"/>
+                                    <property name="fileExtensions" value="java"/>
+                                </module>
+                                <module name="FileTabCharacter"/>
+                                <module name="TreeWalker">
+                                    <module name="ConstantName">
+                                        <property name="format" value="^(([A-Z][A-Z0-9]*(_[A-Z0-9]+)*))$"/>
+                                    </module>
+                                    <module name="LocalVariableName"/>
+                                    <module name="MethodName">
+                                        <property name="format" value="^_?[a-z][a-zA-Z0-9_]*$"/>
+                                    </module>
+                                    <module name="PackageName"/>
+                                    <module name="LocalFinalVariableName"/>
+                                    <module name="ParameterName"/>
+                                    <module name="StaticVariableName"/>
+
+                                    <module name="TypeName">
+                                        <property name="format" value="^_?[A-Z][a-zA-Z0-9]*$|packageinfo"/>
+                                    </module>
+                                    <module name="AvoidStarImport">
+                                        <property name="excludes"
+                                                  value="java.io,java.net,java.util,javax.enterprise.inject.spi"/>
+                                    </module>
+                                    <module name="IllegalImport"/>
+                                    <module name="RedundantImport"/>
+                                    <module name="UnusedImports"/>
+                                    <module name="MethodLength">
+                                        <property name="max" value="250"/>
+                                    </module>
+                                    <module name="ParameterNumber">
+                                        <property name="max" value="11"/>
+                                    </module>
+                                    <module name="EmptyBlock">
+                                        <property name="option" value="text"/>
+                                    </module>
+                                    <module name="NeedBraces"/>
+                                    <module name="LeftCurly">
+                                        <property name="option" value="EOL"/>
+                                    </module>
+                                    <module name="RightCurly"/>
+                                    <module name="EmptyStatement"/>
+                                    <module name="EqualsHashCode"/>
+                                    <module name="DefaultComesLast"/>
+                                    <module name="MissingSwitchDefault"/>
+                                    <module name="FallThrough"/>
+                                    <module name="MultipleVariableDeclarations"/>
+                                    <module
+                                        name="com.puppycrawl.tools.checkstyle.checks.design.DesignForExtensionCheck">
+                                        <property name="severity" value="ignore"/>
+                                    </module>
+                                    <module name="HideUtilityClassConstructor"/>
+                                    <module
+                                        name="com.puppycrawl.tools.checkstyle.checks.design.VisibilityModifierCheck">
+                                        <property name="packageAllowed" value="false"/>
+                                        <property name="protectedAllowed" value="true"/>
+                                        <property name="publicMemberPattern" value="^serialVersionUID"/>
+                                        <property name="severity" value="warning"/>
+                                    </module>
+                                    <module name="UpperEll"/>
+                                </module>
+                            </module>
+                        </checkstyleRules>
                     </configuration>
                     <executions>
                         <execution>
-                            <id>attach-javadocs</id>
+                            <id>verify-style</id>
+                            <phase>process-test-classes</phase>
                             <goals>
-                                <goal>jar</goal>
+                                <goal>check</goal>
                             </goals>
                         </execution>
                     </executions>
                 </plugin>
                 <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>flatten-maven-plugin</artifactId>
-                    <version>1.5.0</version>
-                    <inherited>true</inherited>
+                    <groupId>net.revelc.code</groupId>
+                    <artifactId>impsort-maven-plugin</artifactId>
+                    <version>1.8.0</version>
                     <configuration>
-                        <updatePomFile>true</updatePomFile>
-                        <flattenMode>resolveCiFriendliesOnly</flattenMode>
-                        <pomElements>
-                            <parent>expand</parent>
-                            <distributionManagement>remove</distributionManagement>
-                            <repositories>remove</repositories>
-                        </pomElements>
+                        <skip>${skipChecks}</skip>
+                        <groups>java.,javax.,org.,com.</groups>
+                        <staticGroups>*</staticGroups>
+                        <removeUnused>true</removeUnused>
                     </configuration>
                     <executions>
                         <execution>
-                            <id>flatten</id>
-                            <phase>process-resources</phase>
+                            <id>sort-imports</id>
                             <goals>
-                                <goal>flatten</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>flatten.clean</id>
-                            <phase>clean</phase>
-                            <goals>
-                                <goal>clean</goal>
+                                <goal>sort</goal>
                             </goals>
                         </execution>
                     </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
-
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>flatten-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
     </build>
 
     <profiles>
         <profile>
+            <id>quality-checks</id>
+            <activation>
+                <property>
+                    <name>skipChecks</name>
+                    <value>!true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>net.revelc.code</groupId>
+                        <artifactId>impsort-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
             <id>release</id>
             <build>
                 <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <!-- https://itnext.io/publishing-artifacts-to-maven-central-using-github-actions-a-step-by-step-guide-fd65ef075fd4-->
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
@@ -245,35 +397,9 @@
                             <!-- For pre 2021 legacy projects you may use https://oss.sonatype.org -->
                             <!-- See https://central.sonatype.org/publish/release/#login-into-ossrh for details -->
                             <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>${env.AUTO_RELEASE_AFTER_CLOSE}</autoReleaseAfterClose>
+                            <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                            <stagingProgressTimeoutMinutes>10</stagingProgressTimeoutMinutes>
                         </configuration>
-                    </plugin>
-                    <!-- https://blog.sonatype.com/2010/01/how-to-generate-pgp-signatures-with-maven/-->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.1.0</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-release-plugin</artifactId>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
