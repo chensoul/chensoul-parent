@@ -30,7 +30,7 @@ jobs:
             https://api.github.com/repos/${{github.event.repository.owner.login}}/${{github.event.repository.name}}/releases/latest | jq -r '.tag_name')" >> $GITHUB_ENV
           echo "currentTag=$(git describe --tags `git rev-list --tags --max-count=1`)" >> $GITHUB_ENV
       - name: Build Changelog
-        uses: mikepenz/release-changelog-builder-action@v2
+        uses: mikepenz/release-changelog-builder-action@v4
         with:
           configuration: ".github/configs/configuration_repo.json"
           fromTag: ${{env.latest_release_tag}}
