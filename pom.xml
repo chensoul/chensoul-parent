@@ -14,8 +14,8 @@
     <url>https://chensoul.github.io/chensoul-parent/</url>
 
     <scm>
-        <connection>scm:git:https://github.com/chensoul/chensoul-parent.git</connection>
-        <developerConnection>scm:git:https://github.com/chensoul/chensoul-parent.git</developerConnection>
+        <connection>scm:git:https://github.com/chensoul/chensoul-parent</connection>
+        <developerConnection>scm:git:git@github.com:chensoul/chensoul-parent.git</developerConnection>
         <url>https://github.com/chensoul/chensoul-parent</url>
         <tag>HEAD</tag>
     </scm>
@@ -37,11 +37,9 @@
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
             <uniqueVersion>true</uniqueVersion>
         </snapshotRepository>
-
         <site>
-            <id>site</id>
-            <name>chensoul-parent</name>
-            <url>https://chensoul.github.io/chensoul-parent/</url>
+            <id>github</id>
+            <url>https://github.com/chensoul/chensoul-parent</url>
         </site>
     </distributionManagement>
 
@@ -92,8 +90,7 @@
         <relativizeDecorationLinks>false</relativizeDecorationLinks>
 
         <!-- maven-release-plugin properties -->
-        <goals>deploy,post-site,scm-publish:publish-scm</goals>
-        <!-- See http://central.sonatype.org/pages/apache-maven.html#performing-a-release-deployment-with-the-maven-release-plugin -->
+        <goals>deploy nexus-staging:release</goals>
         <releaseProfiles>release</releaseProfiles>
         <useReleaseProfile>false</useReleaseProfile>
 
@@ -101,8 +98,7 @@
         <autoReleaseAfterClose>false</autoReleaseAfterClose>
         <stagingProgressTimeoutMinutes>10</stagingProgressTimeoutMinutes>
 
-        <!-- maven-scm-publish-plugin properties;
-         see https://maven.apache.org/plugins/maven-scm-publish-plugin/publish-scm-mojo.html -->
+        <!-- maven-scm-publish-plugin properties -->
         <scmpublish.content>${project.reporting.outputDirectory}</scmpublish.content>
         <scmpublish.pubScmUrl>${project.scm.developerConnection}</scmpublish.pubScmUrl>
         <scmpublish.scm.branch>gh-pages</scmpublish.scm.branch>
@@ -211,6 +207,7 @@
                         <tagNameFormat>v@{project.version}</tagNameFormat>
                     </configuration>
                 </plugin>
+                <!-- https://www.lorenzobettini.it/2020/01/publishing-a-maven-site-to-github-pages -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-scm-publish-plugin</artifactId>
