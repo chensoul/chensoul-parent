@@ -3,6 +3,8 @@ name: 'Maven Verify'
 on:
   push:
     paths-ignore:
+      - 'Dockerfile'
+      - '.dockerignore'
       - 'editorconfig'
       - '.github/**'
       - '.gitattributes'
@@ -12,6 +14,8 @@ on:
       - 'settings.xml'
   pull_request:
     paths-ignore:
+      - 'Dockerfile'
+      - '.dockerignore'
       - 'editorconfig'
       - '.github/**'
       - '.gitattributes'
