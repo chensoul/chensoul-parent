@@ -62,7 +62,6 @@ jobs:
           release:perform \
           -DreleaseVersion=${{ github.event.inputs.releaseVersion }} \
           -DdevelopmentVersion=${{ github.event.inputs.developmentVersion }} \
-          deploy \
           -Prelease \
           -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}  \
           -DautoReleaseAfterClose=${{ env.auto_release }}  \
