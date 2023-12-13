@@ -177,8 +177,8 @@
                         </additionalJOptions>
                         <attach>true</attach>
                         <doclint>none</doclint>
-                        <doctitle>&lt;a href="${project.url}" target="_top"&gt;&lt;span style="font-family:Lobster,
-                            cursive;"&gt;µb&lt;/span&gt;${project.artifactId}&lt;/a&gt; ${project.version}
+                        <doctitle>&lt;a href="${project.url}" target="_top"&gt;${project.artifactId}&lt;/a&gt;
+                            ${project.version}
                         </doctitle>
                         <docfilessubdirs>true</docfilessubdirs>
                         <windowtitle>${project.name}</windowtitle>
