@@ -97,8 +97,6 @@
         <releaseProfiles>release</releaseProfiles>
 
         <!-- nexus-staging-maven-plugin properties -->
-        <!-- whether autorelease maven central staging repositories - default false to allow review and manually release repositories -->
-        <autoReleaseAfterClose>false</autoReleaseAfterClose>
         <stagingProgressTimeoutMinutes>10</stagingProgressTimeoutMinutes>
 
         <!-- maven-scm-publish-plugin properties -->
