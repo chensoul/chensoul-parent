@@ -69,7 +69,7 @@ jobs:
           -s settings.xml
 
           ret = $?
-          echo "ret=${{ ret }}"
+          echo "${{ ret }}"
           if [ "${{ env.auto_release }}" == "true" ] ; then
             if [ ${{ ret }} != 0 ]; then
               echo "auto_release=true" >> $GITHUB_ENV
