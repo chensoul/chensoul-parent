@@ -5,7 +5,7 @@
 
     <groupId>com.chensoul</groupId>
     <artifactId>chensoul-parent</artifactId>
-    <version>1.0.4-SNAPSHOT</version>
+    <version>1.0.14-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>ChenSoul™: Parent</name>
@@ -15,7 +15,7 @@
 
     <scm>
         <connection>scm:git:https://github.com/chensoul/chensoul-parent.git</connection>
-        <developerConnection>scm:git:git@github.com:chensoul/chensoul-parent.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/chensoul/chensoul-parent.git</developerConnection>
         <url>https://github.com/chensoul/chensoul-parent</url>
         <tag>HEAD</tag>
     </scm>
@@ -72,6 +72,9 @@
     </licenses>
 
     <properties>
+        <project.build.sourceEncoding>UTF8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF8</project.reporting.outputEncoding>
+
         <!-- maven-compiler-plugin properties -->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -104,9 +107,6 @@
         <scmpublish.scm.branch>gh-pages</scmpublish.scm.branch>
 
         <!-- Other properties -->
-        <project.build.sourceEncoding>UTF8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF8</project.reporting.outputEncoding>
-
         <skipChecks>false</skipChecks>
     </properties>
 
@@ -553,6 +553,18 @@
                                 <id>attach-javadocs</id>
                                 <goals>
                                     <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>default</id>
+                                <goals>
+                                    <goal>perform</goal>
                                 </goals>
                             </execution>
                         </executions>
