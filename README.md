@@ -68,11 +68,67 @@ Check your maven settings file `～/.m2/settings.xml`:
     </server>
 ```
 
-Update pom version:
+According to [publish-maven](https://central.sonatype.org/publish/publish-maven/), you can do these as below.
+
+
+### Performing a Snapshot Deployment
+
+Snapshot deployment are performed when your version ends in -SNAPSHOT . You do not need to fulfill the requirements when performing snapshot deployments and can simply run
 
 ```bash
-mvn -B build-helper:parse-version versions:set -DnewVersion=0.0.2-SNAPSHOT versions:commit 
+mvn -B clean deploy
 ```
+
+SNAPSHOT versions are not synchronized to the Central Repository. If you wish your users to consume your SNAPSHOT versions, they would need to add the snapshot repository to their Nexus Repository Manager, settings.xml, or pom.xml. Successfully deployed SNAPSHOT versions will be found in https://s01.oss.sonatype.org/content/repositories/snapshots/
+
+
+### Performing a Release Deployment
+
+The change of the versions for your project, and the parent references in a multi module setup, can be performed manually or with the help of the Maven versions plugin.
+
+```bash
+mvn versions:set -DnewVersion=1.2.3 versions:commit
+```
+
+Once you have updated all the versions and ensured that your build passes without deployment you can perform the deployment with the usage of the release profile with
+
+```bash
+mvn clean deploy -P release
+```
+
+By default, the deployment will be performed to the staging repository https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/ . You can release the deployment to the central repository:
+
+```bash
+mvn clean deploy -P release -DautoReleaseAfterClose=true
+```
+
+### Performing a Release Deployment with the Maven Release Plugin
+
+The configuration for the Maven release plugin should include disabling the release profile that is part of the Maven Super POM, since we are using our own profile, and specify the deploy goal together with the activation of our release profile
+
+```xml
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-release-plugin</artifactId>
+  <version>2.5.3</version>
+  <configuration>
+    <autoVersionSubmodules>true</autoVersionSubmodules>
+    <useReleaseProfile>false</useReleaseProfile>
+    <releaseProfiles>release</releaseProfiles>
+    <goals>deploy</goals>
+  </configuration>
+</plugin>
+```
+
+With the SCM connection configured correctly you can perform a release deployment to OSSRH with
+
+```bash
+mvn release:clean release:prepare release:perform
+```
+
+This execution will deploy to OSSRH and release to the Central Repository in one go, thanks to the usage of the Nexus Staging Maven Plugin with autoReleaseAfterClose set to true.
+
+### Create a Snapshot Branch with the Maven Release Plugin
 
 Create new branch with next version, it won't update the working copy version:
 
@@ -80,26 +136,35 @@ Create new branch with next version, it won't update the working copy version:
 mvn -B release:branch -DbranchName=my-branch -DupdateBranchVersions=true -DupdateWorkingCopyVersions=false
 ```
 
-Release to local staging (push tag to github using username and password):
+### Manually Releasing the Deployment to the Central Repository
+
+You can simply release the staging repository with
 
 ```bash
-mvn -B release:clean release:prepare release:perform
+mvn nexus-staging:release -DautoReleaseAfterClose=true
 ```
 
-GPG to sign and release to sonatype using release profile:
+If you have been running the deployment as part of a release done with the Maven release plugin, the deployment was done from the tag in your version control system checked out into target/checkout so you have to run the Nexus Staging plugin from there:
 
 ```bash
-mvn -B clean deploy -Prelease -Dgpg.passphrase=<PASSPHRASE_GPG> -Dusername=<OSSRH_USERNAME> -Dpassword=<OSSRH_TOKEN>
-
-# reading gpg.passphrase, username and password from settings.xml
-mvn -B clean deploy -Prelease
+mvn release:perform
+cd target/checkout
+mvn nexus-staging:release
 ```
 
-Release to sonatype (push tag to github using username and password); sign and release to Release Staging Area:
+You can configure this goal to be run automatically as part of your release deployment with the release plugin by adding it as a goal execution after deploy.
 
-```bash
-mvn -B release:clean release:prepare release:perform -Prelease -DautoReleaseAfterClose=true
+```xml
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-release-plugin</artifactId>
+  <configuration>
+    <goals>deploy nexus-staging:release</goals>
+  </configuration>
+</plugin>
 ```
+
+### Manually Publish the site to github pages
 
 Publish to github pages:
 
