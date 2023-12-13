@@ -29,7 +29,7 @@
           <ul class="breadcrumb">
         <li id="publishDate">Last Published: 2023-12-13<span class="divider">|</span>
 </li>
-          <li id="projectVersion">Version: 1.0.14-SNAPSHOT</li>
+          <li id="projectVersion">Version: 1.0.33</li>
           </ul>
         </div>
       </header>
@@ -74,13 +74,17 @@
 <h2><a name="Status"></a>Status</h2>
 <p>This project is currently experimental, in a pre-alpha state, and unsuitable for production use.</p></section><section>
 <h2><a name="Compatibility"></a>Compatibility</h2>
-<p><b>Until further notice, this project's APIs are subject to frequent backwards-incompatible signature and behavior changes, regardless of project version and without notice.</b></p></section><section>
+<p><b>Until further notice, this project's APIs are subject to frequent backwards-incompatible signature and behavior
+changes, regardless of project version and without notice.</b></p></section><section>
 <h2><a name="Requirements"></a>Requirements</h2>
 <p>ChenSoul&#x2122; Parent POM requires a Java runtime of version 1.8 or higher.</p></section><section>
 <h2><a name="Installation"></a>Installation</h2>
-<p>ChenSoul&#x2122; Parent POM is, or will be, available on <a class="externalLink" href="https://search.maven.org/artifact/com.chensoul/chensoul-parent">Maven Central</a>.  Using ChenSoul&#x2122; Parent POM as a Maven pom:</p>
+<p>ChenSoul&#x2122; Parent POM is, or will be, available
+on <a class="externalLink" href="https://search.maven.org/artifact/com.chensoul/chensoul-parent">Maven Central</a>. Using ChenSoul&#x2122; Parent POM as a
+Maven pom:</p>
 
-<div class="source"><pre class="prettyprint"><code class="language-xml">&lt;parent&gt;
+<div class="source"><pre class="prettyprint"><code class="language-xml">
+&lt;parent&gt;
     &lt;groupId&gt;com.chensoul&lt;/groupId&gt;
     &lt;artifactId&gt;chensoul-parent&lt;/artifactId&gt;
     &lt;!-- Always check https://search.maven.org/artifact/com.chensoul/chensoul-parent for up-to-date available versions. --&gt;
@@ -89,7 +93,8 @@
 &lt;/parent&gt;
 </code></pre></div></section><section>
 <h2><a name="GPG"></a>GPG</h2>
-<p>After generating gpg key following by <a class="externalLink" href="https://central.sonatype.org/publish/requirements/gpg/#generating-a-key-pair">here</a></p>
+<p>After generating gpg key following
+by <a class="externalLink" href="https://central.sonatype.org/publish/requirements/gpg/#generating-a-key-pair">here</a></p>
 
 <div class="source"><pre class="prettyprint"><code class="language-bash">gpg --gen-key
 </code></pre></div>
@@ -118,33 +123,39 @@
         &lt;password&gt;&lt;OSSRH_TOKEN&gt;&lt;/password&gt;
     &lt;/server&gt;
 </code></pre></div>
-<p>Update pom version:</p>
+<p>According to <a class="externalLink" href="https://central.sonatype.org/publish/publish-maven/">publish-maven</a>, you can do these as below.</p><section>
+<h3><a name="Performing_a_Snapshot_Deployment"></a>Performing a Snapshot Deployment</h3>
+<p>Snapshot deployment are performed when your version ends in -SNAPSHOT . You do not need to fulfill the requirements when
+performing snapshot deployments and can simply run</p>
 
-<div class="source"><pre class="prettyprint"><code class="language-bash">mvn -B build-helper:parse-version versions:set -DnewVersion=0.0.2-SNAPSHOT versions:commit 
+<div class="source"><pre class="prettyprint"><code class="language-bash">mvn -B clean deploy
 </code></pre></div>
-<p>Create new branch with next version, it won't update the working copy version:</p>
+<p>SNAPSHOT versions are not synchronized to the Central Repository. If you wish your users to consume your SNAPSHOT
+versions, they would need to add the snapshot repository to their Nexus Repository Manager, settings.xml, or pom.xml.
+Successfully deployed SNAPSHOT versions will be found in <a class="externalLink" href="https://s01.oss.sonatype.org/content/repositories/snapshots/">https://s01.oss.sonatype.org/content/repositories/snapshots/</a></p></section><section>
+<h3><a name="Performing_a_Release_Deployment"></a>Performing a Release Deployment</h3>
+<p>Change version with the Maven versions plugin.</p>
 
-<div class="source"><pre class="prettyprint"><code class="language-bash">mvn -B release:branch -DbranchName=my-branch -DupdateBranchVersions=true -DupdateWorkingCopyVersions=false
+<div class="source"><pre class="prettyprint"><code class="language-bash">mvn versions:set -DnewVersion=1.2.3 versions:commit
 </code></pre></div>
-<p>Release to local staging (push tag to github using username and password):</p>
+<p>Release to the staging repository <a class="externalLink" href="https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/">https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</a> with the release profile:</p>
 
-<div class="source"><pre class="prettyprint"><code class="language-bash">mvn -B release:clean release:prepare release:perform
+<div class="source"><pre class="prettyprint"><code class="language-bash">mvn clean deploy -P release
 </code></pre></div>
-<p>GPG to sign and release to sonatype using release profile:</p>
+<p>Release to the central repository:</p>
 
-<div class="source"><pre class="prettyprint"><code class="language-bash">mvn -B clean deploy -Prelease -Dgpg.passphrase=&lt;PASSPHRASE_GPG&gt; -Dusername=&lt;OSSRH_USERNAME&gt; -Dpassword=&lt;OSSRH_TOKEN&gt;
+<div class="source"><pre class="prettyprint"><code class="language-bash">mvn clean deploy -P release -DautoReleaseAfterClose=true
+</code></pre></div></section><section>
+<h3><a name="Manually_Releasing_the_Deployment_to_the_Central_Repository"></a>Manually Releasing the Deployment to the Central Repository</h3>
+<p>You can simply release the staging repository with</p>
 
-# reading gpg.passphrase, username and password from settings.xml
-mvn -B clean deploy -Prelease
-</code></pre></div>
-<p>Release to sonatype (push tag to github using username and password); sign and release to Release Staging Area:</p>
-
-<div class="source"><pre class="prettyprint"><code class="language-bash">mvn -B release:clean release:prepare release:perform -Prelease -DautoReleaseAfterClose=true
-</code></pre></div>
+<div class="source"><pre class="prettyprint"><code class="language-bash">mvn nexus-staging:release -P release -DautoReleaseAfterClose=true
+</code></pre></div></section><section>
+<h3><a name="Manually_Publish_the_site_to_github_pages"></a>Manually Publish the site to github pages</h3>
 <p>Publish to github pages:</p>
 
 <div class="source"><pre class="prettyprint"><code class="language-bash">mvn site scm-publish:publish-scm
-</code></pre></div></section><section>
+</code></pre></div></section></section><section>
 <h2><a name="Links"></a>Links</h2>
 <p>Login to your <a class="externalLink" href="https://s01.oss.sonatype.org/">sonatype</a> account to release the version</p>
 <table border="0" class="table table-striped">
@@ -159,29 +170,20 @@ mvn -B clean deploy -Prelease
 <tr class="b">
 <td align="left">Snapshot</td>
 <td align="left"><a class="externalLink" href="https://s01.oss.sonatype.org/content/repositories/snapshots/com/chensoul/chensoul-parent/">sonatype</a></td>
-<td align="left">Snapshot versions</td></tr>
+<td align="left">Sonatype Snapshot versions</td></tr>
 <tr class="a">
 <td align="left">Release</td>
-<td align="left"><a class="externalLink" href="https://repo.maven.apache.org/maven2/com/chensoul/chensoul-parent/">sonatype</a></td>
-<td align="left">Release versions</td></tr>
+<td align="left"><a class="externalLink" href="https://repo.maven.apache.org/maven2/com/chensoul/chensoul-parent/">maven</a></td>
+<td align="left">Maven Release versions</td></tr>
 <tr class="b">
 <td align="left">Release</td>
 <td align="left"><a class="externalLink" href="https://central.sonatype.com/artifact/com.chensoul/chensoul-parent/">central-sonatype</a></td>
-<td align="left">Release versions</td></tr>
+<td align="left">Sonatype Release versions</td></tr>
 </tbody>
 </table></section><section>
-<h2><a name="References"></a>References</h2>
-<ul>
-
-<li></li>
-</ul></section><section>
 <h2><a name="Documentation"></a>Documentation</h2>
-<p>Full documentation is, or will be, available at <a class="externalLink" href="https://chensoul.github.io/chensoul-parent/">chensoul.github.io/chensoul-parent</a>.</p></section><section>
-<h2><a name="Authors"></a>Authors</h2>
-<ul>
-
-<li><a class="externalLink" href="https://www.github.com/chensoul">@chensoul</a></li>
-</ul></section>
+<p>Full documentation is, or will be, available
+at <a class="externalLink" href="https://chensoul.github.io/chensoul-parent/">chensoul.github.io/chensoul-parent</a>.</p></section>
         </main>
       </div>
     </div>
