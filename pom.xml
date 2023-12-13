@@ -92,7 +92,7 @@
         <relativizeDecorationLinks>false</relativizeDecorationLinks>
 
         <!-- maven-release-plugin properties -->
-        <goals>deploy nexus-staging:release</goals>
+        <goals>deploy</goals>
         <tagNameFormat>v@{project.version}</tagNameFormat>
         <releaseProfiles>release</releaseProfiles>
 
