@@ -102,7 +102,7 @@
         <!-- whether autorelease maven central staging repositories - default false to allow review and manually release repositories -->
         <autoReleaseAfterClose>false</autoReleaseAfterClose>
         <!-- keeping closed repos with failure - default is false because the errors are visible in the maven output, but true will leave the repo open for investigation in Sonatype Nexus -->
-        <keepStagingReposOnFailure>false</keepStagingReposOnFailure>
+        <keepStagingRepositoryOnCloseRuleFailure>false</keepStagingRepositoryOnCloseRuleFailure>
         <stagingProgressTimeoutMinutes>10</stagingProgressTimeoutMinutes>
 
         <!-- maven-scm-publish-plugin properties -->
@@ -223,7 +223,7 @@
                         <serverId>ossrh</serverId>
                         <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
                         <autoReleaseAfterClose>${autoReleaseAfterClose}</autoReleaseAfterClose>
-                        <keepStagingRepositoryOnCloseRuleFailure>${keepStagingReposOnFailure}
+                        <keepStagingRepositoryOnCloseRuleFailure>${keepStagingRepositoryOnCloseRuleFailure}
                         </keepStagingRepositoryOnCloseRuleFailure>
                     </configuration>
                     <dependencies>
