@@ -111,11 +111,11 @@ mvn site scm-publish:publish-scm
 
 Login to your [sonatype](https://s01.oss.sonatype.org/) account to release the version
 
-| Type     | URL                                                                                                   | Description       |
-|:---------|:------------------------------------------------------------------------------------------------------|:------------------|
-| Snapshot | [sonatype](https://s01.oss.sonatype.org/content/repositories/snapshots/com/chensoul/chensoul-parent/) | Snapshot versions |
-| Release  | [maven](https://repo.maven.apache.org/maven2/com/chensoul/chensoul-parent/)                           | Release versions  |
-| Release  | [central-sonatype](https://central.sonatype.com/artifact/com.chensoul/chensoul-parent/)               | Release versions  |
+| Type     | URL                                                                                                   | Description                |
+|:---------|:------------------------------------------------------------------------------------------------------|:---------------------------|
+| Snapshot | [sonatype](https://s01.oss.sonatype.org/content/repositories/snapshots/com/chensoul/chensoul-parent/) | Sonatype Snapshot versions |
+| Release  | [maven](https://repo.maven.apache.org/maven2/com/chensoul/chensoul-parent/)                           | Maven Release versions     |
+| Release  | [central-sonatype](https://central.sonatype.com/artifact/com.chensoul/chensoul-parent/)               | Sonatype Release versions  |
 
 
 ## References
