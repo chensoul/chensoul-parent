@@ -114,8 +114,8 @@ Login to your [sonatype](https://s01.oss.sonatype.org/) account to release the v
 | Type     | URL                                                                                                   | Description       |
 |:---------|:------------------------------------------------------------------------------------------------------|:------------------|
 | Snapshot | [sonatype](https://s01.oss.sonatype.org/content/repositories/snapshots/com/chensoul/chensoul-parent/) | Snapshot versions |
-| Release  | [sonatype](https://repo.maven.apache.org/maven2/com/chensoul/chensoul-parent/)                      | Release versions  |
-| Release  | [central-sonatype](https://central.sonatype.com/artifact/com.chensoul/chensoul-parent/)             | Release versions  |
+| Release  | [maven](https://repo.maven.apache.org/maven2/com/chensoul/chensoul-parent/)                           | Release versions  |
+| Release  | [central-sonatype](https://central.sonatype.com/artifact/com.chensoul/chensoul-parent/)               | Release versions  |
 
 
 ## References
