@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.chensoul</groupId>
@@ -7,7 +8,7 @@
     <version>1.0.15-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>ChenSoul™: Parent POM</name>
+    <name>ChenSoul™: Parent</name>
     <description>${project.name}</description>
     <inceptionYear>2023</inceptionYear>
     <url>https://chensoul.github.io/chensoul-parent/</url>
@@ -74,19 +75,14 @@
 
     <properties>
         <!-- maven-compiler-plugin properties -->
-        <maven.compiler.release>1.8</maven.compiler.release>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-
         <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
         <maven.compiler.showWarnings>true</maven.compiler.showWarnings>
 
         <!-- maven-surefire-plugin properties -->
         <surefire.useFile>false</surefire.useFile>
         <trimStackTrace>false</trimStackTrace>
-
-        <!-- spotbugs-maven-plugin properties; see https://spotbugs.github.io/spotbugs-maven-plugin/spotbugs-mojo.html -->
-        <spotbugs.excludeFilterFile>src/spotbugs/exclude.xml</spotbugs.excludeFilterFile>
 
         <!-- maven-enforce-plugin properties -->
         <maven.version>3.2.5</maven.version>
@@ -182,6 +178,7 @@
                         <doctitle>&lt;a href="${project.url}" target="_top"&gt;&lt;span style="font-family:Lobster,
                             cursive;"&gt;µb&lt;/span&gt;${project.artifactId}&lt;/a&gt; ${project.version}
                         </doctitle>
+                        <docfilessubdirs>true</docfilessubdirs>
                         <windowtitle>${project.name}</windowtitle>
                         <header><![CDATA[<br>${project.name} v${project.version}]]></header>
                         <bottom>
@@ -256,8 +253,8 @@
                             <id>enforce-dependencyConvergence</id>
                             <configuration>
                                 <rules>
-                                    <DependencyConvergence />
-                                    <banDuplicatePomDependencyVersions />
+                                    <DependencyConvergence/>
+                                    <banDuplicatePomDependencyVersions/>
                                 </rules>
                                 <fail>false</fail>
                             </configuration>
@@ -409,71 +406,88 @@
                         <checkstyleRules>
                             <module name="Checker">
                                 <module name="LineLength">
-                                    <property name="max" value="150" />
+                                    <property name="max" value="150"/>
                                     <!--suppress UnresolvedMavenProperty -->
-                                    <property name="ignorePattern" value="@version|@see" />
+                                    <property name="ignorePattern" value="@version|@see"/>
                                 </module>
                                 <module name="FileLength">
-                                    <property name="max" value="3500" />
-                                    <property name="fileExtensions" value="java" />
+                                    <property name="max" value="3500"/>
+                                    <property name="fileExtensions" value="java"/>
                                 </module>
-                                <module name="FileTabCharacter" />
+                                <!--                                <module name="FileTabCharacter"/>-->
+                                <module name="JavadocPackage"/>
                                 <module name="TreeWalker">
-                                    <module name="ConstantName">
-                                        <property name="format" value="^(([A-Z][A-Z0-9]*(_[A-Z0-9]+)*))$" />
-                                    </module>
-                                    <module name="LocalVariableName" />
-                                    <module name="MethodName">
-                                        <property name="format" value="^_?[a-z][a-zA-Z0-9_]*$" />
-                                    </module>
-                                    <module name="PackageName" />
-                                    <module name="LocalFinalVariableName" />
-                                    <module name="ParameterName" />
-                                    <module name="StaticVariableName" />
-
-                                    <module name="TypeName">
-                                        <property name="format" value="^_?[A-Z][a-zA-Z0-9]*$|packageinfo" />
-                                    </module>
                                     <module name="AvoidStarImport">
-                                        <property name="excludes" value="java.io,java.net,java.util,javax.enterprise.inject.spi" />
+                                        <property name="excludes"
+                                                  value="java.io,java.net,java.util,javax.enterprise.inject.spi"/>
                                     </module>
-                                    <module name="IllegalImport" />
-                                    <module name="RedundantImport" />
-                                    <module name="UnusedImports" />
-                                    <module name="MethodLength">
-                                        <property name="max" value="250" />
+                                    <module name="ConstantName">
+                                        <property name="format" value="^(([A-Z][A-Z0-9]*(_[A-Z0-9]+)*))$"/>
                                     </module>
-                                    <module name="ParameterNumber">
-                                        <property name="max" value="11" />
-                                    </module>
+                                    <module name="DefaultComesLast"/>
                                     <module name="EmptyBlock">
-                                        <property name="option" value="text" />
+                                        <property name="option" value="text"/>
                                     </module>
-                                    <module name="NeedBraces" />
+                                    <module name="EmptyCatchBlock"/>
+                                    <module name="EmptyStatement"/>
+                                    <module name="EqualsHashCode"/>
+                                    <module name="FallThrough"/>
+                                    <module name="HideUtilityClassConstructor"/>
+                                    <module name="IllegalImport"/>
                                     <module name="LeftCurly">
-                                        <property name="option" value="EOL" />
+                                        <property name="option" value="EOL"/>
                                     </module>
-                                    <module name="RightCurly" />
-                                    <module name="EmptyStatement" />
-                                    <module name="EqualsHashCode" />
-                                    <module name="DefaultComesLast" />
-                                    <module name="MissingSwitchDefault" />
-                                    <module name="FallThrough" />
-                                    <module name="MultipleVariableDeclarations" />
-                                    <module name="com.puppycrawl.tools.checkstyle.checks.design.DesignForExtensionCheck">
-                                        <property name="severity" value="ignore" />
+                                    <module name="LocalVariableName"/>
+                                    <module name="LocalFinalVariableName"/>
+                                    <module name="MethodName">
+                                        <property name="format" value="^_?[a-z][a-zA-Z0-9_]*$"/>
                                     </module>
-                                    <module name="HideUtilityClassConstructor" />
-                                    <module name="com.puppycrawl.tools.checkstyle.checks.design.VisibilityModifierCheck">
-                                        <property name="packageAllowed" value="false" />
-                                        <property name="protectedAllowed" value="true" />
-                                        <property name="publicMemberPattern" value="^serialVersionUID" />
-                                        <property name="severity" value="warning" />
+                                    <module name="MethodTypeParameterName"/>
+                                    <module name="MethodLength">
+                                        <property name="max" value="250"/>
                                     </module>
-                                    <module name="UpperEll" />
+                                    <module name="MissingDeprecated"/>
+                                    <module name="MissingJavadocMethod"/>
+                                    <module name="MissingJavadocPackage"/>
+                                    <module name="MissingJavadocType">
+                                        <property name="scope" value="protected"/>
+                                    </module>
+                                    <module name="MissingOverride"/>
+                                    <module name="MissingSwitchDefault"/>
+                                    <module name="MultipleVariableDeclarations"/>
+                                    <module name="ModifierOrder"/>
+                                    <module name="NeedBraces"/>
+                                    <module name="PackageName"/>
+                                    <module name="PackageDeclaration"/>
+                                    <module name="ParameterName"/>
+                                    <module name="ParameterNumber">
+                                        <property name="max" value="11"/>
+                                    </module>
+                                    <module name="RedundantImport"/>
+                                    <module name="RegexpSinglelineJava">
+                                        <property name="format" value="\s+$"/>
+                                        <property name="message" value="File contains trailing whitespace."/>
+                                    </module>
+                                    <module name="RequireEmptyLineBeforeBlockTagGroup"/>
+                                    <module name="RequireThis"/>
+                                    <module name="RightCurly"/>
+                                    <module name="StaticVariableName"/>
+                                    <module name="SuppressWarningsHolder"/>
+                                    <module name="TypeName">
+                                        <property name="format" value="^_?[A-Z][a-zA-Z0-9]*$|packageinfo"/>
+                                    </module>
+                                    <module name="UnusedImports"/>
+                                    <module name="UnusedLocalVariable"/>
+                                    <module name="UpperEll"/>
+                                    <module name="VariableDeclarationUsageDistance"/>
                                 </module>
+                                <property name="charset" value="${project.build.sourceEncoding}"/>
                             </module>
                         </checkstyleRules>
+                        <propertyExpansion>
+                            project.basedir=${project.basedir}
+                            project.build.sourceEncoding=${project.build.sourceEncoding}
+                        </propertyExpansion>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -544,6 +558,14 @@
                             <autoReleaseAfterClose>false</autoReleaseAfterClose>
                             <stagingProgressTimeoutMinutes>10</stagingProgressTimeoutMinutes>
                         </configuration>
+                        <dependencies>
+                            <!-- https://issues.sonatype.org/browse/NEXUS-26993?focusedCommentId=1098136&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-1098136 -->
+                            <dependency>
+                                <groupId>com.thoughtworks.xstream</groupId>
+                                <artifactId>xstream</artifactId>
+                                <version>1.4.20</version>
+                            </dependency>
+                        </dependencies>
                     </plugin>
                 </plugins>
             </build>
@@ -617,6 +639,18 @@
                     <reportSet>
                         <reports>
                             <report>javadoc-no-fork</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>checkstyle</report>
                         </reports>
                     </reportSet>
                 </reportSets>

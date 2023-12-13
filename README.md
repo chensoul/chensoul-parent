@@ -118,6 +118,9 @@ Login to your [sonatype](https://s01.oss.sonatype.org/) account to release the v
 | Release  | [central-sonatype](https://central.sonatype.com/artifact/com.chensoul/chensoul-parent/)             | Release versions  |
 
 
+## References
+- 
+
 ## Documentation
 
 Full documentation is, or will be, available at [chensoul.github.io/chensoul-parent](https://chensoul.github.io/chensoul-parent/).
