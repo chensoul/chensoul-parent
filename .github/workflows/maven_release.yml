@@ -11,16 +11,15 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - id: install-secret-key
-        name: Install gpg secret key
+      - uses: actions/checkout@v3
+      - name: Install gpg secret key
         run: |
           cat <(echo -e "${{ secrets.MAVEN_GPG_PRIVATE_KEY }}") | gpg --batch --import
           gpg --list-secret-keys --keyid-format LONG
-      - uses: actions/checkout@v3
       - name: Set up Java for publishing to Maven Central Repository
         uses: actions/setup-java@v3
         with:
-          java-version: '8.0'
+          java-version: 8
           distribution: 'temurin'
           cache: 'maven'
           server-id: ossrh
@@ -28,7 +27,7 @@ jobs:
           server-password: MAVEN_PASSWORD
           gpg-passphrase: PASSPHRASE
       - name: Make a release
-        run: mvn -Prelease -ntp -B clean deploy
+        run: mvn -ntp -B -U -P release clean deploy
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
