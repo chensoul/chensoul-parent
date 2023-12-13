@@ -100,7 +100,7 @@
 
         <!-- nexus-staging-maven-plugin properties -->
         <!-- whether autorelease maven central staging repositories - default false to allow review and manually release repositories -->
-        <keepStagingReposOnFailure>false</keepStagingReposOnFailure>
+        <autoReleaseAfterClose>false</autoReleaseAfterClose>
         <!-- keeping closed repos with failure - default is false because the errors are visible in the maven output, but true will leave the repo open for investigation in Sonatype Nexus -->
         <keepStagingReposOnFailure>false</keepStagingReposOnFailure>
         <stagingProgressTimeoutMinutes>10</stagingProgressTimeoutMinutes>
@@ -221,8 +221,6 @@
                     <extensions>true</extensions>
                     <configuration>
                         <serverId>ossrh</serverId>
-                        <!-- For pre 2021 legacy projects you may use https://oss.sonatype.org -->
-                        <!-- See https://central.sonatype.org/publish/release/#login-into-ossrh for details -->
                         <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
                         <autoReleaseAfterClose>${autoReleaseAfterClose}</autoReleaseAfterClose>
                         <keepStagingRepositoryOnCloseRuleFailure>${keepStagingReposOnFailure}
