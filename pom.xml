@@ -14,7 +14,7 @@
     <url>https://chensoul.github.io/chensoul-parent/</url>
 
     <scm>
-        <connection>scm:git:https://github.com/chensoul/chensoul-parent</connection>
+        <connection>scm:git:https://github.com/chensoul/chensoul-parent.git</connection>
         <developerConnection>scm:git:git@github.com:chensoul/chensoul-parent.git</developerConnection>
         <url>https://github.com/chensoul/chensoul-parent</url>
         <tag>HEAD</tag>
@@ -213,7 +213,7 @@
                     <artifactId>maven-scm-publish-plugin</artifactId>
                     <version>3.2.1</version>
                 </plugin>
-                <!-- https://itnext.io/publishing-artifacts-to-maven-central-using-github-actions-a-step-by-step-guide-fd65ef075fd4-->
+                <!-- https://itnext.io/publishing-artifacts-to-maven-central-using-github-actions-a-step-by-step-guide-fd65ef075fd4 -->
                 <plugin>
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
