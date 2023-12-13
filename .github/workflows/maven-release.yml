@@ -57,7 +57,7 @@ jobs:
       - name: Release With Maven
         run: |
           echo "${{ env.artifact_name }} ${{ env.artifact_version }} ${{ env.artifact_packaging }}"
-          mvn -B -U \
+          mvn -B -U -X -e \
           release:prepare \
           release:perform \
           -DreleaseVersion=${{ github.event.inputs.releaseVersion }} \
