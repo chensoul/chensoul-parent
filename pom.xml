@@ -222,7 +222,6 @@
                     <configuration>
                         <serverId>ossrh</serverId>
                         <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                        <autoReleaseAfterClose>${autoReleaseAfterClose}</autoReleaseAfterClose>
                     </configuration>
                 </plugin>
                 <!-- https://blog.sonatype.com/2010/01/how-to-generate-pgp-signatures-with-maven/-->
