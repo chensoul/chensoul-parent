@@ -58,12 +58,13 @@ jobs:
         run: |
           echo "${{ env.artifact_name }} ${{ env.artifact_version }} ${{ env.artifact_packaging }}"
           mvn -B -U -X \
+          -DautoReleaseAfterClose=${{ env.auto_release }}  \
+
           release:prepare \
           release:perform \
           -DreleaseVersion=${{ github.event.inputs.releaseVersion }} \
           -DdevelopmentVersion=${{ github.event.inputs.developmentVersion }} \
           -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}  \
-          -DautoReleaseAfterClose=${{ env.auto_release }}  \
           -s settings.xml
 
           ls -al ./target/

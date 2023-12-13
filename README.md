@@ -123,7 +123,7 @@ The configuration for the Maven release plugin should include disabling the rele
 With the SCM connection configured correctly you can perform a release deployment to OSSRH with
 
 ```bash
-mvn -B release:clean release:prepare release:perform -DreleaseVersion= -DdevelopmentVersion= -DautoReleaseAfterClose=true
+mvn -B -X release:clean release:prepare release:perform -DreleaseVersion= -DdevelopmentVersion= -DautoReleaseAfterClose=true
 ```
 
 This execution will deploy to OSSRH and release to the Central Repository, thanks to the usage of the Nexus Staging Maven Plugin with autoReleaseAfterClose set to true.
