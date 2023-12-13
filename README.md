@@ -119,12 +119,11 @@ Login to your [sonatype](https://s01.oss.sonatype.org/) account to release the v
 
 
 ## References
-- 
+
+- https://github.com/eclipse/microprofile
+- https://github.com/microbean/microbean-parent
+- https://github.com/naturalett/maven-hello-world/
 
 ## Documentation
 
 Full documentation is, or will be, available at [chensoul.github.io/chensoul-parent](https://chensoul.github.io/chensoul-parent/).
-
-## Authors
-
-- [@chensoul](https://www.github.com/chensoul)
