@@ -113,7 +113,7 @@ mvn clean deploy -P release -DautoReleaseAfterClose=true
 You can simply release the staging repository with
 
 ```bash
-mvn nexus-staging:release -P release -DautoReleaseAfterClose=true
+mvn clean nexus-staging:release -P release -DautoReleaseAfterClose=true
 ```
 
 ### Manually Publish the site to github pages
@@ -121,7 +121,7 @@ mvn nexus-staging:release -P release -DautoReleaseAfterClose=true
 Publish to github pages:
 
 ```bash
-mvn site scm-publish:publish-scm
+mvn clean site scm-publish:publish-scm
 ```
 
 ## Links
