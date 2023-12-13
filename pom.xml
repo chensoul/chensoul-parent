@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.chensoul</groupId>
@@ -99,7 +100,10 @@
         <useReleaseProfile>false</useReleaseProfile>
 
         <!-- nexus-staging-maven-plugin properties -->
-        <autoReleaseAfterClose>false</autoReleaseAfterClose>
+        <!-- whether autorelease maven central staging repositories - default false to allow review and manually release repositories -->
+        <keepStagingReposOnFailure>false</keepStagingReposOnFailure>
+        <!-- keeping closed repos with failure - default is false because the errors are visible in the maven output, but true will leave the repo open for investigation in Sonatype Nexus -->
+        <keepStagingReposOnFailure>false</keepStagingReposOnFailure>
         <stagingProgressTimeoutMinutes>10</stagingProgressTimeoutMinutes>
 
         <!-- maven-scm-publish-plugin properties -->
@@ -221,6 +225,9 @@
                         <!-- For pre 2021 legacy projects you may use https://oss.sonatype.org -->
                         <!-- See https://central.sonatype.org/publish/release/#login-into-ossrh for details -->
                         <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                        <autoReleaseAfterClose>${autoReleaseAfterClose}</autoReleaseAfterClose>
+                        <keepStagingRepositoryOnCloseRuleFailure>${keepStagingReposOnFailure}
+                        </keepStagingRepositoryOnCloseRuleFailure>
                     </configuration>
                 </plugin>
                 <!-- https://blog.sonatype.com/2010/01/how-to-generate-pgp-signatures-with-maven/-->
@@ -268,8 +275,8 @@
                             <id>enforce-dependencyConvergence</id>
                             <configuration>
                                 <rules>
-                                    <DependencyConvergence />
-                                    <banDuplicatePomDependencyVersions />
+                                    <DependencyConvergence/>
+                                    <banDuplicatePomDependencyVersions/>
                                 </rules>
                                 <fail>false</fail>
                             </configuration>
@@ -421,81 +428,82 @@
                         <checkstyleRules>
                             <module name="Checker">
                                 <module name="LineLength">
-                                    <property name="max" value="150" />
+                                    <property name="max" value="150"/>
                                     <!--suppress UnresolvedMavenProperty -->
-                                    <property name="ignorePattern" value="@version|@see" />
+                                    <property name="ignorePattern" value="@version|@see"/>
                                 </module>
                                 <module name="FileLength">
-                                    <property name="max" value="3500" />
-                                    <property name="fileExtensions" value="java" />
+                                    <property name="max" value="3500"/>
+                                    <property name="fileExtensions" value="java"/>
                                 </module>
                                 <!--                                <module name="FileTabCharacter"/>-->
-                                <module name="JavadocPackage" />
+                                <module name="JavadocPackage"/>
                                 <module name="TreeWalker">
                                     <module name="AvoidStarImport">
-                                        <property name="excludes" value="java.io,java.net,java.util,javax.enterprise.inject.spi" />
+                                        <property name="excludes"
+                                                  value="java.io,java.net,java.util,javax.enterprise.inject.spi"/>
                                     </module>
                                     <module name="ConstantName">
-                                        <property name="format" value="^(([A-Z][A-Z0-9]*(_[A-Z0-9]+)*))$" />
+                                        <property name="format" value="^(([A-Z][A-Z0-9]*(_[A-Z0-9]+)*))$"/>
                                     </module>
-                                    <module name="DefaultComesLast" />
+                                    <module name="DefaultComesLast"/>
                                     <module name="EmptyBlock">
-                                        <property name="option" value="text" />
+                                        <property name="option" value="text"/>
                                     </module>
-                                    <module name="EmptyCatchBlock" />
-                                    <module name="EmptyStatement" />
-                                    <module name="EqualsHashCode" />
-                                    <module name="FallThrough" />
-                                    <module name="HideUtilityClassConstructor" />
-                                    <module name="IllegalImport" />
+                                    <module name="EmptyCatchBlock"/>
+                                    <module name="EmptyStatement"/>
+                                    <module name="EqualsHashCode"/>
+                                    <module name="FallThrough"/>
+                                    <module name="HideUtilityClassConstructor"/>
+                                    <module name="IllegalImport"/>
                                     <module name="LeftCurly">
-                                        <property name="option" value="EOL" />
+                                        <property name="option" value="EOL"/>
                                     </module>
-                                    <module name="LocalVariableName" />
-                                    <module name="LocalFinalVariableName" />
+                                    <module name="LocalVariableName"/>
+                                    <module name="LocalFinalVariableName"/>
                                     <module name="MethodName">
-                                        <property name="format" value="^_?[a-z][a-zA-Z0-9_]*$" />
+                                        <property name="format" value="^_?[a-z][a-zA-Z0-9_]*$"/>
                                     </module>
-                                    <module name="MethodTypeParameterName" />
+                                    <module name="MethodTypeParameterName"/>
                                     <module name="MethodLength">
-                                        <property name="max" value="250" />
+                                        <property name="max" value="250"/>
                                     </module>
-                                    <module name="MissingDeprecated" />
-                                    <module name="MissingJavadocMethod" />
-                                    <module name="MissingJavadocPackage" />
+                                    <module name="MissingDeprecated"/>
+                                    <module name="MissingJavadocMethod"/>
+                                    <module name="MissingJavadocPackage"/>
                                     <module name="MissingJavadocType">
-                                        <property name="scope" value="protected" />
+                                        <property name="scope" value="protected"/>
                                     </module>
-                                    <module name="MissingOverride" />
-                                    <module name="MissingSwitchDefault" />
-                                    <module name="MultipleVariableDeclarations" />
-                                    <module name="ModifierOrder" />
-                                    <module name="NeedBraces" />
-                                    <module name="PackageName" />
-                                    <module name="PackageDeclaration" />
-                                    <module name="ParameterName" />
+                                    <module name="MissingOverride"/>
+                                    <module name="MissingSwitchDefault"/>
+                                    <module name="MultipleVariableDeclarations"/>
+                                    <module name="ModifierOrder"/>
+                                    <module name="NeedBraces"/>
+                                    <module name="PackageName"/>
+                                    <module name="PackageDeclaration"/>
+                                    <module name="ParameterName"/>
                                     <module name="ParameterNumber">
-                                        <property name="max" value="11" />
+                                        <property name="max" value="11"/>
                                     </module>
-                                    <module name="RedundantImport" />
+                                    <module name="RedundantImport"/>
                                     <module name="RegexpSinglelineJava">
-                                        <property name="format" value="\s+$" />
-                                        <property name="message" value="File contains trailing whitespace." />
+                                        <property name="format" value="\s+$"/>
+                                        <property name="message" value="File contains trailing whitespace."/>
                                     </module>
-                                    <module name="RequireEmptyLineBeforeBlockTagGroup" />
-                                    <module name="RequireThis" />
-                                    <module name="RightCurly" />
-                                    <module name="StaticVariableName" />
-                                    <module name="SuppressWarningsHolder" />
+                                    <module name="RequireEmptyLineBeforeBlockTagGroup"/>
+                                    <module name="RequireThis"/>
+                                    <module name="RightCurly"/>
+                                    <module name="StaticVariableName"/>
+                                    <module name="SuppressWarningsHolder"/>
                                     <module name="TypeName">
-                                        <property name="format" value="^_?[A-Z][a-zA-Z0-9]*$|packageinfo" />
+                                        <property name="format" value="^_?[A-Z][a-zA-Z0-9]*$|packageinfo"/>
                                     </module>
-                                    <module name="UnusedImports" />
-                                    <module name="UnusedLocalVariable" />
-                                    <module name="UpperEll" />
-                                    <module name="VariableDeclarationUsageDistance" />
+                                    <module name="UnusedImports"/>
+                                    <module name="UnusedLocalVariable"/>
+                                    <module name="UpperEll"/>
+                                    <module name="VariableDeclarationUsageDistance"/>
                                 </module>
-                                <property name="charset" value="${project.build.sourceEncoding}" />
+                                <property name="charset" value="${project.build.sourceEncoding}"/>
                             </module>
                         </checkstyleRules>
                         <propertyExpansion>
