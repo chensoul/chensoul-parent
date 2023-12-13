@@ -96,13 +96,13 @@ Change version with the Maven versions plugin.
 mvn versions:set -DnewVersion=1.2.3 versions:commit
 ```
 
-Deploy the release version to the staging repository https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/ with the release profile:
+Release to the staging repository https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/ with the release profile:
 
 ```bash
 mvn clean deploy -P release
 ```
 
-Release the deployment to the central repository:
+Release to the central repository:
 
 ```bash
 mvn clean deploy -P release -DautoReleaseAfterClose=true
@@ -113,7 +113,7 @@ mvn clean deploy -P release -DautoReleaseAfterClose=true
 You can simply release the staging repository with
 
 ```bash
-mvn nexus-staging:release -DautoReleaseAfterClose=true
+mvn nexus-staging:release -P release -DautoReleaseAfterClose=true
 ```
 
 ### Manually Publish the site to github pages
@@ -133,12 +133,6 @@ Login to your [sonatype](https://s01.oss.sonatype.org/) account to release the v
 | Snapshot | [sonatype](https://s01.oss.sonatype.org/content/repositories/snapshots/com/chensoul/chensoul-parent/) | Sonatype Snapshot versions |
 | Release  | [maven](https://repo.maven.apache.org/maven2/com/chensoul/chensoul-parent/)                           | Maven Release versions     |
 | Release  | [central-sonatype](https://central.sonatype.com/artifact/com.chensoul/chensoul-parent/)               | Sonatype Release versions  |
-
-## References
-
-- https://github.com/eclipse/microprofile
-- https://github.com/microbean/microbean-parent
-- https://github.com/naturalett/maven-hello-world/
 
 ## Documentation
 
