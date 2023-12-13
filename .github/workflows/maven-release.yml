@@ -1,3 +1,6 @@
+# This workflow will build a package using Maven and then publish it to GitHub packages when a release is created
+# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
+
 name: 'Maven Release'
 
 on:
@@ -21,24 +24,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Maven Central Repository
+      - name: Install gpg secret key
+        run: |
+          cat <(echo -e "${{ secrets.MAVEN_GPG_PRIVATE_KEY }}") | gpg --batch --import
+          gpg --list-secret-keys --keyid-format LONG
+      - name: Set up Apache Maven Central
         uses: actions/setup-java@v4
         with:
-          java-version: 11
+          java-version: 1.8
           distribution: 'temurin'
           java-package: 'jdk'
           cache: 'maven'
-          server-id: ossrh
-      - name: Configure Git User
-        run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-          echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-      - name: Import GPG Key
-        uses: crazy-max/ghaction-import-gpg@v6.0.0
-        with:
-          gpg_private_key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+          server-id: ossrh # Value of the distributionManagement/repository/id field of the pom.xml
+          server-username: MAVEN_USERNAME # env variable for username in deploy
+          server-password: MAVEN_PASSWORD # env variable for token in deploy
+          passphrase: PASSPHRASE # env variable for passphrase in deploy
       - name: Verify Whether a Release is Ready
         shell: bash
         run: |
@@ -59,25 +59,13 @@ jobs:
           echo "${{ env.artifact_name }} ${{ env.artifact_version }} ${{ env.artifact_packaging }}"
           mvn -B -U -X \
           -DautoReleaseAfterClose=${{ env.auto_release }}  \
-
           release:prepare \
           release:perform \
           -DreleaseVersion=${{ github.event.inputs.releaseVersion }} \
           -DdevelopmentVersion=${{ github.event.inputs.developmentVersion }} \
-          -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}  \
-          -s settings.xml
 
           ls -al ./target/
         env:
-          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.artifact_name }}-${{ env.artifact_version }}
-          path: ./target/${{ env.artifact_name }}-${{ env.artifact_version }}.${{ env.artifact_packaging }}
-      - name: Workflow Release Notes
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          event-type: github-release
-          client-payload: '{"auto_release": "${{ env.auto_release }}", "artifact": "${{ env.artifact_name }}-${{ env.artifact_version }}"}'
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+          PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
