@@ -133,7 +133,7 @@ This execution will deploy to OSSRH and release to the Central Repository in one
 Create new branch with next version, it won't update the working copy version:
 
 ```bash
-mvn -B release:branch -DbranchName=my-branch -DupdateBranchVersions=true -DupdateWorkingCopyVersions=false
+mvn -B release:branch -DbranchName=my-branch -DupdateBranchVersions=true -DupdateWorkingCopyVersions=false 
 ```
 
 ### Manually Releasing the Deployment to the Central Repository
