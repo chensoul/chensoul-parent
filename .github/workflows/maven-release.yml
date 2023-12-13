@@ -68,16 +68,6 @@ jobs:
           -DautoReleaseAfterClose=${{ env.auto_release }}  \
           -s settings.xml
 
-          ret = $?
-          echo "${{ ret }}"
-          if [ "${{ env.auto_release }}" == "true" ] ; then
-            if [ ${{ ret }} != 0 ]; then
-              echo "auto_release=true" >> $GITHUB_ENV
-            else
-              echo "auto_release=false" >> $GITHUB_ENV
-            fi
-          fi
-
           ls -al ./target/
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
