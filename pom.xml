@@ -618,22 +618,6 @@
                         <xmlOutputDirectory>target/site</xmlOutputDirectory>
                     </configuration>
                 </plugin>
-                <!-- mvn spring-javaformat:apply -Dspring-javaformat.validate.skip=true -Dspring-javaformat.skip=true-->
-                <!-- 高版本支持 JDK 8：https://github.com/spring-io/spring-javaformat/#java-8-support -->
-                <plugin>
-                    <groupId>io.spring.javaformat</groupId>
-                    <artifactId>spring-javaformat-maven-plugin</artifactId>
-                    <version>0.0.39</version>
-                    <executions>
-                        <execution>
-                            <phase>validate</phase>
-                            <inherited>true</inherited>
-                            <goals>
-                                <goal>validate</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
             </plugins>
         </pluginManagement>
     </build>
