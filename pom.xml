@@ -132,7 +132,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.11.0</version>
+                    <version>3.12.0</version>
                     <configuration>
                         <annotationProcessorPaths>
                             <!-- https://springdoc.org/#javadoc-support -->
@@ -242,7 +242,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>3.5.0</version>
+                    <version>3.6.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -304,7 +304,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.2.2</version>
+                    <version>3.2.3</version>
                     <configuration>
                         <!-- Force alphabetical order to have a reproducible build -->
                         <runOrder>alphabetical</runOrder>
@@ -320,7 +320,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>3.2.1</version>
+                    <version>3.2.3</version>
                     <configuration>
                         <!-- Due to spring-boot repackage, without adding this property test classes are not found
                              See https://github.com/spring-projects/spring-boot/issues/6254 -->
