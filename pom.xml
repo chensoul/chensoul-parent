@@ -195,7 +195,18 @@
                     <version>3.1.1</version>
                 </plugin>
 
-                <!-- Release -->
+                <!-- site -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.12.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.5.0</version>
+                </plugin>
+                <!-- mvn clean site scm-publish:publish-scm -->
                 <!-- https://www.lorenzobettini.it/2020/01/publishing-a-maven-site-to-github-pages -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -203,18 +214,7 @@
                     <version>3.2.1</version>
                 </plugin>
 
-                <!-- site -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-project-info-reports-plugin</artifactId>
-                    <version>3.5.0</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>3.12.1</version>
-                </plugin>
-
+                <!--检查 maven 和 java 版本: mvn enforcer:enforce -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
@@ -257,11 +257,67 @@
                         </rules>
                     </configuration>
                 </plugin>
+                <!-- mvn git-commit-id:revision-->
+                <plugin>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <version>4.9.10</version>
+                    <executions>
+                        <execution>
+                            <id>get-the-git-infos</id>
+                            <goals>
+                                <!-- 父子项目必须添加 -->
+                                <goal>revision</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <!-- 父子项目必须添加 -->
+                        <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                        <offline>true</offline>
+                        <!-- 输出详细内容 -->
+                        <!--<verbose>true</verbose>-->
+                        <dateFormatTimeZone>${user.timezone}</dateFormatTimeZone>
+                        <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
+                    </configuration>
+                </plugin>
+
+                <!-- 替换变量：mvn flatten:flatten -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>flatten-maven-plugin</artifactId>
+                    <version>1.2.5</version>
+                    <executions>
+                        <execution>
+                            <id>flatten</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>flatten</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>flatten.clean</id>
+                            <phase>clean</phase>
+                            <goals>
+                                <goal>clean</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <inherited>true</inherited>
+                    <configuration>
+                        <updatePomFile>true</updatePomFile>
+                        <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                        <pomElements>
+                            <parent>expand</parent>
+                            <distributionManagement>remove</distributionManagement>
+                            <repositories>remove</repositories>
+                        </pomElements>
+                    </configuration>
+                </plugin>
 
                 <!-- 列举开源协议：mvn license:license-list -->
                 <!-- 添加开源协议：mvn license:update-file-header -->
                 <!-- 删除开源协议：mvn license:remove-file-header -->
-                <!-- http://www.mojohaus.org/license-maven-plugin/index.html -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>license-maven-plugin</artifactId>
@@ -582,7 +638,7 @@
         </profile>
 
         <profile>
-            <id>quality-checks</id>
+            <id>check</id>
             <activation>
                 <property>
                     <name>skipChecks</name>
@@ -607,6 +663,10 @@
                     <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>io.spring.javaformat</groupId>
+                        <artifactId>spring-javaformat-maven-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
