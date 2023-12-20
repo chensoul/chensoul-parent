@@ -14,9 +14,29 @@ name: "CodeQL"
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'Dockerfile'
+      - '.dockerignore'
+      - 'editorconfig'
+      - '.github/**'
+      - '.gitattributes'
+      - '.gitignore'
+      - 'LICENSE'
+      - 'README*'
   pull_request:
-    # The branches below must be a subset of the branches above
     branches: [ main ]
+    paths-ignore:
+      - 'Dockerfile'
+      - '.dockerignore'
+      - 'editorconfig'
+      - '.github/**'
+      - '.gitattributes'
+      - '.gitignore'
+      - '.springjavaformatconfig'
+      - 'gitmoji.md'
+      - 'CHANGELOG.md'
+      - 'LICENSE'
+      - 'README*'
   schedule:
     - cron: '0 0 * * *'
 
