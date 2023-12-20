@@ -27,7 +27,7 @@ jobs:
           server-password: MAVEN_PASSWORD
           gpg-passphrase: PASSPHRASE
       - name: Maven Release
-        run: mvn -ntp -B -U clean deploy site scm-publish:publish-scm -P release -DautoReleaseAfterClose=true
+        run: mvn -ntp -B -U clean source:jar javadoc:jar deploy site scm-publish:publish-scm -P release -DautoReleaseAfterClose=true
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}

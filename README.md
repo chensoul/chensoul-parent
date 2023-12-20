@@ -1,6 +1,14 @@
 # ChenSoul™: Parent POM
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.chensoul/chensoul-parent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.chensoul/chensoul-parent)
+<p align="center">
+  <a href="https://search.maven.org/artifact/com.chensoul/chensoul-parent">
+    <img alt="maven" src="https://img.shields.io/maven-central/v/com.chensoul/chensoul-parent.svg?style=flat-square">
+  </a>
+
+  <a href="https://www.apache.org/licenses/LICENSE-2.0">
+    <img alt="code style" src="https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square">
+  </a>
+</p>
 
 This project houses the parent Project Object Model (POM) for most ChenSoul™ projects.
 
@@ -19,9 +27,7 @@ ChenSoul™ Parent POM requires a Java runtime of version 1.8 or higher.
 
 ## Installation
 
-ChenSoul™ Parent POM is, or will be, available
-on [Maven Central](https://search.maven.org/artifact/com.chensoul/chensoul-parent). Using ChenSoul™ Parent POM as a
-Maven pom:
+ChenSoul™ Parent POM is, or will be, available on [Maven Central](https://search.maven.org/artifact/com.chensoul/chensoul-parent). Using ChenSoul™ Parent POM as a Maven pom:
 
 ```xml
 
