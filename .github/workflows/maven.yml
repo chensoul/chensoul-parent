@@ -75,15 +75,11 @@ jobs:
   # https://docs.github.com/zh/enterprise-cloud@latest/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions
   dependabot:
     name: Dependabot
-    # 需要所有 build 完成后，才运行
     needs: build
     runs-on: ${{ matrix.os }}
     permissions:
-      # 可以修改仓库中的文件内容
       contents: write
-      # # 可以新建或修改 Pull Request
       pull-requests: write
-    # 依赖机器人 && 仅PR
     if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
 
     strategy:
@@ -94,7 +90,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          # 获取所有的代码历史记录，包括分支和标签
+          # fetch all branches and tags
           fetch-depth: 0
 
       - name: Dependabot metadata

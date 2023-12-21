@@ -6,29 +6,13 @@
 
     <groupId>com.chensoul</groupId>
     <artifactId>chensoul-parent</artifactId>
-    <version>1.0.36-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>ChenSoul™: Parent</name>
     <description>${project.name}</description>
     <inceptionYear>2023</inceptionYear>
     <url>https://chensoul.github.io/chensoul-parent/</url>
-
-    <!-- 以下是一些常见的POM节点，在子项目中可以继承或覆盖父项目的配置：
-    groupId（项目组ID）：如果在子项目中未定义groupId，则将继承父项目的groupId。
-    version（项目版本）：如果在子项目中未定义version，则将继承父项目的version。
-    properties（属性）：子项目可以继承父项目的属性定义，并在子项目中使用相同的属性。
-    dependencies（依赖项）：子项目可以继承父项目的依赖项配置，包括依赖的groupId、artifactId和version等信息。
-    dependencyManagement（依赖管理）：在父项目的dependencyManagement节点中定义的依赖版本可以被子项目继承和使用。
-    build（构建配置）：子项目可以继承父项目的构建配置，包括插件配置、构建目录、资源目录等。子项目可以覆盖或添加额外的构建配置。
-    reporting（报告配置）：子项目可以继承父项目的报告配置，包括报告插件的配置信息。
-    repositories（仓库配置）：子项目可以继承父项目的仓库配置，用于从指定的仓库解析依赖。
-    scm（版本控制配置）：子项目可以继承父项目的 scm 节点中的配置，包括版本控制系统的 URL、连接器、标签等信息。
-    issueManagement（问题管理配置）：子项目可以继承父项目的 issueManagement 节点中的配置，包括问题跟踪系统的 URL、连接器等信息。
-    organization（组织配置）：子项目可以继承父项目的 organization 节点中的配置，包括组织的名称、URL 等信息。
-    developers（开发者配置）：子项目可以继承父项目的 developers 节点中的配置，包括开发者的姓名、邮箱等信息。
-    licenses（许可证配置）：子项目可以继承父项目的 licenses 节点中的配置，包括许可证的名称、URL、分发方式等信息。
-   -->
 
     <scm>
         <connection>scm:git:https://github.com/chensoul/chensoul-parent.git</connection>
@@ -44,6 +28,7 @@
 
     <distributionManagement>
         <repository>
+            <!-- The ID must be the same as the value of the server element id in the settings.xml -->
             <id>ossrh</id>
             <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
@@ -70,7 +55,6 @@
             <email>chensoul.eth@gmail.com</email>
             <url>https://blog.chensoul.com</url>
             <roles>
-                <role>architect</role>
                 <role>developer</role>
             </roles>
             <timezone>+8</timezone>
@@ -122,49 +106,30 @@
 
         <!-- Other properties -->
         <skipChecks>false</skipChecks>
+
+        <maven-compiler-plugin.version>3.12.0</maven-compiler-plugin.version>
+        <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
+        <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
+        <maven-dependency-plugin.version>3.6.1</maven-dependency-plugin.version>
+        <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
+        <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
+        <maven-project-info-reports-plugin.version>3.5.0</maven-project-info-reports-plugin.version>
+        <maven-scm-publish-plugin.version>3.2.1</maven-scm-publish-plugin.version>
+        <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
+        <git-commit-id-plugin.version>4.9.10</git-commit-id-plugin.version>
+        <flatten-maven-plugin.version>1.2.5</flatten-maven-plugin.version>
+        <license-maven-plugin.version>2.3.0</license-maven-plugin.version>
+        <maven-surefire-plugin.version>3.2.3</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>3.2.3</maven-failsafe-plugin.version>
+        <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
+        <clover-maven-plugin.version>4.5.1</clover-maven-plugin.version>
+        <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
+        <spotbugs-maven-plugin.version>4.8.2.0</spotbugs-maven-plugin.version>
+        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+        <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
+        <maven-jxr-plugin.version>3.3.1</maven-jxr-plugin.version>
     </properties>
 
-    <!--
-        Maven的标准生命周期包括三个主要的生命周期：
-        1. Clean生命周期：用于清理项目构建产生的输出，包括删除生成的目录和文件。
-        clean：清理项目，删除生成的目录和文件。
-
-        2.Default生命周期：用于构建项目的核心生命周期，涵盖了项目的编译、测试、打包、部署等主要阶段。
-        validate：验证项目是否正确且所有必要信息可用。
-        compile：编译项目的源代码。
-        test：运行项目的单元测试。
-        package：将编译后的代码打包成可分发的格式，例如JAR、WAR。
-        install：将打包的项目安装到本地仓库，供其他项目使用。
-        deploy：将最终的包复制到远程仓库，供其他开发人员和项目使用。
-
-        3.Site生命周期：用于生成项目的站点文档。
-        site：生成项目的站点文档。
-        site-deploy：将生成的站点文档部署到远程服务器。
-
-        validate：验证项目是否正确且所有必要信息可用。
-        initialize：初始化构建环境，例如设置构建属性和加载父POM。
-        generate-sources：生成项目的源代码，例如通过处理注解或其他生成代码的工具。
-        process-sources：处理项目的源代码，例如对源代码进行过滤或转换。
-        generate-resources：生成项目的资源文件，例如拷贝资源文件到目标目录。
-        process-resources：处理项目的资源文件，例如过滤资源文件的占位符。
-        compile：编译项目的源代码，将源代码编译为字节码文件（.class文件）。
-        process-classes：对编译后的类文件进行额外的处理，例如生成额外的资源文件。
-        generate-test-sources：生成项目的测试源代码，例如通过处理注解或其他生成代码的工具。
-        process-test-sources：处理项目的测试源代码，例如对测试源代码进行过滤或转换。
-        generate-test-resources：生成项目的测试资源文件，例如拷贝测试资源文件到目标目录。
-        process-test-resources：处理项目的测试资源文件，例如过滤测试资源文件的占位符。
-        test-compile：编译项目的测试源代码，将测试源代码编译为字节码文件。
-        process-test-classes：对编译后的测试类文件进行额外的处理。
-        test：运行项目的单元测试。
-        prepare-package：准备打包阶段的相关工作，例如生成额外的文件或资源。
-        package：将项目打包成可分发的格式，例如JAR、WAR等。
-        pre-integration-test：在集成测试之前执行的一些准备工作。
-        integration-test：运行项目的集成测试。
-        post-integration-test：在集成测试之后执行的一些清理工作。
-        verify：验证项目的完整性，例如对生成的报告进行检查。
-        install：将项目的构件安装到本地仓库，供本地其他项目使用。
-        deploy：将项目的构件复制到远程仓库，供其他开发人员和项目使用。
-    -->
     <build>
         <resources>
             <resource>
@@ -190,7 +155,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.12.0</version>
+                    <version>${maven-compiler-plugin.version}</version>
                     <configuration>
                         <compilerArgs>
                             <arg>-Xlint:all</arg>
@@ -202,7 +167,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>3.3.0</version>
+                    <version>${maven-source-plugin.version}</version>
                     <executions>
                         <execution>
                             <id>attach-sources</id>
@@ -216,7 +181,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.6.3</version>
+                    <version>${maven-javadoc-plugin.version}</version>
                     <configuration>
                         <additionalJOptions combine.children="append">
                             <additionalJOption>-J-Dhttp.agent=maven-javadoc-plugin</additionalJOption>
@@ -245,38 +210,43 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
-                    <version>3.6.1</version>
+                    <version>${maven-dependency-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-deploy-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <version>${maven-deploy-plugin.version}</version>
                 </plugin>
 
                 <!-- site -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>3.12.1</version>
+                    <version>${maven-site-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
-                    <version>3.5.0</version>
+                    <version>${maven-project-info-reports-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jxr-plugin</artifactId>
+                    <version>${maven-jxr-plugin.version}</version>
                 </plugin>
                 <!-- mvn clean site scm-publish:publish-scm -->
                 <!-- https://www.lorenzobettini.it/2020/01/publishing-a-maven-site-to-github-pages -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-scm-publish-plugin</artifactId>
-                    <version>3.2.1</version>
+                    <version>${maven-scm-publish-plugin.version}</version>
                 </plugin>
 
                 <!--检查 maven 和 java 版本: mvn enforcer:enforce -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>3.4.1</version>
+                    <version>${maven-enforcer-plugin.version}</version>
                     <executions>
                         <execution>
                             <id>enforce-versions</id>
@@ -319,7 +289,7 @@
                 <plugin>
                     <groupId>pl.project13.maven</groupId>
                     <artifactId>git-commit-id-plugin</artifactId>
-                    <version>4.9.10</version>
+                    <version>${git-commit-id-plugin.version}</version>
                     <executions>
                         <execution>
                             <id>get-the-git-infos</id>
@@ -333,18 +303,16 @@
                         <!-- 父子项目必须添加 -->
                         <generateGitPropertiesFile>true</generateGitPropertiesFile>
                         <offline>true</offline>
-                        <!-- 输出详细内容 -->
-                        <!--<verbose>true</verbose>-->
                         <dateFormatTimeZone>${user.timezone}</dateFormatTimeZone>
                         <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
                     </configuration>
                 </plugin>
 
-                <!-- 替换变量：mvn flatten:flatten -->
+                <!-- mvn flatten:flatten -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>flatten-maven-plugin</artifactId>
-                    <version>1.2.5</version>
+                    <version>${flatten-maven-plugin.version}</version>
                     <executions>
                         <execution>
                             <id>flatten</id>
@@ -373,13 +341,13 @@
                     </configuration>
                 </plugin>
 
-                <!-- 列举开源协议：mvn license:license-list -->
-                <!-- 添加开源协议：mvn license:update-file-header -->
-                <!-- 删除开源协议：mvn license:remove-file-header -->
+                <!-- mvn license:license-list -->
+                <!-- mvn license:update-file-header -->
+                <!-- mvn license:remove-file-header -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>license-maven-plugin</artifactId>
-                    <version>2.3.0</version>
+                    <version>${license-maven-plugin.version}</version>
                     <configuration>
                         <licenseName>apache_v2</licenseName>
                     </configuration>
@@ -389,7 +357,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.2.3</version>
+                    <version>${maven-surefire-plugin.version}</version>
                     <configuration>
                         <!-- Force alphabetical order to have a reproducible build -->
                         <runOrder>alphabetical</runOrder>
@@ -405,7 +373,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>3.2.3</version>
+                    <version>${maven-failsafe-plugin.version}</version>
                     <configuration>
                         <!-- Due to spring-boot repackage, without adding this property test classes are not found
                              See https://github.com/spring-projects/spring-boot/issues/6254 -->
@@ -431,7 +399,7 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.11</version>
+                    <version>${jacoco-maven-plugin.version}</version>
                     <executions>
                         <execution>
                             <id>default-prepare-agent</id>
@@ -472,7 +440,7 @@
                 <plugin>
                     <groupId>org.openclover</groupId>
                     <artifactId>clover-maven-plugin</artifactId>
-                    <version>4.5.1</version>
+                    <version>${clover-maven-plugin.version}</version>
                     <configuration>
                         <generateHtml>true</generateHtml>
                         <generateXml>true</generateXml>
@@ -490,27 +458,11 @@
                     </executions>
                 </plugin>
 
-                <!-- quality-checks -->
+                <!-- mvn checkstyle:checkstyle -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>3.3.1</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>com.puppycrawl.tools</groupId>
-                            <artifactId>checkstyle</artifactId>
-                            <version>9.3</version>
-                        </dependency>
-                    </dependencies>
-                    <executions>
-                        <execution>
-                            <id>validate</id>
-                            <phase>validate</phase>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
+                    <version>${maven-checkstyle-plugin.version}</version>
                     <configuration>
                         <skip>${skipChecks}</skip>
                         <inputEncoding>UTF-8</inputEncoding>
@@ -609,7 +561,7 @@
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>4.8.2.0</version>
+                    <version>${spotbugs-maven-plugin.version}</version>
                     <configuration>
                         <effort>Max</effort>
                         <threshold>Low</threshold>
@@ -632,7 +584,7 @@
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.13</version>
+                        <version>${nexus-staging-maven-plugin.version}</version>
                         <extensions>true</extensions>
                         <configuration>
                             <serverId>ossrh</serverId>
@@ -643,7 +595,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.1.0</version>
+                        <version>${maven-gpg-plugin.version}</version>
                         <configuration>
                             <gpgArguments>
                                 <arg>--pinentry-mode</arg>
@@ -754,7 +706,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>3.3.0</version>
             </plugin>
         </plugins>
     </reporting>
