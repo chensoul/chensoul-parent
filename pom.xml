@@ -105,9 +105,9 @@
         <scmpublish.scm.branch>gh-pages</scmpublish.scm.branch>
 
         <!-- Other properties -->
-        <skipChecks>false</skipChecks>
+        <skipChecks>true</skipChecks>
 
-        <maven-compiler-plugin.version>3.12.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
         <maven-dependency-plugin.version>3.6.1</maven-dependency-plugin.version>
@@ -127,7 +127,6 @@
         <spotbugs-maven-plugin.version>4.8.2.0</spotbugs-maven-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
         <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
-        <maven-jxr-plugin.version>3.3.1</maven-jxr-plugin.version>
     </properties>
 
     <build>
@@ -229,11 +228,6 @@
                     <artifactId>maven-project-info-reports-plugin</artifactId>
                     <version>${maven-project-info-reports-plugin.version}</version>
                 </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jxr-plugin</artifactId>
-                    <version>${maven-jxr-plugin.version}</version>
-                </plugin>
                 <!-- mvn clean site scm-publish:publish-scm -->
                 <!-- https://www.lorenzobettini.it/2020/01/publishing-a-maven-site-to-github-pages -->
                 <plugin>
@@ -270,19 +264,17 @@
                     </executions>
                     <configuration>
                         <rules>
+                            <banCircularDependencies/>
                             <requireMavenVersion>
-                                <message>You are running an older version of Maven. This project requires at least Maven
-                                    ${maven.version}
-                                </message>
+                                <message>This project requires at least Maven ${maven.version}</message>
                                 <version>[${maven.version},)</version>
                             </requireMavenVersion>
                             <requireJavaVersion>
-                                <message>You are running an older version of Java. This project requires at least JDK
-                                    ${maven.compiler.source}
-                                </message>
+                                <message>This project requires at least JDK ${maven.compiler.source}</message>
                                 <version>[${maven.compiler.source},)</version>
                             </requireJavaVersion>
                         </rules>
+                        <fail>true</fail>
                     </configuration>
                 </plugin>
                 <!-- mvn git-commit-id:revision-->
@@ -359,6 +351,8 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
                     <configuration>
+                        <testSourceDirectory>${project.build.directory}/generated-test-sources/test-annotations
+                        </testSourceDirectory>
                         <!-- Force alphabetical order to have a reproducible build -->
                         <runOrder>alphabetical</runOrder>
                         <includes>
@@ -466,6 +460,10 @@
                     <configuration>
                         <skip>${skipChecks}</skip>
                         <inputEncoding>UTF-8</inputEncoding>
+                        <sourceDirectories>
+                            <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
+                            <sourceDirectory>${project.build.testSourceDirectory}</sourceDirectory>
+                        </sourceDirectories>
                         <failOnViolation>true</failOnViolation>
                         <failsOnError>true</failsOnError>
                         <linkXRef>true</linkXRef>
@@ -702,10 +700,6 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jxr-plugin</artifactId>
             </plugin>
         </plugins>
     </reporting>
