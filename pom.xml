@@ -14,6 +14,8 @@
     <inceptionYear>2023</inceptionYear>
     <url>https://chensoul.github.io/chensoul-parent/</url>
 
+    <!-- 以下节点可以被继承：groupId、version、properties、dependencies、dependencyManagement、build、
+    reporting、repositories、scm、issueManagement、organization、developers、licenses-->
     <scm>
         <connection>scm:git:https://github.com/chensoul/chensoul-parent.git</connection>
         <developerConnection>scm:git:https://github.com/chensoul/chensoul-parent.git</developerConnection>
@@ -105,9 +107,10 @@
         <scmpublish.scm.branch>gh-pages</scmpublish.scm.branch>
 
         <!-- Other properties -->
-        <skipChecks>true</skipChecks>
+        <skipChecks>false</skipChecks>
 
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+        <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
         <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
         <maven-dependency-plugin.version>3.6.1</maven-dependency-plugin.version>
@@ -148,6 +151,7 @@
             </resource>
         </resources>
 
+        <!--Maven的生命周期 clean、test、validate、compile、test、package、install、deploy、site -->
         <pluginManagement>
             <plugins>
                 <!-- mvn clean deploy -DskipTests -->
@@ -157,9 +161,24 @@
                     <version>${maven-compiler-plugin.version}</version>
                     <configuration>
                         <compilerArgs>
+                            <!-- java 8 禁用编译警告 -->
                             <arg>-Xlint:all</arg>
+                            <!-- java 8在运行期获取方法参数名称-->
                             <arg>-parameters</arg>
                         </compilerArgs>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven-jar-plugin.version}</version>
+                    <configuration>
+                        <archive>
+                            <manifestEntries>
+                                <Implementation-Version>${project.version}</Implementation-Version>
+                                <Build-Time>${maven.build.timestamp}</Build-Time>
+                            </manifestEntries>
+                        </archive>
                     </configuration>
                 </plugin>
                 <!-- mvn clean source:jar deploy -->

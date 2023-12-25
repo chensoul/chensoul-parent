@@ -6,16 +6,14 @@
                         http://maven.apache.org/xsd/decoration-1.8.0.xsd"
     name="${this.name}"
     combine.self="merge">
-    <bannerRight>
-        <name>${this.artifactId}</name>
-        <src>https://avatars.githubusercontent.com/u/826932?s=60</src>
-        <href>${this.url}</href>
-    </bannerRight>
-<!--    <version position="right"/>-->
+
+    <publishDate position="left" format="yyyy-MM-dd HH:mm:ss"  />
+
+    <version position="right"/>
     <skin>
         <groupId>org.apache.maven.skins</groupId>
         <artifactId>maven-fluido-skin</artifactId>
-        <version>1.9</version>
+        <version>1.11.1</version>
     </skin>
 
     <body>
