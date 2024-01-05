@@ -1,6 +1,6 @@
 # To get started with Dependabot version updates, you'll need to specify which
 # package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
+# Please see the documentation for all interceptor options:
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
 # 文件的配置选项：https://docs.github.com/zh/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
@@ -16,45 +16,39 @@ updates:
       time: "00:00"
       timezone: "Asia/Shanghai"
     # https://docs.github.com/zh/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#ignore
+    # 忽略不支持 JDK8 的依赖项
     ignore:
       - dependency-name: org.springframework.boot:spring-boot-dependencies
-        # spring-boot 3.0 不支持 JDK 8
-        # https://s01.oss.sonatype.org/service/local/repositories/releases/archive/org/springframework/boot/spring-boot-starter-web/3.0.0/spring-boot-starter-web-3.0.0.jar/!/META-INF/MANIFEST.MF 中的 Build-Jdk-Spec 为 17（还需参考 java.version）
         versions:
           - ">= 3"
       - dependency-name: org.springframework.boot:spring-boot-maven-plugin
-        # spring-boot 3.0 不支持 JDK 8
-        # https://s01.oss.sonatype.org/service/local/repositories/releases/archive/org/springframework/boot/spring-boot-maven-plugin/3.0.0/spring-boot-maven-plugin-3.0.0.jar/!/META-INF/MANIFEST.MF 中的 Build-Jdk-Spec 为 17（还需参考 java.version）
         versions:
           - ">= 3"
       - dependency-name: org.springframework.cloud:spring-cloud-dependencies
-        # spring-cloud 2022 不支持 JDK 8
-        # https://s01.oss.sonatype.org/service/local/repositories/releases/content/org/springframework/cloud/spring-cloud-dependencies/2022.0.2/spring-cloud-dependencies-2022.0.2.pom 继承自 org.springframework.cloud:spring-cloud-dependencies-parent:4.0.2
-        # https://s01.oss.sonatype.org/service/local/repositories/releases/content/org/springframework/cloud/spring-cloud-starter-bootstrap/4.0.2/spring-cloud-starter-bootstrap-4.0.2.pom 继承自 org.springframework.cloud:spring-cloud-dependencies-parent:4.0.2
-        # https://s01.oss.sonatype.org/service/local/repositories/releases/archive/org/springframework/cloud/spring-cloud-starter-bootstrap/4.0.2/spring-cloud-starter-bootstrap-4.0.2.jar/!/META-INF/MANIFEST.MF 中的 Build-Jdk-Spec 为 17（还需参考 java.version）
         versions:
           - ">= 2022"
+      - dependency-name: de.codecentric:spring-boot-admin-dependencies
+        versions:
+          - ">= 3"
+      - dependency-name: org.springframework.security:spring-security-oauth2-authorization-server
+        versions:
+          - ">= 1"
       - dependency-name: com.alibaba.cloud:spring-cloud-alibaba-dependencies
-        # spring-cloud-alibaba 2022 不支持 JDK 8
-        # https://oss.sonatype.org/service/local/repositories/releases/archive/com/alibaba/cloud/spring-cloud-starter-alibaba-nacos-config/2022.0.0.0-RC1/spring-cloud-starter-alibaba-nacos-config-2022.0.0.0-RC1.jar/!/META-INF/MANIFEST.MF 中的 Build-Jdk-Spec 为 17（还需参考 java.version）
         versions:
           - "= 2021.1"
           - ">= 2022"
       - dependency-name: org.mybatis.spring.boot:mybatis-spring-boot-starter
-        # mybatis-spring-boot-starter 3.0 不支持 JDK 8
-        # https://oss.sonatype.org/service/local/repositories/releases/archive/org/mybatis/spring/boot/mybatis-spring-boot-starter/3.0.0/mybatis-spring-boot-starter-3.0.0.jar/!/META-INF/MANIFEST.MF 中的 Build-Jdk-Spec 为 17（还需参考 java.version）
         versions:
           - ">= 3"
-      - dependency-name: de.codecentric:spring-boot-admin-dependencies
-        # spring-boot-admin 3.0 不支持 JDK 8
-        # https://oss.sonatype.org/service/local/repositories/releases/archive/de/codecentric/spring-boot-admin-starter-server/3.0.0/spring-boot-admin-starter-server-3.0.0.jar/!/META-INF/MANIFEST.MF 中的 Build-Jdk-Spec 为 17（还需参考 java.version）
+      - dependency-name: org.mybatis:mybatis-spring
         versions:
           - ">= 3"
-      - dependency-name: org.springframework.security:spring-security-oauth2-authorization-server
-        # spring-security-oauth2-authorization-server 1.0 不支持 JDK 8
-        # https://s01.oss.sonatype.org/service/local/repositories/releases/archive/org/springframework/security/spring-security-oauth2-authorization-server/1.0.0/spring-security-oauth2-authorization-server-1.0.0.jar/!/META-INF/MANIFEST.MF 中的 Created-By 为 17（还需参考 java.version）
+      - dependency-name: org.springdoc:springdoc-openapi
         versions:
-          - ">= 1"
+          - ">= 2"
+      - dependency-name: mysql:mysql-connector-java
+        versions:
+          - ">= 8"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
