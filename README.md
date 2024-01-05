@@ -35,7 +35,7 @@ ChenSoul™ Parent POM is, or will be, available on [Maven Central](https://sear
     <groupId>com.chensoul</groupId>
     <artifactId>chensoul-parent</artifactId>
     <!-- Always check https://search.maven.org/artifact/com.chensoul/chensoul-parent for up-to-date available versions. -->
-    <version>1.0.10</version>
+    <version>1.1.0</version>
     <relativePath/>
 </parent>
 ```
