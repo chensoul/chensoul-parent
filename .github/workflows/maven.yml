@@ -85,7 +85,6 @@ jobs:
       pull-requests: write
     # 依赖机器人 && 仅PR
     if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
-
     strategy:
       matrix:
         os: [ "ubuntu-latest" ]
