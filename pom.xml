@@ -6,7 +6,7 @@
 
     <groupId>com.chensoul</groupId>
     <artifactId>chensoul-parent</artifactId>
-    <version>1.0.36</version>
+    <version>1.0.37</version>
     <packaging>pom</packaging>
 
     <name>ChenSoul™: Parent</name>
@@ -27,23 +27,6 @@
         <system>Github</system>
         <url>https://github.com/chensoul/chensoul-parent/issues</url>
     </issueManagement>
-
-    <distributionManagement>
-        <repository>
-            <!-- The ID must be the same as the value of the server element id in the settings.xml -->
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-            <uniqueVersion>true</uniqueVersion>
-        </snapshotRepository>
-        <site>
-            <id>github</id>
-            <url>https://github.com/chensoul/chensoul-parent</url>
-        </site>
-    </distributionManagement>
 
     <organization>
         <name>ChenSoul™</name>
@@ -92,11 +75,6 @@
         <!-- maven-site-plugin properties -->
         <maven.site.deploy.skip>true</maven.site.deploy.skip>
         <relativizeDecorationLinks>false</relativizeDecorationLinks>
-
-        <!-- maven-release-plugin properties -->
-        <goals>deploy</goals>
-        <tagNameFormat>v@{project.version}</tagNameFormat>
-        <releaseProfiles>release</releaseProfiles>
 
         <!-- nexus-staging-maven-plugin properties -->
         <stagingProgressTimeoutMinutes>10</stagingProgressTimeoutMinutes>
@@ -605,7 +583,7 @@
     </build>
 
     <profiles>
-        <!-- mvn clean source:jar javadoc:jar deploy -DskipTests -P release -->
+        <!-- mvn clean deploy -DskipTests -Prelease -->
         <profile>
             <id>release</id>
             <build>
@@ -641,6 +619,14 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
@@ -708,6 +694,23 @@
             </plugin>
         </plugins>
     </reporting>
+
+    <distributionManagement>
+        <repository>
+            <!-- The ID must be the same as the value of the server element id in the settings.xml -->
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+            <uniqueVersion>true</uniqueVersion>
+        </snapshotRepository>
+        <site>
+            <id>github</id>
+            <url>https://github.com/chensoul/chensoul-parent</url>
+        </site>
+    </distributionManagement>
 
     <repositories>
         <!-- 如果使用浏览器访问时，需要添加 groupId 才显示内容 -->
