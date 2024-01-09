@@ -12,19 +12,21 @@ jobs:
       matrix:
         os: [ ubuntu-latest, macos-latest, windows-latest ]
         java: [ 8 ]
-        distribution: [ 'temurin' ]
+        distribution: [ 'zulu' ]
       fail-fast: false
       max-parallel: 4
     name: Test JDK ${{ matrix.java }}, ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Set up JDK ${{ matrix.java }} ${{ matrix.distribution }}
         uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java }}
           distribution: ${{ matrix.distribution }}
-      - name: Cache modules
+      - name: Cache Maven packages
         uses: actions/cache@v3
         with:
           path: |
@@ -53,15 +55,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # 获取所有的代码历史记录，包括分支和标签
           fetch-depth: 0
-
       - name: Dependabot metadata
         id: metadata
         uses: dependabot/fetch-metadata@v1
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
-
       - name: ENV
         run: |
           echo ${{ github.event.pull_request.html_url }}
