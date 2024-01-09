@@ -6,7 +6,7 @@ name: Java CI
 on: [ workflow_dispatch, push, pull_request ]
 
 jobs:
-  test:
+  build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -40,8 +40,7 @@ jobs:
   # https://docs.github.com/zh/enterprise-cloud@latest/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions
   dependabot:
     name: Dependabot
-    # 需要所有 test 完成后，才运行
-    needs: test
+    needs: build
     runs-on: ${{ matrix.os }}
     permissions:
       contents: write

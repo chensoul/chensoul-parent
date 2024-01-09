@@ -5,7 +5,7 @@
 
     <groupId>com.chensoul</groupId>
     <artifactId>chensoul-parent</artifactId>
-    <version>1.0.38-SNAPSHOT</version>
+    <version>1.0.38</version>
     <packaging>pom</packaging>
 
     <name>ChenSoul™: Parent</name>
@@ -942,10 +942,10 @@
                         <artifactId>clover-maven-plugin</artifactId>
                     </plugin>
 
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                    </plugin>
+<!--                    <plugin>-->
+<!--                        <groupId>org.sonatype.plugins</groupId>-->
+<!--                        <artifactId>nexus-staging-maven-plugin</artifactId>-->
+<!--                    </plugin>-->
                 </plugins>
             </build>
         </profile>
