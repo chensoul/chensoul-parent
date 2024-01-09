@@ -15,7 +15,6 @@
 
     <!-- 以下节点可以被继承：groupId、version、properties、dependencies、dependencyManagement、build、
           reporting、repositories、scm、issueManagement、organization、developers、licenses-->
-
     <organization>
         <name>chensoul.cc</name>
         <url>https://blog.chensoul.cc/</url>
@@ -79,7 +78,6 @@
         <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <!-- Maven date configuration -->
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
 
         <!-- maven-compiler-plugin properties -->
@@ -102,10 +100,6 @@
         <!-- maven-enforce-plugin properties -->
         <maven.min-version>3.9.5</maven.min-version>
 
-        <!-- maven-site-plugin properties -->
-        <maven.site.deploy.skip>true</maven.site.deploy.skip>
-        <relativizeDecorationLinks>false</relativizeDecorationLinks>
-
         <!-- nexus-staging-maven-plugin properties -->
         <stagingProgressTimeoutMinutes>10</stagingProgressTimeoutMinutes>
 
@@ -118,14 +112,14 @@
         <!-- maven-checkstyle-plugin properties-->
         <checkstyle.config>checkstyle.xml</checkstyle.config>
 
+        <!--  clirr-maven-plugin properties-->
         <clirr.comparisonVersion>39</clirr.comparisonVersion>
 
-        <impsortGroups>au,ch,com,config,de,examples,io,jakarta,java,javassist,javax,lombok,mockit,net,nl,ognl,org
-        </impsortGroups>
-        <spotbugs.onlyAnalyze/>
+        <!--  impsort-maven-plugin properties-->
+        <impsortGroups>au,ch,com,config,de,io,jakarta,java,javassist,javax,lombok,mockit,net,nl,ognl,org</impsortGroups>
 
-        <!-- Other properties -->
-        <skipChecks>true</skipChecks>
+        <!-- spotbugs-maven-plugin properties -->
+        <spotbugs.onlyAnalyze/>
 
         <!-- Dependency versions -->
         <asm.version>9.6</asm.version>
@@ -133,8 +127,6 @@
         <fluido.version>1.12.0</fluido.version>
 
         <!-- Maven Plugin versions -->
-        <antrun-maven-plugin.version>3.1.0</antrun-maven-plugin.version>
-        <assembly-maven-plugin.version>3.6.0</assembly-maven-plugin.version>
         <clover-maven-plugin.version>4.5.1</clover-maven-plugin.version>
         <clirr-maven-plugin.version>2.8</clirr-maven-plugin.version>
         <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>
@@ -147,30 +139,29 @@
         <spotbugs-maven-plugin.version>4.8.2.0</spotbugs-maven-plugin.version>
         <license-maven-plugin.version>2.3.0</license-maven-plugin.version>
         <modernizer-maven-plugin.version>2.7.0</modernizer-maven-plugin.version>
-        <maven-dependency-plugin.version>3.6.1</maven-dependency-plugin.version>
         <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
         <maven-clean-plugin.version>3.3.2</maven-clean-plugin.version>
         <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
+        <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
+        <maven-dependency-plugin.version>3.6.1</maven-dependency-plugin.version>
+        <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
         <maven-failsafe-plugin.version>3.2.3</maven-failsafe-plugin.version>
         <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
         <maven-install-plugin.version>3.1.1</maven-install-plugin.version>
         <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
-        <maven-pdf-plugin.version>1.6.1</maven-pdf-plugin.version>
-        <maven-pmd-plugin.version>3.21.2</maven-pmd-plugin.version>
-        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
-        <maven-surefire-plugin.version>3.2.3</maven-surefire-plugin.version>
-        <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
         <maven-jxr-plugin.version>3.3.1</maven-jxr-plugin.version>
-        <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
-        <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
-        <maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
-        <maven-site-plugin.version>4.0.0-M12</maven-site-plugin.version>
+        <maven-pdf-plugin.version>1.6.1</maven-pdf-plugin.version>
+        <maven-pmd-plugin.version>3.21.2</maven-pmd-plugin.version>
         <maven-project-info-reports-plugin.version>3.5.0</maven-project-info-reports-plugin.version>
+        <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
+        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
         <maven-scm-publish-plugin.version>3.2.1</maven-scm-publish-plugin.version>
-        <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
+        <maven-site-plugin.version>4.0.0-M12</maven-site-plugin.version>
+        <maven-surefire-plugin.version>3.2.3</maven-surefire-plugin.version>
+        <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
+        <maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
-        <versions-maven-plugin.version>2.16.2</versions-maven-plugin.version>
         <whitespace-maven-plugin.version>1.3.1</whitespace-maven-plugin.version>
     </properties>
 
@@ -185,7 +176,6 @@
                 <directory>${project.basedir}</directory>
                 <includes>
                     <include>LICENSE</include>
-                    <include>NOTICE</include>
                 </includes>
             </resource>
         </resources>
@@ -216,15 +206,14 @@
                     <artifactId>spotbugs-maven-plugin</artifactId>
                     <version>${spotbugs-maven-plugin.version}</version>
                     <configuration>
-                        <xmlOutput>true</xmlOutput>
-                        <xmlOutputDirectory>${project.build.directory}/spotbugs-reports</xmlOutputDirectory>
-                        <spotbugsXmlOutputDirectory>${project.build.directory}/spotbugs-reports
-                        </spotbugsXmlOutputDirectory>
                         <threshold>High</threshold>
                         <effort>Max</effort>
                         <visitors>FindDeadLocalStores,UnreadFields</visitors>
-                        <onlyAnalyze>${spotbugs.onlyAnalyze}</onlyAnalyze>
                         <relaxed>true</relaxed>
+                        <xmlOutput>true</xmlOutput>
+                        <!-- Optional directory to put spotbugs xdoc xml report -->
+                        <xmlOutputDirectory>target/site</xmlOutputDirectory>
+                        <onlyAnalyze>${spotbugs.onlyAnalyze}</onlyAnalyze>
                     </configuration>
                 </plugin>
 
@@ -254,13 +243,18 @@
                     </configuration>
                 </plugin>
 
+                <!-- mvn checkstyle:checkstyle -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
                     <version>${maven-checkstyle-plugin.version}</version>
                     <configuration>
-                        <violationSeverity>warning</violationSeverity>
+                        <inputEncoding>UTF-8</inputEncoding>
                         <failOnViolation>false</failOnViolation>
+                        <failsOnError>true</failsOnError>
+                        <linkXRef>true</linkXRef>
+                        <consoleOutput>true</consoleOutput>
+                        <logViolationsToConsole>true</logViolationsToConsole>
                     </configuration>
                 </plugin>
 
@@ -276,8 +270,6 @@
                     <version>${maven-compiler-plugin.version}</version>
                     <configuration>
                         <parameters>true</parameters>
-                        <!-- Slightly faster builds, see https://issues.apache.org/jira/browse/MCOMPILER-209 -->
-                        <useIncrementalCompilation>false</useIncrementalCompilation>
                     </configuration>
                 </plugin>
 
@@ -287,6 +279,7 @@
                     <version>${maven-dependency-plugin.version}</version>
                 </plugin>
 
+                <!-- mvn deploy -Daether.checksums.algorithms=MD5 -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-deploy-plugin</artifactId>
@@ -299,6 +292,7 @@
                     <version>${maven-enforcer-plugin.version}</version>
                     <configuration>
                         <rules>
+                            <banCircularDependencies/>
                             <enforceBytecodeVersion>
                                 <maxJdkVersion>${java.version}</maxJdkVersion>
                                 <ignoredScopes>test</ignoredScopes>
@@ -327,10 +321,17 @@
                     </dependencies>
                 </plugin>
 
+                <!-- https://blog.sonatype.com/2010/01/how-to-generate-pgp-signatures-with-maven/-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-gpg-plugin</artifactId>
                     <version>${maven-gpg-plugin.version}</version>
+                    <configuration>
+                        <gpgArguments>
+                            <arg>--pinentry-mode</arg>
+                            <arg>loopback</arg>
+                        </gpgArguments>
+                    </configuration>
                 </plugin>
 
                 <plugin>
@@ -345,16 +346,9 @@
                     <version>${maven-jar-plugin.version}</version>
                     <configuration>
                         <archive>
-                            <manifest>
-                                <addBuildEnvironmentEntries>false</addBuildEnvironmentEntries>
-                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-                            </manifest>
                             <manifestEntries>
-                                <Git-Revision>${git.commit.id}</Git-Revision>
-                                <X-Compile-Source-JDK>${maven.compiler.source}</X-Compile-Source-JDK>
-                                <X-Compile-Target-JDK>${maven.compiler.target}</X-Compile-Target-JDK>
-                                <X-Compile-Release-JDK>${maven.compiler.release}</X-Compile-Release-JDK>
+                                <Implementation-Version>${project.version}</Implementation-Version>
+                                <Build-Time>${maven.build.timestamp}</Build-Time>
                             </manifestEntries>
                         </archive>
                     </configuration>
@@ -369,16 +363,9 @@
                             <additionalOption>-html5</additionalOption>
                         </additionalOptions>
                         <archive>
-                            <manifest>
-                                <addBuildEnvironmentEntries>false</addBuildEnvironmentEntries>
-                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-                            </manifest>
                             <manifestEntries>
-                                <Git-Revision>${git.commit.id}</Git-Revision>
-                                <X-Compile-Source-JDK>${maven.compiler.source}</X-Compile-Source-JDK>
-                                <X-Compile-Target-JDK>${maven.compiler.target}</X-Compile-Target-JDK>
-                                <X-Compile-Release-JDK>${maven.compiler.release}</X-Compile-Release-JDK>
+                                <Implementation-Version>${project.version}</Implementation-Version>
+                                <Build-Time>${maven.build.timestamp}</Build-Time>
                             </manifestEntries>
                         </archive>
                         <legacyMode>true</legacyMode>
@@ -434,7 +421,7 @@
                     <artifactId>maven-release-plugin</artifactId>
                     <version>${maven-release-plugin.version}</version>
                     <configuration>
-                        <arguments>-Daether.checksums.algorithms=SHA-512,SHA-256,SHA-1,MD5</arguments>
+                        <arguments>-Daether.checksums.algorithms=MD5</arguments>
                         <autoVersionSubmodules>true</autoVersionSubmodules>
                         <mavenExecutorId>forked-path</mavenExecutorId>
                         <releaseProfiles>release</releaseProfiles>
@@ -448,9 +435,15 @@
                     <configuration>
                         <!-- Defaults to source, use resources as this is a resource -->
                         <propertiesEncoding>${project.build.resourceEncoding}</propertiesEncoding>
+                        <!--  https://maven.apache.org/plugins/maven-resources-plugin/examples/filter.html-->
+                        <nonFilteredFileExtensions>
+                            <nonFilteredFileExtension>jks</nonFilteredFileExtension>
+                        </nonFilteredFileExtensions>
                     </configuration>
                 </plugin>
 
+                <!-- mvn clean site scm-publish:publish-scm -->
+                <!-- https://www.lorenzobettini.it/2020/01/publishing-a-maven-site-to-github-pages -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-scm-publish-plugin</artifactId>
@@ -499,16 +492,9 @@
                     <version>${maven-source-plugin.version}</version>
                     <configuration>
                         <archive>
-                            <manifest>
-                                <addBuildEnvironmentEntries>false</addBuildEnvironmentEntries>
-                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-                            </manifest>
                             <manifestEntries>
-                                <Git-Revision>${git.commit.id}</Git-Revision>
-                                <X-Compile-Source-JDK>${maven.compiler.source}</X-Compile-Source-JDK>
-                                <X-Compile-Target-JDK>${maven.compiler.target}</X-Compile-Target-JDK>
-                                <X-Compile-Release-JDK>${maven.compiler.release}</X-Compile-Release-JDK>
+                                <Implementation-Version>${project.version}</Implementation-Version>
+                                <Build-Time>${maven.build.timestamp}</Build-Time>
                             </manifestEntries>
                         </archive>
                     </configuration>
@@ -518,6 +504,19 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
+                    <configuration>
+                        <testSourceDirectory>${project.build.directory}/generated-test-sources/test-annotations
+                        </testSourceDirectory>
+                        <!-- Force alphabetical order to have a reproducible build -->
+                        <runOrder>alphabetical</runOrder>
+                        <includes>
+                            <include>**/*Tests.java</include>
+                            <include>**/*Test.java</include>
+                        </includes>
+                        <excludes>
+                            <exclude>**/Abstract*.java</exclude>
+                        </excludes>
+                    </configuration>
                 </plugin>
 
                 <plugin>
@@ -530,40 +529,6 @@
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>${jacoco-maven-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>prepare-agent</id>
-                            <goals>
-                                <goal>prepare-agent</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>report</id>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>default-check</id>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                            <configuration>
-                                <rules>
-                                    <rule>
-                                        <element>BUNDLE</element>
-                                        <limits>
-                                            <limit>
-                                                <counter>COMPLEXITY</counter>
-                                                <value>COVEREDRATIO</value>
-                                                <minimum>0.7</minimum>
-                                            </limit>
-                                        </limits>
-                                    </rule>
-                                </rules>
-                            </configuration>
-                        </execution>
-                    </executions>
                 </plugin>
 
                 <plugin>
@@ -590,13 +555,6 @@
                     <version>${taglist-maven-plugin.version}</version>
                 </plugin>
 
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>versions-maven-plugin</artifactId>
-                    <version>${versions-maven-plugin.version}</version>
-                </plugin>
-
-
                 <!-- mvn flatten:flatten -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -612,27 +570,9 @@
                             <repositories>remove</repositories>
                         </pomElements>
                     </configuration>
-                    <executions>
-                        <execution>
-                            <id>flatten</id>
-                            <goals>
-                                <goal>flatten</goal>
-                            </goals>
-                            <phase>process-resources</phase>
-                        </execution>
-                        <execution>
-                            <id>flatten.clean</id>
-                            <goals>
-                                <goal>clean</goal>
-                            </goals>
-                            <phase>clean</phase>
-                        </execution>
-                    </executions>
                 </plugin>
 
-                <!-- mvn license:license-list -->
-                <!-- mvn license:update-file-header -->
-                <!-- mvn license:remove-file-header -->
+                <!-- mvn license:license-list mvn license:update-file-header mvn license:remove-file-header-->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>license-maven-plugin</artifactId>
@@ -660,10 +600,45 @@
                     </dependencies>
                 </plugin>
 
+                <!-- https://openclover.org/doc/maven/4.2.0/usage.html-->
+                <plugin>
+                    <groupId>org.openclover</groupId>
+                    <artifactId>clover-maven-plugin</artifactId>
+                    <version>${clover-maven-plugin.version}</version>
+                    <configuration>
+                        <generateHtml>true</generateHtml>
+                        <generateXml>true</generateXml>
+                        <jdk>${maven.compiler.source}</jdk>
+                        <targetPercentage>70%</targetPercentage>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>instrument</goal>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!-- rewrite and upgrade code-->
                 <plugin>
                     <groupId>org.openrewrite.maven</groupId>
                     <artifactId>rewrite-maven-plugin</artifactId>
                     <version>${rewrite-maven-plugin.version}</version>
+                </plugin>
+
+                <!-- https://itnext.io/publishing-artifacts-to-maven-central-using-github-actions-a-step-by-step-guide-fd65ef075fd4 -->
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>${nexus-staging-maven-plugin.version}</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <serverId>ossrh</serverId>
+                        <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -692,19 +667,45 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>default-check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>COMPLEXITY</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.7</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
                 <groupId>com.github.hazendaz.maven</groupId>
                 <artifactId>whitespace-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>trim</goal>
-                        </goals>
-                        <phase>process-sources</phase>
-                    </execution>
-                </executions>
             </plugin>
 
             <plugin>
@@ -738,6 +739,22 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                        <phase>process-resources</phase>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <phase>clean</phase>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -790,6 +807,7 @@
                 <artifactId>maven-pmd-plugin</artifactId>
             </plugin>
 
+            <!-- mvn taglist:taglis -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>taglist-maven-plugin</artifactId>
@@ -836,17 +854,10 @@
                 </configuration>
             </plugin>
 
+            <!-- compare binaries or sources for compatibility:  mvn clirr:clirr -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>clirr-maven-plugin</artifactId>
-            </plugin>
-
-            <!-- This plugin will fail if any POM is marked as Byte Order Mark is UTF-8 (BOM).
-                                 | If this occurs, create a new POM and move the contents in order to fix.
-                                 | For reference, this was a problem with mybatis/mybatis-spring poms. -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
             </plugin>
 
             <plugin>
@@ -866,59 +877,7 @@
     </reporting>
 
     <profiles>
-        <profile>
-            <id>format</id>
-            <activation>
-                <file>
-                    <exists>${project.basedir}/format.xml</exists>
-                </file>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>net.revelc.code</groupId>
-                        <artifactId>impsort-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>sort</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.openrewrite.maven</groupId>
-                        <artifactId>rewrite-maven-plugin</artifactId>
-                        <configuration>
-                            <activeRecipes>
-                                <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>
-                            </activeRecipes>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                                <phase>process-sources</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>com.github.ekryd.sortpom</groupId>
-                        <artifactId>sortpom-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>sort</goal>
-                                </goals>
-                                <phase>verify</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
+        <!-- mvn clean deploy -DskipTests -Prelease -->
         <profile>
             <id>release</id>
             <build>
@@ -974,6 +933,69 @@
                                     <goal>publish-scm</goal>
                                 </goals>
                                 <phase>site-deploy</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.openclover</groupId>
+                        <artifactId>clover-maven-plugin</artifactId>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>format</id>
+            <activation>
+                <file>
+                    <exists>${project.basedir}/format.xml</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>net.revelc.code</groupId>
+                        <artifactId>impsort-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>sort</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.openrewrite.maven</groupId>
+                        <artifactId>rewrite-maven-plugin</artifactId>
+                        <configuration>
+                            <activeRecipes>
+                                <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>
+                            </activeRecipes>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <phase>process-sources</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.ekryd.sortpom</groupId>
+                        <artifactId>sortpom-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>sort</goal>
+                                </goals>
+                                <phase>verify</phase>
                             </execution>
                         </executions>
                     </plugin>
