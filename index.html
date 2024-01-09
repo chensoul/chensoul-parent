@@ -156,19 +156,14 @@ Successfully deployed SNAPSHOT versions will be found in <a href="https://s01.os
 <div class="verbatim">
 <pre><code class="language-bash">mvn clean install
 </code></pre></div>
-<p>Release to the staging repository <a href="https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/" class="externalLink">https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</a> with the release profile:</p>
+<p>Release to the staging repository with the release profile:</p>
 
 <div class="verbatim">
-<pre><code class="language-bash">mvn clean deploy -P release -DautoReleaseAfterClose=true
+<pre><code class="language-bash">mvn clean deploy -P release
 </code></pre></div>
 <p>And then login to the staging repository <a href="https://s01.oss.sonatype.org/#stagingRepositories" class="externalLink">https://s01.oss.sonatype.org/#stagingRepositories</a> , release and drop the repository.
 Wait a few minutes and then you can find the release version in <a href="https://central.sonatype.com/artifact/com.chensoul/chensoul-parent/" class="externalLink">https://central.sonatype.com/artifact/com.chensoul/chensoul-parent/</a>
-or <a href="https://s01.oss.sonatype.org/service/local/repositories/releases/content/com/chensoul/chensoul-parent/" class="externalLink">https://s01.oss.sonatype.org/service/local/repositories/releases/content/com/chensoul/chensoul-parent/</a> .</p>
-<p>If you want to release to the release repository directly, you can add parameter <code>-DautoReleaseAfterClose=true</code> to the command line:</p>
-
-<div class="verbatim">
-<pre><code class="language-bash">mvn clean deploy -Prelease -DautoReleaseAfterClose=true
-</code></pre></div></section><section>
+or <a href="https://s01.oss.sonatype.org/service/local/repositories/releases/content/com/chensoul/chensoul-parent/" class="externalLink">https://s01.oss.sonatype.org/service/local/repositories/releases/content/com/chensoul/chensoul-parent/</a> .</p></section><section>
 <h3>Manually Publish the site to github pages</h3>
 <p>Publish to github pages:</p>
 
