@@ -25,6 +25,5 @@ jobs:
       - name: Deploy to Sonatype
         run: ./mvnw deploy -DskipTests -B -V -ntp  -Prelease --settings ./.mvn/settings.xml
         env:
-          CI_DEPLOY_USERNAME: ${{ secrets.OSSRH_TOKEN }}
-          CI_DEPLOY_PASSWORD: ${{ secrets.OSSRH_USERNAME }}
-          CI_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          CI_DEPLOY_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          CI_DEPLOY_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
