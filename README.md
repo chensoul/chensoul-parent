@@ -108,21 +108,15 @@ Install to local repository `~/.m2/repository`:
 mvn clean install
 ```
 
-Release to the staging repository https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/ with the release profile:
+Release to the staging repository with the release profile:
 
 ```bash
-mvn clean deploy -P release -DautoReleaseAfterClose=true
+mvn clean deploy -P release
 ```
 
 And then login to the staging repository https://s01.oss.sonatype.org/#stagingRepositories , release and drop the repository. 
 Wait a few minutes and then you can find the release version in https://central.sonatype.com/artifact/com.chensoul/chensoul-parent/
 or https://s01.oss.sonatype.org/service/local/repositories/releases/content/com/chensoul/chensoul-parent/ .
-
-If you want to release to the release repository directly, you can add parameter `-DautoReleaseAfterClose=true` to the command line:
-
-```bash
-mvn clean deploy -Prelease -DautoReleaseAfterClose=true
-```
 
 ### Manually Publish the site to github pages
 

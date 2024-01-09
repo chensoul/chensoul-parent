@@ -5,7 +5,7 @@
 
     <groupId>com.chensoul</groupId>
     <artifactId>chensoul-parent</artifactId>
-    <version>1.0.38</version>
+    <version>1.0.39</version>
     <packaging>pom</packaging>
 
     <name>ChenSoul™: Parent</name>
@@ -67,7 +67,7 @@
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
         <site>
-            <id>gh-pages-scm</id>
+            <id>github</id>
             <url>scm:git:ssh://git@github.com/chensoul/chensoul-parent.git</url>
         </site>
     </distributionManagement>
@@ -90,18 +90,13 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.testSource>${java.test.version}</maven.compiler.testSource>
         <maven.compiler.testTarget>${java.test.version}</maven.compiler.testTarget>
-        <maven.compiler.release>${java.release.version}</maven.compiler.release>
-        <maven.compiler.testRelease>${java.test.release.version}</maven.compiler.testRelease>
 
         <!-- maven-surefire-plugin properties -->
         <surefire.useFile>false</surefire.useFile>
         <trimStackTrace>false</trimStackTrace>
 
         <!-- maven-enforce-plugin properties -->
-        <maven.min-version>3.9.5</maven.min-version>
-
-        <!-- nexus-staging-maven-plugin properties -->
-        <stagingProgressTimeoutMinutes>10</stagingProgressTimeoutMinutes>
+        <maven.min-version>3.8.3</maven.min-version>
 
         <!-- maven-scm-publish-plugin properties -->
         <!-- Single module project has no need for site:stage, use target/site or target/checkout/target/site on release. -->
@@ -113,7 +108,7 @@
         <checkstyle.config>checkstyle.xml</checkstyle.config>
 
         <!--  clirr-maven-plugin properties-->
-        <clirr.comparisonVersion>39</clirr.comparisonVersion>
+        <clirr.comparisonVersion>1.0.38</clirr.comparisonVersion>
 
         <!--  impsort-maven-plugin properties-->
         <impsortGroups>au,ch,com,config,de,io,jakarta,java,javassist,javax,lombok,mockit,net,nl,ognl,org</impsortGroups>
@@ -359,9 +354,9 @@
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>${maven-javadoc-plugin.version}</version>
                     <configuration>
-                        <additionalOptions>
-                            <additionalOption>-html5</additionalOption>
-                        </additionalOptions>
+                        <additionalJOptions combine.children="append">
+                            <additionalJOption>-J-Dhttp.agent=maven-javadoc-plugin</additionalJOption>
+                        </additionalJOptions>
                         <archive>
                             <manifestEntries>
                                 <Implementation-Version>${project.version}</Implementation-Version>
@@ -467,14 +462,6 @@
                         <!-- don't deploy site with maven-site-plugin (instead use scm publish during release) -->
                         <skipDeploy>true</skipDeploy>
                     </configuration>
-                    <dependencies>
-                        <!-- Additional entries for version site tracking only -->
-                        <dependency>
-                            <groupId>org.apache.maven.skins</groupId>
-                            <artifactId>maven-fluido-skin</artifactId>
-                            <version>${fluido.version}</version>
-                        </dependency>
-                    </dependencies>
                     <!-- Execution like this will pick up in the normal site cycle -->
                     <executions>
                         <execution>
@@ -529,6 +516,40 @@
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>${jacoco-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>prepare-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>report</id>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>default-check</id>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <rule>
+                                        <element>BUNDLE</element>
+                                        <limits>
+                                            <limit>
+                                                <counter>COMPLEXITY</counter>
+                                                <value>COVEREDRATIO</value>
+                                                <minimum>0.7</minimum>
+                                            </limit>
+                                        </limits>
+                                    </rule>
+                                </rules>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
 
                 <plugin>
@@ -572,7 +593,7 @@
                     </configuration>
                 </plugin>
 
-                <!-- mvn license:license-list mvn license:update-file-header mvn license:remove-file-header-->
+                <!-- mvn license:license-list , mvn license:update-file-header,  mvn license:remove-file-header-->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>license-maven-plugin</artifactId>
@@ -628,18 +649,6 @@
                     <artifactId>rewrite-maven-plugin</artifactId>
                     <version>${rewrite-maven-plugin.version}</version>
                 </plugin>
-
-                <!-- https://itnext.io/publishing-artifacts-to-maven-central-using-github-actions-a-step-by-step-guide-fd65ef075fd4 -->
-                <plugin>
-                    <groupId>org.sonatype.plugins</groupId>
-                    <artifactId>nexus-staging-maven-plugin</artifactId>
-                    <version>${nexus-staging-maven-plugin.version}</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <serverId>ossrh</serverId>
-                        <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                    </configuration>
-                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -665,45 +674,6 @@
             </plugin>
 
             <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>prepare-agent</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>default-check</id>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <rule>
-                                    <element>BUNDLE</element>
-                                    <limits>
-                                        <limit>
-                                            <counter>COMPLEXITY</counter>
-                                            <value>COVEREDRATIO</value>
-                                            <minimum>0.7</minimum>
-                                        </limit>
-                                    </limits>
-                                </rule>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
                 <groupId>com.github.hazendaz.maven</groupId>
                 <artifactId>whitespace-maven-plugin</artifactId>
             </plugin>
@@ -711,6 +681,17 @@
             <plugin>
                 <groupId>io.github.git-commit-id</groupId>
                 <artifactId>git-commit-id-maven-plugin</artifactId>
+                <configuration>
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                    <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties
+                    </generateGitPropertiesFilename>
+                    <includeOnlyProperties>
+                        <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
+                        <includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>
+                        <includeOnlyProperty>^git.commit.message.full$</includeOnlyProperty>
+                    </includeOnlyProperties>
+                    <commitIdGenerationMode>full</commitIdGenerationMode>
+                </configuration>
                 <executions>
                     <execution>
                         <id>git-commit-id</id>
@@ -762,6 +743,11 @@
     <reporting>
         <plugins>
             <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
             </plugin>
@@ -771,9 +757,9 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <reportSets>
                     <reportSet>
-                        <id>default</id>
                         <reports>
-                            <report>javadoc</report>
+                            <!-- 在同一个进程中生成文档 -->
+                            <report>javadoc-no-fork</report>
                         </reports>
                     </reportSet>
                 </reportSets>
@@ -782,11 +768,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>com.github.spotbugs</groupId>
-                <artifactId>spotbugs-maven-plugin</artifactId>
             </plugin>
 
             <plugin>
@@ -873,6 +854,10 @@
                 </reportSets>
             </plugin>
 
+            <plugin>
+                <groupId>org.openclover</groupId>
+                <artifactId>clover-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </reporting>
 
@@ -936,16 +921,6 @@
                             </execution>
                         </executions>
                     </plugin>
-
-                    <plugin>
-                        <groupId>org.openclover</groupId>
-                        <artifactId>clover-maven-plugin</artifactId>
-                    </plugin>
-
-<!--                    <plugin>-->
-<!--                        <groupId>org.sonatype.plugins</groupId>-->
-<!--                        <artifactId>nexus-staging-maven-plugin</artifactId>-->
-<!--                    </plugin>-->
                 </plugins>
             </build>
         </profile>
