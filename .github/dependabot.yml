@@ -21,6 +21,9 @@ updates:
       - dependency-name: org.springframework.boot:spring-boot-dependencies
         versions:
           - ">= 3"
+      - dependency-name: org.springframework.boot:spring-boot-starter-parent
+        versions:
+          - ">= 3"
       - dependency-name: org.springframework.boot:spring-boot-maven-plugin
         versions:
           - ">= 3"
