@@ -107,7 +107,7 @@
     <checkstyle.config>checkstyle.xml</checkstyle.config>
 
     <!--  clirr-maven-plugin properties-->
-    <clirr.comparisonVersion>1.0.38</clirr.comparisonVersion>
+    <clirr.comparisonVersion>1.0.40</clirr.comparisonVersion>
 
     <!-- spotbugs-maven-plugin properties -->
     <spotbugs.onlyAnalyze/>
@@ -283,7 +283,7 @@
           <version>${maven-dependency-plugin.version}</version>
         </plugin>
 
-        <!-- mvn deploy -Daether.checksums.algorithms=MD5 -->
+        <!-- mvn clean deploy -P release -Dgpg.passphrase=yourpassphrase  -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
@@ -549,6 +549,7 @@
           </executions>
         </plugin>
 
+        <!-- compare binaries or sources for compatibility:  mvn clirr:clirr -->
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>clirr-maven-plugin</artifactId>
@@ -830,7 +831,6 @@
         </configuration>
       </plugin>
 
-      <!-- compare binaries or sources for compatibility:  mvn clirr:clirr -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>clirr-maven-plugin</artifactId>
