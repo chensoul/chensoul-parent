@@ -49,6 +49,12 @@ updates:
       - dependency-name: mysql:mysql-connector-java
         versions:
           - ">= 8"
+      - dependency-name: com.github.ekryd.sortpom:sortpom-maven-plugin
+        versions:
+          - ">= 3.1.0"
+      - dependency-name: io.github.git-commit-id:git-commit-id-maven-plugin
+        versions:
+          - ">= 5"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
