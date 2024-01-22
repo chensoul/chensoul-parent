@@ -133,7 +133,7 @@
     <rewrite-maven-plugin.version>5.20.0</rewrite-maven-plugin.version>
     <taglist-maven-plugin.version>3.0.0</taglist-maven-plugin.version>
     <sortpom-maven-plugin.version>3.0.1</sortpom-maven-plugin.version>
-    <spotbugs-maven-plugin.version>4.8.2.0</spotbugs-maven-plugin.version>
+    <spotbugs-maven-plugin.version>4.8.3.0</spotbugs-maven-plugin.version>
     <license-maven-plugin.version>2.3.0</license-maven-plugin.version>
     <modernizer-maven-plugin.version>2.7.0</modernizer-maven-plugin.version>
     <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
@@ -155,7 +155,7 @@
     <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
     <maven-scm-publish-plugin.version>3.2.1</maven-scm-publish-plugin.version>
     <maven-site-plugin.version>4.0.0-M13</maven-site-plugin.version>
-    <maven-surefire-plugin.version>3.2.3</maven-surefire-plugin.version>
+    <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
     <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
     <maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
     <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
@@ -258,6 +258,7 @@
         <plugin>
           <groupId>net.revelc.code</groupId>
           <artifactId>impsort-maven-plugin</artifactId>
+          <!-- 1.6.2 for jdk8 -->
           <version>${impsort-maven-plugin.version}</version>
           <configuration>
             <groups>${impsortGroups}</groups>
@@ -603,7 +604,7 @@
             <dependency>
               <groupId>org.apache.bcel</groupId>
               <artifactId>bcel</artifactId>
-              <version>6.7.0</version>
+              <version>6.8.1</version>
             </dependency>
           </dependencies>
         </plugin>
