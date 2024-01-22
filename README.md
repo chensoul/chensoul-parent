@@ -45,7 +45,7 @@ ChenSoul™ Parent POM is, or will be, available on [Maven Central](https://sear
 After generating gpg key following by [here](https://central.sonatype.org/publish/requirements/gpg/#generating-a-key-pair)
 
 ```bash
-gpg --gen-key
+gpg --full-generate-key
 ```
 
 You can list the local key that you created:
@@ -61,6 +61,20 @@ gpg --armor --export-secret-keys <YOUR_KEY> > private.gpg
 ```
 
 * YOUR_KEY='long number'
+
+Distribute your public key:
+
+```bash
+gpg --keyserver hkp://keyserver.ubuntu.com:11371 --send-keys <YOUR_KEY>
+
+gpg --keyserver hkp://keyserver.ubuntu.com:11371 --recv-keys <YOUR_KEY>
+```
+
+Or upload your public key by https://keys.openpgp.org/upload.
+
+```bash
+gpg --export xxx@xxx.com > my_key.pub
+```
 
 ## Usage
 
@@ -110,7 +124,7 @@ mvn clean install
 Release to the staging repository with the release profile:
 
 ```bash
-mvn clean deploy -P release
+mvn clean deploy -P release -Dgpg.passphrase=yourpassphrase
 ```
 
 And then login to the staging repository https://s01.oss.sonatype.org/#stagingRepositories , release and drop the repository.
