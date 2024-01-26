@@ -5,7 +5,7 @@
 
   <groupId>com.chensoul</groupId>
   <artifactId>chensoul-parent</artifactId>
-  <version>1.0.40</version>
+  <version>1.0.41-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>ChenSoul™: Parent</name>
@@ -75,7 +75,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
 
     <!-- maven-compiler-plugin properties -->
@@ -194,12 +193,6 @@
     </resources>
     <pluginManagement>
       <plugins>
-        <plugin>
-          <groupId>com.github.hazendaz.maven</groupId>
-          <artifactId>whitespace-maven-plugin</artifactId>
-          <version>${whitespace-maven-plugin.version}</version>
-        </plugin>
-
         <plugin>
           <groupId>com.github.spotbugs</groupId>
           <artifactId>spotbugs-maven-plugin</artifactId>
@@ -585,6 +578,22 @@
               <parent>expand</parent>
             </pomElements>
           </configuration>
+          <executions>
+            <execution>
+              <id>flatten</id>
+              <goals>
+                <goal>flatten</goal>
+              </goals>
+              <phase>process-resources</phase>
+            </execution>
+            <execution>
+              <id>flatten.clean</id>
+              <goals>
+                <goal>clean</goal>
+              </goals>
+              <phase>clean</phase>
+            </execution>
+          </executions>
         </plugin>
 
         <!-- mvn license:license-list , mvn license:update-file-header,  mvn license:remove-file-header-->
@@ -668,11 +677,6 @@
       </plugin>
 
       <plugin>
-        <groupId>com.github.hazendaz.maven</groupId>
-        <artifactId>whitespace-maven-plugin</artifactId>
-      </plugin>
-
-      <plugin>
         <groupId>io.github.git-commit-id</groupId>
         <artifactId>git-commit-id-maven-plugin</artifactId>
         <configuration>
@@ -706,27 +710,6 @@
               <goal>modernizer</goal>
             </goals>
             <phase>verify</phase>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>flatten-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>flatten</id>
-            <goals>
-              <goal>flatten</goal>
-            </goals>
-            <phase>process-resources</phase>
-          </execution>
-          <execution>
-            <id>flatten.clean</id>
-            <goals>
-              <goal>clean</goal>
-            </goals>
-            <phase>clean</phase>
           </execution>
         </executions>
       </plugin>
