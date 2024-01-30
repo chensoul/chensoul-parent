@@ -125,7 +125,7 @@
     <rewrite-maven-plugin.version>5.20.0</rewrite-maven-plugin.version>
     <taglist-maven-plugin.version>3.0.0</taglist-maven-plugin.version>
     <spotbugs-maven-plugin.version>4.8.3.0</spotbugs-maven-plugin.version>
-    <license-maven-plugin.version>2.3.0</license-maven-plugin.version>
+    <license-maven-plugin.version>2.4.0</license-maven-plugin.version>
     <modernizer-maven-plugin.version>2.7.0</modernizer-maven-plugin.version>
     <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
     <maven-clean-plugin.version>3.3.2</maven-clean-plugin.version>
