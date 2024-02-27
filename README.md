@@ -127,7 +127,7 @@ Release to the staging repository with the release profile:
 mvn clean deploy -P release -Dgpg.passphrase=yourpassphrase
 ```
 
-And then login to the staging repository https://s01.oss.sonatype.org/#stagingRepositories , release and drop the repository.
+And then login to the staging repository https://s01.oss.sonatype.org/#stagingRepositories , close, release and drop the repository.
 Wait a few minutes and then you can find the release version in https://central.sonatype.com/artifact/com.chensoul/chensoul-parent/
 or https://s01.oss.sonatype.org/service/local/repositories/releases/content/com/chensoul/chensoul-parent/ .
 
