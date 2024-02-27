@@ -5,7 +5,7 @@
 
   <groupId>com.chensoul</groupId>
   <artifactId>chensoul-parent</artifactId>
-  <version>1.0.41-SNAPSHOT</version>
+  <version>1.0.41</version>
   <packaging>pom</packaging>
 
   <name>ChenSoul™: Parent</name>
@@ -79,9 +79,7 @@
 
     <!-- maven-compiler-plugin properties -->
     <java.version>8</java.version>
-    <java.release.version>8</java.release.version>
     <java.test.version>8</java.test.version>
-    <java.test.release.version>8</java.test.release.version>
 
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -892,6 +890,13 @@
                 <phase>verify</phase>
               </execution>
             </executions>
+            <!--
+               注: 如果不主动指定gpg.exe的话，那么可能(因为和idea内部发生了未知冲突)报错:Cannot run program "gpg.exe": CreateProcess error=2, 系统找不到指定的文件。
+               注: 当然，如果你直接用的git bash之类的工具执行mvn，而不是用idea提供的maven功能的话，你也可以不指定executable。
+             -->
+            <configuration>
+              <executable>/opt/homebrew/bin/gpg</executable>
+            </configuration>
           </plugin>
 
           <!-- deploy site with maven-scm-publish-plugin -->
