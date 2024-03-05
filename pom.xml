@@ -675,6 +675,24 @@
       </plugin>
 
       <plugin>
+        <groupId>org.openrewrite.maven</groupId>
+        <artifactId>rewrite-maven-plugin</artifactId>
+        <configuration>
+          <activeRecipes>
+            <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>
+          </activeRecipes>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <phase>process-sources</phase>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
         <groupId>io.github.git-commit-id</groupId>
         <artifactId>git-commit-id-maven-plugin</artifactId>
         <configuration>
@@ -916,36 +934,5 @@
         </plugins>
       </build>
     </profile>
-
-    <profile>
-      <id>format</id>
-      <activation>
-        <file>
-          <exists>${project.basedir}/format.xml</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.openrewrite.maven</groupId>
-            <artifactId>rewrite-maven-plugin</artifactId>
-            <configuration>
-              <activeRecipes>
-                <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>
-              </activeRecipes>
-            </configuration>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <phase>process-sources</phase>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
   </profiles>
-
 </project>
