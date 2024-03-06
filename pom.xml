@@ -8,7 +8,7 @@
   <version>1.0.43-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>ChenSoul™: Parent</name>
+  <name>ChenSoul™ Parent</name>
   <description>${project.name}</description>
   <url>https://chensoul.github.io/chensoul-parent/</url>
   <inceptionYear>2023</inceptionYear>
@@ -119,8 +119,7 @@
     <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
     <git-commit-id-maven-plugin.version>4.9.9</git-commit-id-maven-plugin.version>
     <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
-    <rewrite-maven-plugin.version>5.23.3</rewrite-maven-plugin.version>
-    <taglist-maven-plugin.version>3.0.0</taglist-maven-plugin.version>
+    <rewrite-maven-plugin.version>5.23.2</rewrite-maven-plugin.version>
     <spotbugs-maven-plugin.version>4.8.3.1</spotbugs-maven-plugin.version>
     <license-maven-plugin.version>2.4.0</license-maven-plugin.version>
     <modernizer-maven-plugin.version>2.8.0</modernizer-maven-plugin.version>
@@ -179,7 +178,18 @@
     <resources>
       <resource>
         <filtering>true</filtering>
-        <directory>${project.basedir}/src/main/resources</directory>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>*.yml</include>
+          <include>*.yaml</include>
+        </includes>
+      </resource>
+      <resource>
+        <filtering>false</filtering>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>*</include>
+        </includes>
       </resource>
       <resource>
         <targetPath>META-INF</targetPath>
@@ -551,15 +561,9 @@
             <dependency>
               <groupId>org.apache.bcel</groupId>
               <artifactId>bcel</artifactId>
-              <version>6.8.2</version>
+              <version>6.8.1</version>
             </dependency>
           </dependencies>
-        </plugin>
-
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>taglist-maven-plugin</artifactId>
-          <version>${taglist-maven-plugin.version}</version>
         </plugin>
 
         <!-- mvn flatten:flatten -->
@@ -679,6 +683,7 @@
         <artifactId>rewrite-maven-plugin</artifactId>
         <configuration>
           <activeRecipes>
+            <recipe>org.openrewrite.java.OrderImports</recipe>
             <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>
           </activeRecipes>
         </configuration>
@@ -778,53 +783,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-      </plugin>
-
-      <!-- mvn taglist:taglis -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>taglist-maven-plugin</artifactId>
-        <configuration>
-          <tagListOptions>
-            <tagClasses>
-              <tagClass>
-                <displayName>FIXME Work</displayName>
-                <tags>
-                  <tag>
-                    <matchString>fixme</matchString>
-                    <matchType>ignoreCase</matchType>
-                  </tag>
-                  <tag>
-                    <matchString>@fixme</matchString>
-                    <matchType>ignoreCase</matchType>
-                  </tag>
-                </tags>
-              </tagClass>
-              <tagClass>
-                <displayName>Todo Work</displayName>
-                <tags>
-                  <tag>
-                    <matchString>todo</matchString>
-                    <matchType>ignoreCase</matchType>
-                  </tag>
-                  <tag>
-                    <matchString>@todo</matchString>
-                    <matchType>ignoreCase</matchType>
-                  </tag>
-                </tags>
-              </tagClass>
-              <tagClass>
-                <displayName>Deprecated Work</displayName>
-                <tags>
-                  <tag>
-                    <matchString>@deprecated</matchString>
-                    <matchType>ignoreCase</matchType>
-                  </tag>
-                </tags>
-              </tagClass>
-            </tagClasses>
-          </tagListOptions>
-        </configuration>
       </plugin>
 
       <plugin>
