@@ -1,4 +1,4 @@
-# ChenSoul™: Parent POM
+# ChenSoul™ Parent POM
 
 <p align="center">
   <a href="https://search.maven.org/artifact/com.chensoul/chensoul-parent">
