@@ -11,6 +11,10 @@ updates:
       interval: "daily"
       time: "00:00"
       timezone: "Asia/Shanghai"
+    ignore:
+      - dependency-name: org.springframework.boot:spring-boot-maven-plugin
+        versions:
+          - ">= 3"
 
   - package-ecosystem: "github-actions"
     directory: "/"
