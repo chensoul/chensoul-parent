@@ -219,6 +219,20 @@
           </configuration>
         </plugin>
 
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.3.0</version>
+          <configuration>
+            <archive>
+              <manifestEntries>
+                <Implementation-Version>${project.version}</Implementation-Version>
+                <Build-Time>${maven.build.timestamp}</Build-Time>
+              </manifestEntries>
+            </archive>
+          </configuration>
+        </plugin>
+
         <!-- https://blog.sonatype.com/2010/01/how-to-generate-pgp-signatures-with-maven/ -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -310,6 +324,100 @@
         <downloadSources>true</downloadSources>
         <downloadJavadocs>true</downloadJavadocs>
       </properties>
+    </profile>
+
+    <profile>
+      <id>site</id>
+      <properties>
+        <!-- maven-scm-publish-plugin properties -->
+        <!-- Single module project has no need for site:stage, use target/site or target/checkout/target/site on release. -->
+        <scmpublish.content>${project.reporting.outputDirectory}</scmpublish.content>
+        <scmpublish.pubScmUrl>${project.scm.developerConnection}</scmpublish.pubScmUrl>
+        <scmpublish.scm.branch>gh-pages</scmpublish.scm.branch>
+      </properties>
+
+      <distributionManagement>
+        <site>
+          <id>github</id>
+          <url>scm:git:ssh://git@github.com/chensoul/chensoul-parent.git</url>
+        </site>
+      </distributionManagement>
+
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-project-info-reports-plugin</artifactId>
+            <version>3.5.0</version>
+          </plugin>
+
+          <!-- mvn clean site scm-publish:publish-scm -->
+          <!-- https://www.lorenzobettini.it/2020/01/publishing-a-maven-site-to-github-pages -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-scm-publish-plugin</artifactId>
+            <version>3.2.1</version>
+            <configuration>
+              <tryUpdate>true</tryUpdate>
+            </configuration>
+            <executions>
+              <execution>
+                <id>scm-publish</id>
+                <goals>
+                  <goal>publish-scm</goal>
+                </goals>
+                <phase>site-deploy</phase>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>3.12.1</version>
+            <configuration>
+              <!-- don't deploy site with maven-site-plugin (instead use scm publish during release) -->
+              <skipDeploy>true</skipDeploy>
+            </configuration>
+            <!-- Execution like this will pick up in the normal site cycle -->
+            <executions>
+              <execution>
+                <id>attach-descriptor</id>
+                <goals>
+                  <goal>attach-descriptor</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+
+      <reporting>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-project-info-reports-plugin</artifactId>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <reportSets>
+              <reportSet>
+                <reports>
+                  <!-- 在同一个进程中生成文档 -->
+                  <report>javadoc-no-fork</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </reporting>
     </profile>
   </profiles>
 
