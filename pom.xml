@@ -5,16 +5,14 @@
 
   <groupId>com.chensoul</groupId>
   <artifactId>chensoul-parent</artifactId>
-  <version>1.0.44-SNAPSHOT</version>
+  <version>1.0.50-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>ChenSoul™ Parent</name>
+  <name>ChenSoul Parent</name>
   <description>${project.name}</description>
   <url>https://chensoul.github.io/chensoul-parent/</url>
   <inceptionYear>2023</inceptionYear>
 
-  <!-- 以下节点可以被继承：groupId、version、properties、dependencies、dependencyManagement、build、
-  reporting、repositories、scm、issueManagement、organization、developers、licenses-->
   <organization>
     <name>chensoul.cc</name>
     <url>https://blog.chensoul.cc/</url>
@@ -32,7 +30,7 @@
     <developer>
       <id>chensoul</id>
       <name>chensoul</name>
-      <email>chensoul.eth@gmail.com</email>
+      <email>ichensoul@gmail.com</email>
       <url>https://blog.chensoul.cc</url>
       <roles>
         <role>developer</role>
@@ -68,51 +66,37 @@
       <id>ossrh</id>
       <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
-    <site>
-      <id>github</id>
-      <url>scm:git:ssh://git@github.com/chensoul/chensoul-parent.git</url>
-    </site>
   </distributionManagement>
 
   <properties>
     <java.version>1.8</java.version>
-    <resource.delimiter>@</resource.delimiter>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-    <!-- maven-scm-publish-plugin properties -->
-    <!-- Single module project has no need for site:stage, use target/site or target/checkout/target/site on release. -->
-    <scmpublish.content>${project.reporting.outputDirectory}</scmpublish.content>
-    <scmpublish.pubScmUrl>${project.scm.developerConnection}</scmpublish.pubScmUrl>
-    <scmpublish.scm.branch>gh-pages</scmpublish.scm.branch>
-
     <therapi-runtime-javadoc.version>0.15.0</therapi-runtime-javadoc.version>
     <lombok.version>1.18.32</lombok.version>
-
-    <spring-boot-maven-plugin.version>2.7.18</spring-boot-maven-plugin.version>
-    <clover-maven-plugin.version>4.5.2</clover-maven-plugin.version>
-    <build-helper-maven-plugin.version>3.4.0</build-helper-maven-plugin.version>
-    <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
-    <git-commit-id-maven-plugin.version>4.9.9</git-commit-id-maven-plugin.version>
-    <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
-    <license-maven-plugin.version>2.4.0</license-maven-plugin.version>
-    <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
-    <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
-    <maven-dependency-plugin.version>3.6.1</maven-dependency-plugin.version>
-    <maven-failsafe-plugin.version>3.2.3</maven-failsafe-plugin.version>
-    <maven-gpg-plugin.version>3.2.1</maven-gpg-plugin.version>
-    <maven-install-plugin.version>3.1.1</maven-install-plugin.version>
-    <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
-    <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
-    <maven-project-info-reports-plugin.version>3.5.0</maven-project-info-reports-plugin.version>
-    <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
-    <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
-    <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
-    <maven-scm-publish-plugin.version>3.2.1</maven-scm-publish-plugin.version>
-    <maven-site-plugin.version>4.0.0-M13</maven-site-plugin.version>
   </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
+        <scope>provided</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
 
   <build>
     <resources>
@@ -145,7 +129,7 @@
         <plugin>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
-          <version>${spring-boot-maven-plugin.version}</version>
+          <version>2.7.18</version>
           <executions>
             <execution>
               <goals>
@@ -164,7 +148,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>${maven-compiler-plugin.version}</version>
+          <version>3.13.0</version>
           <configuration>
             <parameters>true</parameters>
             <annotationProcessorPaths>
@@ -186,33 +170,41 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>${maven-dependency-plugin.version}</version>
+          <version>3.6.1</version>
+          <executions>
+            <execution>
+              <id>copy-protoc</id>
+              <phase>generate-sources</phase>
+              <goals>
+                <goal>copy</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
 
         <!-- mvn clean deploy -P release -Dgpg.passphrase=yourpassphrase  -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
-          <version>${maven-deploy-plugin.version}</version>
+          <version>2.8.2</version>
         </plugin>
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>${maven-jar-plugin.version}</version>
-          <configuration>
-            <archive>
-              <manifest>
-                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-              </manifest>
-            </archive>
-          </configuration>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>3.1.1</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.2.0</version>
         </plugin>
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>${maven-javadoc-plugin.version}</version>
+          <version>3.6.3</version>
           <configuration>
             <doclint>none</doclint>
             <archive>
@@ -227,39 +219,11 @@
           </configuration>
         </plugin>
 
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-source-plugin</artifactId>
-          <version>${maven-source-plugin.version}</version>
-          <configuration>
-            <archive>
-              <manifestEntries>
-                <Implementation-Version>${project.version}</Implementation-Version>
-                <Build-Time>${maven.build.timestamp}</Build-Time>
-              </manifestEntries>
-            </archive>
-          </configuration>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>${maven-resources-plugin.version}</version>
-          <configuration>
-            <!-- Defaults to source, use resources as this is a resource -->
-            <propertiesEncoding>${project.build.sourceEncoding}</propertiesEncoding>
-            <!--  https://maven.apache.org/plugins/maven-resources-plugin/examples/filter.html-->
-            <nonFilteredFileExtensions>
-              <nonFilteredFileExtension>jks</nonFilteredFileExtension>
-            </nonFilteredFileExtensions>
-          </configuration>
-        </plugin>
-
         <!-- https://blog.sonatype.com/2010/01/how-to-generate-pgp-signatures-with-maven/ -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-gpg-plugin</artifactId>
-          <version>${maven-gpg-plugin.version}</version>
+          <version>1.6</version>
           <executions>
             <execution>
               <id>sign-artifacts</id>
@@ -269,107 +233,15 @@
               <phase>verify</phase>
             </execution>
           </executions>
-          <!--
-             注: 如果不主动指定gpg.exe的话，那么可能(因为和idea内部发生了未知冲突)报错:Cannot run program "gpg.exe": CreateProcess error=2, 系统找不到指定的文件。
-             注: 当然，如果你直接用的git bash之类的工具执行mvn，而不是用idea提供的maven功能的话，你也可以不指定executable。
-           -->
           <configuration>
             <executable>/opt/homebrew/bin/gpg</executable>
           </configuration>
         </plugin>
 
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>${maven-project-info-reports-plugin.version}</version>
-        </plugin>
-
-        <!--  https://central.sonatype.org/publish/publish-maven/#performing-a-release-deployment-with-the-maven-release-plugin    -->
-        <!--        <plugin>-->
-        <!--          <groupId>org.apache.maven.plugins</groupId>-->
-        <!--          <artifactId>maven-release-plugin</artifactId>-->
-        <!--          <version>${maven-release-plugin.version}</version>-->
-        <!--          <configuration>-->
-        <!--            <autoVersionSubmodules>true</autoVersionSubmodules>-->
-        <!--            <releaseProfiles>release</releaseProfiles>-->
-        <!--            <useReleaseProfile>false</useReleaseProfile>-->
-        <!--            <goals>deploy</goals>-->
-        <!--          </configuration>-->
-        <!--        </plugin>-->
-
-        <!-- mvn clean site scm-publish:publish-scm -->
-        <!-- https://www.lorenzobettini.it/2020/01/publishing-a-maven-site-to-github-pages -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-scm-publish-plugin</artifactId>
-          <version>${maven-scm-publish-plugin.version}</version>
-          <configuration>
-            <tryUpdate>true</tryUpdate>
-          </configuration>
-          <executions>
-            <execution>
-              <id>scm-publish</id>
-              <goals>
-                <goal>publish-scm</goal>
-              </goals>
-              <phase>site-deploy</phase>
-            </execution>
-          </executions>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>${maven-site-plugin.version}</version>
-          <configuration>
-            <!-- don't deploy site with maven-site-plugin (instead use scm publish during release) -->
-            <skipDeploy>true</skipDeploy>
-          </configuration>
-          <!-- Execution like this will pick up in the normal site cycle -->
-          <executions>
-            <execution>
-              <id>attach-descriptor</id>
-              <goals>
-                <goal>attach-descriptor</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-
-        <plugin>
-          <groupId>io.github.git-commit-id</groupId>
-          <artifactId>git-commit-id-maven-plugin</artifactId>
-          <!-- 4.x.x for jdk8 -->
-          <version>${git-commit-id-maven-plugin.version}</version>
-          <configuration>
-            <failOnNoGitDirectory>false</failOnNoGitDirectory>
-            <!-- Fixes occassional issue in commit id plugin - see https://github.com/ktoso/maven-git-commit-id-plugin/issues/61 -->
-            <gitDescribe>
-              <always>true</always>
-            </gitDescribe>
-            <generateGitPropertiesFile>true</generateGitPropertiesFile>
-            <includeOnlyProperties>
-              <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
-              <includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>
-              <includeOnlyProperty>^git.commit.message.full$</includeOnlyProperty>
-            </includeOnlyProperties>
-            <commitIdGenerationMode>full</commitIdGenerationMode>
-          </configuration>
-          <executions>
-            <execution>
-              <id>git-commit-id</id>
-              <goals>
-                <goal>revision</goal>
-              </goals>
-              <phase>validate</phase>
-            </execution>
-          </executions>
-        </plugin>
-
-        <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
-          <version>${jacoco-maven-plugin.version}</version>
+          <version>0.8.3</version>
           <executions>
             <execution>
               <id>prepare-agent</id>
@@ -406,140 +278,63 @@
           </executions>
         </plugin>
 
-        <!-- mvn flatten:flatten -->
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
-          <artifactId>flatten-maven-plugin</artifactId>
-          <version>${flatten-maven-plugin.version}</version>
-          <inherited>true</inherited>
-          <configuration>
-            <updatePomFile>true</updatePomFile>
-            <keepCommentsInPom>true</keepCommentsInPom>
-            <flattenMode>resolveCiFriendliesOnly</flattenMode>
-            <pomElements>
-              <parent>expand</parent>
-            </pomElements>
-          </configuration>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>1.12</version>
           <executions>
             <execution>
-              <id>flatten</id>
+              <id>add-source</id>
+              <phase>generate-sources</phase>
               <goals>
-                <goal>flatten</goal>
+                <goal>add-source</goal>
               </goals>
-              <phase>process-resources</phase>
-            </execution>
-            <execution>
-              <id>flatten.clean</id>
-              <goals>
-                <goal>clean</goal>
-              </goals>
-              <phase>clean</phase>
+              <configuration>
+                <sources>
+                  <source>${basedir}/target/generated-sources</source>
+                </sources>
+              </configuration>
             </execution>
           </executions>
         </plugin>
-
-        <!-- mvn license:license-list , mvn license:update-file-header,  mvn license:remove-file-header-->
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>license-maven-plugin</artifactId>
-          <version>${license-maven-plugin.version}</version>
-          <configuration>
-            <licenseName>apache_v2</licenseName>
-          </configuration>
-        </plugin>
       </plugins>
     </pluginManagement>
-
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>flatten-maven-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <groupId>io.github.git-commit-id</groupId>
-        <artifactId>git-commit-id-maven-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
   </build>
 
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-project-info-reports-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <!-- 在同一个进程中生成文档 -->
-              <report>javadoc-no-fork</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
-
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <!-- select non-aggregate reports -->
-              <report>report</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
-    </plugins>
-  </reporting>
+  <profiles>
+    <!-- download sources under target/dependencies -->
+    <!-- mvn package -Pdownload-dependencies -Dclassifier=sources dependency:copy-dependencies -->
+    <profile>
+      <id>download-dependencies</id>
+      <properties>
+        <downloadSources>true</downloadSources>
+        <downloadJavadocs>true</downloadJavadocs>
+      </properties>
+    </profile>
+  </profiles>
 
   <repositories>
     <!-- 如果使用浏览器访问时，需要添加 groupId 才显示内容 -->
     <repository>
+      <id>oss-snapshots</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
       <releases>
         <enabled>false</enabled>
       </releases>
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
-      <id>oss-snapshots</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
     </repository>
 
     <repository>
+      <id>oss-snapshots-s01</id>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
       <releases>
         <enabled>false</enabled>
       </releases>
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
-      <id>oss-snapshots-s01</id>
-      <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
     </repository>
   </repositories>
 </project>
