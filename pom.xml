@@ -85,7 +85,7 @@
     <docs.classes.dir>${project.build.directory}/build-docs-classes</docs.classes.dir>
 
     <therapi-runtime-javadoc.version>0.15.0</therapi-runtime-javadoc.version>
-    <lombok.version>1.18.30</lombok.version>
+    <lombok.version>1.18.32</lombok.version>
 
     <!-- Maven Plugins -->
     <build-helper-maven-plugin.version>3.4.0</build-helper-maven-plugin.version>
