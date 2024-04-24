@@ -23,8 +23,7 @@ Chensoul 项目的父级 POM，用于管理项目的依赖和插件版本，目�
 <parent>
     <groupId>com.chensoul</groupId>
     <artifactId>chensoul-parent</artifactId>
-    <!-- https://search.maven.org/artifact/com.chensoul/chensoul-parent -->
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <relativePath/>
 </parent>
 ```
@@ -47,7 +46,10 @@ gpg --export xxx@xxx.com > my_key.pub
 
 ## 如何发布到 Sonatype 仓库
 
-1. 首先配置 `～/.m2/settings.xml`:
+1. 生成 sonatype token
+   请参考 https://central.sonatype.org/publish/generate-token/#alternatives-to-removal-or-modification-of-components
+
+2. 配置 `～/.m2/settings.xml`:
 
 ```bash
 <server>
@@ -61,30 +63,28 @@ gpg --export xxx@xxx.com > my_key.pub
 </server>
 ```
 
-- 生成 ossrh token，请参考 https://central.sonatype.org/publish/generate-token/#alternatives-to-removal-or-modification-of-components
-
-2. 发布快照版本到快照仓库 https://s01.oss.sonatype.org/content/repositories/snapshots/
+2. 发布快照
 
 ```bash
-mvn -B clean source:jar javadoc:jar deploy
+mvn -B -P release clean source:jar javadoc:jar deploy
 ```
+
+执行成功之后，访问 https://s01.oss.sonatype.org/content/repositories/snapshots/com/chensoul/chensoul-parent/ 查看发布的 jar。
 
 3. 发布正式版本到正式仓库
 
 首先，修改版本号为正式版本号：
 
 ```bash
-mvn versions:set -DnewVersion=1.2.3 versions:commit
+mvn versions:set -DnewVersion=1.1.0 versions:commit
 ```
 然后，执行发布命令：
 
 ```bash
-mvn clean source:jar javadoc:jar deploy
+mvn -B -P release clean source:jar javadoc:jar deploy
 ```
 
-然后，登录 https://s01.oss.sonatype.org/#stagingRepositories ，手动关闭 staging 参考，然后发布。
-
-稍等几分钟，可以在以下仓库查看发布的 jar:
+执行成功之后，稍等几分钟，可以在以下仓库查看发布的 jar:
 - https://central.sonatype.com/artifact/com.chensoul/chensoul-parent/
 - https://s01.oss.sonatype.org/service/local/repositories/releases/content/com/chensoul/chensoul-parent/
 - https://repo.maven.apache.org/maven2/com/chensoul/chensoul-parent/
@@ -92,7 +92,7 @@ mvn clean source:jar javadoc:jar deploy
 ## 上传网站到 github-pages
 
 ```bash
-mvn clean site scm-publish:publish-scm
+mvn -P site clean site scm-publish:publish-scm
 ```
 
 ## 参考文章
