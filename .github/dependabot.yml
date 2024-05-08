@@ -11,6 +11,12 @@ updates:
       - dependency-name: org.springframework.boot:spring-boot-maven-plugin
         versions:
           - ">= 3"
+      - dependency-name: com.puppycrawl.tools:checkstyle
+        versions:
+          - ">= 10"
+      - dependency-name: org.asciidoctor:asciidoctor-maven-plugin
+        versions:
+          - ">= 3"
 
   - package-ecosystem: "github-actions"
     directory: "/"

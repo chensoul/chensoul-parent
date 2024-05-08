@@ -33,13 +33,16 @@ Chensoul 项目的父级 POM，用于管理项目的依赖和插件版本，目�
 参考 [这里](https://central.sonatype.org/publish/requirements/gpg/#generating-a-key-pair) 生成 GPG 密钥。
 
 ```bash
-gpg --full-generate-key
+gpg --gen-key
 
 gpg --list-secret-keys --keyid-format=long
 
 gpg --armor --export-secret-keys <YOUR_KEY> > private.gpg
 
-gpg --keyserver hkp://keyserver.ubuntu.com:11371 --send-keys <YOUR_KEY>
+# keyserver.ubuntu.com
+# keys.openpgp.org
+# pgp.mit.edu
+gpg --keyserver keys.openpgp.org --send-keys <YOUR_KEY>
 
 gpg --export xxx@xxx.com > my_key.pub
 ```
