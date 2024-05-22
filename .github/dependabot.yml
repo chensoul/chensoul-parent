@@ -4,8 +4,11 @@ version: 2
 updates:
   - package-ecosystem: "maven"
     directory: "/"
+#    target-branch: "main"
+    open-pull-requests-limit: 50
     schedule:
       interval: "daily"
+      time: "00:00"
       timezone: "Asia/Shanghai"
     ignore:
       - dependency-name: org.springframework.boot:spring-boot-maven-plugin
@@ -22,4 +25,5 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+      time: "00:00"
       timezone: "Asia/Shanghai"
