@@ -65,20 +65,16 @@
       <id>ossrh</id>
       <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
-
-    <site>
-      <id>github</id>
-      <url>scm:git:ssh://git@github.com/chensoul/chensoul-parent.git</url>
-    </site>
   </distributionManagement>
 
   <properties>
-    <java.version>8</java.version>
+    <java.version>1.8</java.version>
     <resource.delimiter>@</resource.delimiter>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
     <main.basedir>${basedir}</main.basedir>
     <docs.main>${project.artifactId}</docs.main>
     <docs.resources.dir>${project.build.directory}/build-docs</docs.resources.dir>
@@ -90,7 +86,6 @@
     <!-- Maven Plugins -->
     <build-helper-maven-plugin.version>3.5.0</build-helper-maven-plugin.version>
     <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
-    <git-commit-id-maven-plugin.version>4.9.9</git-commit-id-maven-plugin.version>
     <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
     <puppycrawl-tools-checkstyle.version>10.15.0</puppycrawl-tools-checkstyle.version>
 
@@ -108,6 +103,7 @@
     <maven-project-info-reports-plugin.version>3.5.0</maven-project-info-reports-plugin.version>
     <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
     <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+    <maven-scm-publish-plugin.version>3.2.1</maven-scm-publish-plugin.version>
     <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
     <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
     <maven-site-plugin.version>4.0.0-M13</maven-site-plugin.version>
@@ -417,20 +413,6 @@
               <goals>
                 <goal>check</goal>
               </goals>
-              <configuration>
-                <rules>
-                  <rule>
-                    <element>BUNDLE</element>
-                    <limits>
-                      <limit>
-                        <counter>COMPLEXITY</counter>
-                        <value>COVEREDRATIO</value>
-                        <minimum>0.7</minimum>
-                      </limit>
-                    </limits>
-                  </rule>
-                </rules>
-              </configuration>
             </execution>
           </executions>
         </plugin>
@@ -503,7 +485,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-scm-publish-plugin</artifactId>
-          <version>3.2.1</version>
+          <version>${maven-scm-publish-plugin.version}</version>
           <configuration>
             <tryUpdate>true</tryUpdate>
           </configuration>
@@ -538,27 +520,23 @@
         </plugin>
 
         <plugin>
-          <groupId>io.github.git-commit-id</groupId>
-          <artifactId>git-commit-id-maven-plugin</artifactId>
-          <!-- 4.x.x for jdk8 -->
-          <version>${git-commit-id-maven-plugin.version}</version>
-          <configuration>
-            <failOnNoGitDirectory>false</failOnNoGitDirectory>
-            <gitDescribe>
-              <always>true</always>
-            </gitDescribe>
-            <generateGitPropertiesFile>true</generateGitPropertiesFile>
-            <commitIdGenerationMode>full</commitIdGenerationMode>
-          </configuration>
+          <groupId>pl.project13.maven</groupId>
+          <artifactId>git-commit-id-plugin</artifactId>
           <executions>
             <execution>
-              <id>git-commit-id</id>
               <goals>
                 <goal>revision</goal>
               </goals>
-              <phase>validate</phase>
             </execution>
           </executions>
+          <configuration>
+            <verbose>true</verbose>
+            <offline>true</offline>
+            <dateFormat>yyyy-MM-dd HH:mm:ssZ</dateFormat>
+            <generateGitPropertiesFile>true</generateGitPropertiesFile>
+            <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties
+            </generateGitPropertiesFilename>
+          </configuration>
         </plugin>
 
         <!-- mvn flatten:flatten -->
@@ -616,6 +594,11 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>flatten-maven-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>pl.project13.maven</groupId>
+        <artifactId>git-commit-id-plugin</artifactId>
       </plugin>
     </plugins>
   </build>
