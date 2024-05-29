@@ -80,15 +80,14 @@
     <docs.resources.dir>${project.build.directory}/build-docs</docs.resources.dir>
     <docs.classes.dir>${project.build.directory}/build-docs-classes</docs.classes.dir>
 
-    <therapi-runtime-javadoc.version>0.15.0</therapi-runtime-javadoc.version>
     <lombok.version>1.18.32</lombok.version>
+    <puppycrawl-tools-checkstyle.version>10.12.5</puppycrawl-tools-checkstyle.version>
 
     <!-- Maven Plugins -->
     <build-helper-maven-plugin.version>3.5.0</build-helper-maven-plugin.version>
     <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
     <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
-    <puppycrawl-tools-checkstyle.version>10.15.0</puppycrawl-tools-checkstyle.version>
-
+    <git-commit-id-plugin.version>4.9.10</git-commit-id-plugin.version>
     <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
     <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
     <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
@@ -154,8 +153,7 @@
         <filtering>true</filtering>
         <directory>src/main/resources</directory>
         <includes>
-          <include>*.yml</include>
-          <include>*.yaml</include>
+          <include>**/*</include>
         </includes>
       </resource>
 
@@ -176,19 +174,6 @@
           <version>${maven-compiler-plugin.version}</version>
           <configuration>
             <parameters>true</parameters>
-            <annotationProcessorPaths>
-              <!-- https://springdoc.org/#javadoc-support -->
-              <path>
-                <groupId>com.github.therapi</groupId>
-                <artifactId>therapi-runtime-javadoc-scribe</artifactId>
-                <version>${therapi-runtime-javadoc.version}</version>
-              </path>
-              <path>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-              </path>
-            </annotationProcessorPaths>
             <source>${maven.compiler.source}</source>
             <target>${maven.compiler.target}</target>
             <encoding>${file.encoding}</encoding>
@@ -522,6 +507,7 @@
         <plugin>
           <groupId>pl.project13.maven</groupId>
           <artifactId>git-commit-id-plugin</artifactId>
+          <version>${git-commit-id-plugin.version}</version>
           <executions>
             <execution>
               <goals>
@@ -623,10 +609,6 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-          </plugin>
-          <plugin>
-            <groupId>io.github.git-commit-id</groupId>
-            <artifactId>git-commit-id-maven-plugin</artifactId>
           </plugin>
           <plugin>
             <groupId>org.sonatype.plugins</groupId>
