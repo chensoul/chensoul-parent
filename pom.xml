@@ -84,13 +84,13 @@
     <puppycrawl-tools-checkstyle.version>10.12.5</puppycrawl-tools-checkstyle.version>
 
     <!-- Maven Plugins -->
-    <build-helper-maven-plugin.version>3.5.0</build-helper-maven-plugin.version>
+    <build-helper-maven-plugin.version>3.6.0</build-helper-maven-plugin.version>
     <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
     <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
     <git-commit-id-plugin.version>4.9.10</git-commit-id-plugin.version>
     <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
     <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
-    <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
+    <maven-deploy-plugin.version>3.1.2</maven-deploy-plugin.version>
     <maven-dependency-plugin.version>3.6.1</maven-dependency-plugin.version>
     <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
     <maven-failsafe-plugin.version>3.2.5</maven-failsafe-plugin.version>
@@ -105,8 +105,8 @@
     <maven-scm-publish-plugin.version>3.2.1</maven-scm-publish-plugin.version>
     <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
     <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
-    <maven-site-plugin.version>4.0.0-M13</maven-site-plugin.version>
-    <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+    <maven-site-plugin.version>4.0.0-M14</maven-site-plugin.version>
+    <nexus-staging-maven-plugin.version>1.7.0</nexus-staging-maven-plugin.version>
 
     <!-- flatten-maven-plugin -->
     <flatten.dependency.mode>all</flatten.dependency.mode>
