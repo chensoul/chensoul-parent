@@ -289,27 +289,26 @@
           <version>${maven-enforcer-plugin.version}</version>
           <executions>
             <execution>
-              <id>enforce-banned-dependencies</id>
-              <goals>
-                <goal>enforce</goal>
-              </goals>
-              <configuration>
-                <rules>
-                  <bannedDependencies>
-                    <searchTransitive>true</searchTransitive>
-                  </bannedDependencies>
-                </rules>
-                <fail>true</fail>
-              </configuration>
-            </execution>
-            <execution>
               <id>enforce-versions</id>
               <goals>
                 <goal>enforce</goal>
               </goals>
               <configuration>
                 <rules>
+                  <!--确保直接引用的依赖不比间接解析出来的依赖版本低-->
+                  <requireUpperBoundDeps/>
+                  <bannedDependencies>
+                    <!--是否检查传递性依赖-->
+                    <searchTransitive>true</searchTransitive>
+                  </bannedDependencies>
+                  <!-- 防止依赖重复声明-->
                   <banDuplicatePomDependencyVersions/>
+                  <requireMavenVersion>
+                    <version>[3.6.3,)</version>
+                  </requireMavenVersion>
+                  <requireJavaVersion>
+                    <version>[${java.version},)</version>
+                  </requireJavaVersion>
                 </rules>
               </configuration>
             </execution>
