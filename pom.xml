@@ -104,7 +104,7 @@
     <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
     <maven-scm-publish-plugin.version>3.2.1</maven-scm-publish-plugin.version>
     <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
-    <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
+    <maven-surefire-plugin.version>3.3.0</maven-surefire-plugin.version>
     <maven-site-plugin.version>4.0.0-M15</maven-site-plugin.version>
     <nexus-staging-maven-plugin.version>1.7.0</nexus-staging-maven-plugin.version>
 
