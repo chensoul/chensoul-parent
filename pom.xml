@@ -5,7 +5,7 @@
 
   <groupId>com.chensoul</groupId>
   <artifactId>chensoul-parent</artifactId>
-  <version>1.1.0</version>
+  <version>1.1.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>ChenSoul Parent</name>
@@ -113,7 +113,7 @@
     <flatten.mode>resolveCiFriendliesOnly</flatten.mode>
     <updatePomFile>true</updatePomFile>
     <flatten.pomElements.parent>expand</flatten.pomElements.parent>
-    <flatten.pomElements.properties>keep</flatten.pomElements.properties>
+    <flatten.pomElements.properties>expand</flatten.pomElements.properties>
     <flatten.pomElements.dependencyManagement>interpolate</flatten.pomElements.dependencyManagement>
     <flatten.pomElements.dependencies>resolve</flatten.pomElements.dependencies>
     <flatten.pomElements.distributionManagement>remove</flatten.pomElements.distributionManagement>
@@ -174,8 +174,6 @@
           <version>${maven-compiler-plugin.version}</version>
           <configuration>
             <parameters>true</parameters>
-            <source>${maven.compiler.source}</source>
-            <target>${maven.compiler.target}</target>
             <encoding>${file.encoding}</encoding>
           </configuration>
         </plugin>
@@ -535,6 +533,7 @@
             <flattenDependencyMode>${flatten.dependency.mode}</flattenDependencyMode>
             <flattenMode>${flatten.mode}</flattenMode>
             <updatePomFile>${updatePomFile}</updatePomFile>
+            <keepCommentsInPom>true</keepCommentsInPom>
             <pomElements>
               <parent>${flatten.pomElements.parent}</parent>
               <properties>${flatten.pomElements.properties}</properties>
@@ -574,11 +573,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>flatten-maven-plugin</artifactId>
       </plugin>
 
       <plugin>
