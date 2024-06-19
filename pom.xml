@@ -75,7 +75,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <lombok.version>1.18.32</lombok.version>
-    <puppycrawl-tools-checkstyle.version>10.12.5</puppycrawl-tools-checkstyle.version>
+    <puppycrawl-tools-checkstyle.version>10.17.0</puppycrawl-tools-checkstyle.version>
 
     <!-- Maven Plugins -->
     <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
