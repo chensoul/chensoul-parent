@@ -80,7 +80,7 @@
     <docs.resources.dir>${project.build.directory}/build-docs</docs.resources.dir>
     <docs.classes.dir>${project.build.directory}/build-docs-classes</docs.classes.dir>
 
-    <lombok.version>1.18.32</lombok.version>
+    <lombok.version>1.18.34</lombok.version>
     <puppycrawl-tools-checkstyle.version>10.17.0</puppycrawl-tools-checkstyle.version>
 
     <!-- Maven Plugins -->
