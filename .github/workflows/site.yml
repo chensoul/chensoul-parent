@@ -37,7 +37,7 @@ jobs:
           server-password: GH_TOKEN
 
       - name: Publish site to github pages
-        run: mvn --ntp --batch-mode --update-snapshots -P site clean site scm-publish:publish-scm
+        run: mvn --ntp --batch-mode --update-snapshots -P site clean site scm-publish:publish-scm -Dscmpublish.serverId=github
         env:
           GH_USERNAME: ${{ secrets.GH_USERNAME }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}

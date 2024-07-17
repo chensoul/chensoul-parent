@@ -15,9 +15,8 @@
 
   <scm>
     <url>git@github.com:chensoul/chensoul-parent.git</url>
-    <!--  connection 需要读权限  -->
     <connection>scm:git:${project.scm.url}</connection>
-    <!--  developerConnection 需要写权限，使用 https 方便通过用户名和密码登录  -->
+    <!--  maven-scm-publish-plugin 插件在 github action 中使用 https 协议通过用户名和密码登录  -->
     <developerConnection>scm:git:https://github.com/chensoul/chensoul-parent.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
@@ -129,7 +128,6 @@
     <!-- Single module project has no need for site:stage, use target/site or target/checkout/target/site on release. -->
     <scmpublish.content>${project.reporting.outputDirectory}</scmpublish.content>
     <scmpublish.pubScmUrl>${project.scm.developerConnection}</scmpublish.pubScmUrl>
-    <scmpublish.serverId>github</scmpublish.serverId>
     <scmpublish.scm.branch>gh-pages</scmpublish.scm.branch>
   </properties>
 
