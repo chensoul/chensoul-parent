@@ -94,6 +94,8 @@ mvn -B -P release clean source:jar javadoc:jar deploy
 
 ## 上传网站到 github-pages
 
+参考 https://quentincastel86.medium.com/release-your-maven-project-using-github-actions-51beba1e4834
+
 ```bash
 mvn -P site clean site scm-publish:publish-scm
 ```
@@ -101,6 +103,3 @@ mvn -P site clean site scm-publish:publish-scm
 ## 参考文章
 
 - [GPG](https://central.sonatype.org/publish/requirements/gpg/)
-
-
-
