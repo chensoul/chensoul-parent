@@ -15,8 +15,10 @@
 
   <scm>
     <url>git@github.com:chensoul/chensoul-parent.git</url>
+    <!--  connection 需要读权限  -->
     <connection>scm:git:${project.scm.url}</connection>
-    <developerConnection>scm:git:${project.scm.url}</developerConnection>
+    <!--  developerConnection 需要写权限，使用 https 方便通过用户名和密码登录  -->
+    <developerConnection>scm:git:https://github.com/chensoul/chensoul-parent.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 
@@ -65,11 +67,6 @@
       <id>ossrh</id>
       <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
-
-    <site>
-      <id>github</id>
-      <url>scm:git:git@github.com:chensoul/chensoul-parent.git</url>
-    </site>
   </distributionManagement>
 
   <properties>
@@ -132,6 +129,7 @@
     <!-- Single module project has no need for site:stage, use target/site or target/checkout/target/site on release. -->
     <scmpublish.content>${project.reporting.outputDirectory}</scmpublish.content>
     <scmpublish.pubScmUrl>${project.scm.developerConnection}</scmpublish.pubScmUrl>
+    <scmpublish.serverId>github</scmpublish.serverId>
     <scmpublish.scm.branch>gh-pages</scmpublish.scm.branch>
   </properties>
 
