@@ -36,6 +36,9 @@ jobs:
           server-username: GH_USERNAME
           server-password: GH_TOKEN
 
+      - name: Setup Git user
+        uses: fregante/setup-git-user@v2.0.1
+
       - name: Publish site to github pages
         run: mvn --ntp --batch-mode --update-snapshots -P site clean site scm-publish:publish-scm -Dscmpublish.serverId=github
         env:
