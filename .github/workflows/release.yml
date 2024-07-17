@@ -15,21 +15,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Java Maven Release
-        uses: qcastel/github-actions-maven-release@master
-        env:
-          JAVA_HOME: /usr/lib/jvm/java-1.8-openjdk/
+      - name: Set up Apache Maven Central
+        uses: actions/setup-java@v1
         with:
-          git-release-bot-name: "release-bot"
-          git-release-bot-email: "release-bot@chensoul.cc"
-          release-branch-name: main
+          java-version: 1.8
+          server-id: ossrh
+          server-username: OSS_USERNAME
+          server-password: OSS_TOKEN
+          gpg-passphrase: GPG_PASSPHRASE
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
 
-          maven-args: "--ntp --batch-mode --update-snapshots -P release -Dmaven.javadoc.skip=true -DskipTests -Dmaven.deploy.skip=true"
-          maven-servers: ${{ secrets.MVN_REPO_SERVERS }}
-
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-          gpg-enabled: true
-          gpg-key-id: ${{ secrets.GPG_KEY_ID }}
-          gpg-key: ${{ secrets.GPG_KEY }}
-          gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
+      - name: Publish to Apache Maven Central
+        run: mvn clean deploy --ntp --batch-mode --update-snapshots -P release -Dmaven.javadoc.skip=true -DskipTests
+        env:
+          OSS_USERNAME: ${{ secrets.OSS_USERNAME }}
+          OSS_TOKEN: ${{ secrets.OSS_TOKEN }}
+          # gpg短密码
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
