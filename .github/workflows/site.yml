@@ -36,13 +36,11 @@ jobs:
           server-username: GH_USERNAME
           server-password: GH_TOKEN
 
-      - name: Setup Git user
+      - name: Publish site to github pages
         run: |
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-
-      - name: Publish site to github pages
-        run: mvn --ntp --batch-mode --update-snapshots -P site clean site scm-publish:publish-scm -Dscmpublish.serverId=github
+          mvn --ntp --batch-mode --update-snapshots -P site clean site scm-publish:publish-scm -Dscmpublish.serverId=github
         env:
           GH_USERNAME: ${{ secrets.GH_USERNAME }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
