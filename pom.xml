@@ -532,13 +532,13 @@
               <phase>verify</phase>
             </execution>
           </executions>
-          <!--
-             注: 如果不主动指定gpg.exe的话，那么可能(因为和idea内部发生了未知冲突)报错:Cannot run program "gpg.exe": CreateProcess error=2, 系统找不到指定的文件。
-             注: 当然，如果你直接用的git bash之类的工具执行mvn，而不是用idea提供的maven功能的话，你也可以不指定executable。
-           -->
-          <configuration>
-            <executable>/opt/homebrew/bin/gpg</executable>
-          </configuration>
+<!--          &lt;!&ndash;-->
+<!--             注: 如果不主动指定gpg.exe的话，那么可能(因为和idea内部发生了未知冲突)报错:Cannot run program "gpg.exe": CreateProcess error=2, 系统找不到指定的文件。-->
+<!--             注: 当然，如果你直接用的git bash之类的工具执行mvn，而不是用idea提供的maven功能的话，你也可以不指定executable。-->
+<!--           &ndash;&gt;-->
+<!--          <configuration>-->
+<!--            <executable>/opt/homebrew/bin/gpg</executable>-->
+<!--          </configuration>-->
         </plugin>
         <plugin>
           <groupId>org.sonatype.plugins</groupId>
