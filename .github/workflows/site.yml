@@ -33,14 +33,11 @@ jobs:
           java-version: ${{ matrix.java }}
           cache: maven
           server-id: github
-          server-username: GH_USERNAME
-          server-password: GH_TOKEN
+          server-username: ${{ secrets.GITHUB_ACTOR }}
+          server-password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish site to github pages
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           mvn --ntp --batch-mode --update-snapshots -P site clean site scm-publish:publish-scm -Dscmpublish.serverId=github
-        env:
-          GH_USERNAME: ${{ secrets.GITHUB_ACTOR }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
