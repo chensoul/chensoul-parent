@@ -31,4 +31,4 @@ jobs:
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots --ntp -P site clean site scm-publish:publish-scm
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
