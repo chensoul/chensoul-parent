@@ -33,6 +33,11 @@ jobs:
           java-version: ${{ matrix.java }}
           cache: maven
           server-id: github
+          server-username: GH_USERNAME
+          server-password: GH_TOKEN
 
       - name: Publish site to github pages
-        run: mvn --batch-mode --update-snapshots --ntp -P site clean site scm-publish:publish-scm
+        run: mvn --ntp --batch-mode --update-snapshots -P site clean site scm-publish:publish-scm
+        env:
+          GH_USERNAME: ${{ secrets.GH_USERNAME }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}

@@ -34,4 +34,4 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots --ntp --file pom.xml clean install
+        run: mvn --ntp --batch-mode --update-snapshots --file pom.xml clean install
