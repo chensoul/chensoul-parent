@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        java: [ '8' ]
+        java: [ '8']
 
     steps:
       - name: Checkout
@@ -32,3 +32,5 @@ jobs:
 
       - name: Publish to Apache Maven Central
         run: mvn clean deploy --ntp --batch-mode --update-snapshots -P release -Dmaven.javadoc.skip=true -DskipTests
+        env:
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
