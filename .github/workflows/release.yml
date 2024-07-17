@@ -33,4 +33,7 @@ jobs:
       - name: Publish to Apache Maven Central
         run: mvn clean deploy --ntp --batch-mode --update-snapshots -P release -Dmaven.javadoc.skip=true -DskipTests
         env:
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
+          # https://maven.apache.org/plugins/maven-gpg-plugin/usage.html#sign-artifacts-with-gnupg
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
