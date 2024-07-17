@@ -47,7 +47,7 @@ gpg --keyserver keys.openpgp.org --send-keys <YOUR_KEY>
 gpg --export xxx@xxx.com > my_key.pub
 ```
 
-## 如何发布到 Sonatype 仓库
+## 发布到 Sonatype 仓库
 
 1. 生成 sonatype token
    请参考 https://central.sonatype.org/publish/generate-token/#alternatives-to-removal-or-modification-of-components
@@ -92,9 +92,13 @@ mvn -B -P release clean source:jar javadoc:jar deploy
 - https://s01.oss.sonatype.org/service/local/repositories/releases/content/com/chensoul/chensoul-parent/
 - https://repo.maven.apache.org/maven2/com/chensoul/chensoul-parent/
 
-## 上传网站到 github-pages
+4. 使用 Github Actions 发布
 
 参考 https://quentincastel86.medium.com/release-your-maven-project-using-github-actions-51beba1e4834
+
+## 上传网站到 github-pages
+
+参考 https://www.lorenzobettini.it/2020/01/publishing-a-maven-site-to-github-pages
 
 ```bash
 mvn -P site clean site scm-publish:publish-scm
