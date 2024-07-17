@@ -3,8 +3,7 @@ name: Release Version
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    tags: [ "*" ]
 
 jobs:
   build:
@@ -19,6 +18,11 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+          server-id: ossrh
+          server-username: OSSRH_USERNAME
+          server-password: OSSRH_TOKEN
+          gpg-passphrase: GPG_PASSPHRASE
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
 
       - name: Publish to Apache Maven Central
         run: mvn clean deploy --ntp --batch-mode --update-snapshots -P release -Dmaven.javadoc.skip=true -DskipTests
