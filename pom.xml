@@ -56,26 +56,14 @@
     </developer>
   </developers>
 
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
-
   <properties>
-    <java.version>1.8</java.version>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <java.version>8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
 
-    <lombok.version>1.18.34</lombok.version>
-    <puppycrawl-tools-checkstyle.version>10.17.0</puppycrawl-tools-checkstyle.version>
+    <puppycrawl-tools-checkstyle.version>10.12.5</puppycrawl-tools-checkstyle.version>
 
     <!-- Maven Plugins -->
     <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
@@ -106,7 +94,7 @@
     <flatten.mode>resolveCiFriendliesOnly</flatten.mode>
     <updatePomFile>true</updatePomFile>
     <flatten.pomElements.parent>expand</flatten.pomElements.parent>
-    <flatten.pomElements.properties>expand</flatten.pomElements.properties>
+    <flatten.pomElements.properties>keep</flatten.pomElements.properties>
     <flatten.pomElements.dependencyManagement>interpolate</flatten.pomElements.dependencyManagement>
     <flatten.pomElements.dependencies>resolve</flatten.pomElements.dependencies>
     <flatten.pomElements.distributionManagement>remove</flatten.pomElements.distributionManagement>
@@ -134,13 +122,20 @@
   <build>
     <resources>
       <resource>
+        <directory>src/main/java</directory>
         <filtering>true</filtering>
+        <includes>
+          <include>**/*.properties</include>
+          <include>**/*.xml</include>
+        </includes>
+      </resource>
+      <resource>
         <directory>src/main/resources</directory>
+        <filtering>true</filtering>
         <includes>
           <include>**/*</include>
         </includes>
       </resource>
-
       <resource>
         <targetPath>META-INF</targetPath>
         <directory>${project.basedir}</directory>
@@ -158,8 +153,25 @@
           <version>${maven-compiler-plugin.version}</version>
           <configuration>
             <parameters>true</parameters>
+            <source>${maven.compiler.source}</source>
+            <target>${maven.compiler.target}</target>
             <encoding>${file.encoding}</encoding>
           </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>${maven-source-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>attach-sources</id>
+              <goals>
+                <goal>jar-no-fork</goal>
+              </goals>
+              <phase>package</phase>
+            </execution>
+          </executions>
         </plugin>
 
         <plugin>
@@ -201,20 +213,6 @@
           </executions>
         </plugin>
 
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-source-plugin</artifactId>
-          <version>${maven-source-plugin.version}</version>
-          <executions>
-            <execution>
-              <id>attach-sources</id>
-              <goals>
-                <goal>jar-no-fork</goal>
-              </goals>
-              <phase>package</phase>
-            </execution>
-          </executions>
-        </plugin>
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -236,7 +234,7 @@
           <version>${maven-dependency-plugin.version}</version>
           <executions>
             <execution>
-              <id>copy-protoc</id>
+              <id>copy</id>
               <phase>generate-sources</phase>
               <goals>
                 <goal>copy</goal>
@@ -262,71 +260,6 @@
             <useReleaseProfile>false</useReleaseProfile>
             <releaseProfiles>release</releaseProfiles>
             <goals>deploy</goals>
-          </configuration>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-enforcer-plugin</artifactId>
-          <version>${maven-enforcer-plugin.version}</version>
-          <executions>
-            <execution>
-              <id>enforce-versions</id>
-              <goals>
-                <goal>enforce</goal>
-              </goals>
-              <configuration>
-                <rules>
-                  <!--确保直接引用的依赖不比间接解析出来的依赖版本低-->
-                  <requireUpperBoundDeps/>
-                  <bannedDependencies>
-                    <!--是否检查传递性依赖-->
-                    <searchTransitive>true</searchTransitive>
-                  </bannedDependencies>
-                  <!-- 防止依赖重复声明-->
-                  <banDuplicatePomDependencyVersions/>
-                  <requireMavenVersion>
-                    <version>[3.6.3,)</version>
-                  </requireMavenVersion>
-                  <requireJavaVersion>
-                    <version>[${java.version},)</version>
-                  </requireJavaVersion>
-                </rules>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-
-        <!-- https://blog.sonatype.com/2010/01/how-to-generate-pgp-signatures-with-maven/ -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-gpg-plugin</artifactId>
-          <version>${maven-gpg-plugin.version}</version>
-          <executions>
-            <execution>
-              <goals>
-                <goal>sign</goal>
-              </goals>
-              <phase>verify</phase>
-            </execution>
-          </executions>
-          <!--
-             注: 如果不主动指定gpg.exe的话，那么可能(因为和idea内部发生了未知冲突)报错:Cannot run program "gpg.exe": CreateProcess error=2, 系统找不到指定的文件。
-             注: 当然，如果你直接用的git bash之类的工具执行mvn，而不是用idea提供的maven功能的话，你也可以不指定executable。
-           -->
-          <configuration>
-            <executable>/opt/homebrew/bin/gpg</executable>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.sonatype.plugins</groupId>
-          <artifactId>nexus-staging-maven-plugin</artifactId>
-          <version>${nexus-staging-maven-plugin.version}</version>
-          <extensions>true</extensions>
-          <configuration>
-            <serverId>ossrh</serverId>
-            <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-            <autoReleaseAfterClose>true</autoReleaseAfterClose>
           </configuration>
         </plugin>
 
@@ -421,20 +354,6 @@
         </plugin>
 
         <plugin>
-          <groupId>org.projectlombok</groupId>
-          <artifactId>lombok-maven-plugin</artifactId>
-          <version>${maven-lombok-plugin.version}</version>
-          <executions>
-            <execution>
-              <phase>generate-sources</phase>
-              <goals>
-                <goal>delombok</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-
-        <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>${maven-project-info-reports-plugin.version}</version>
@@ -480,6 +399,53 @@
         </plugin>
 
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>${maven-enforcer-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>enforce-banned-dependencies</id>
+              <goals>
+                <goal>enforce</goal>
+              </goals>
+              <configuration>
+                <rules>
+                  <bannedDependencies>
+                    <searchTransitive>true</searchTransitive>
+                  </bannedDependencies>
+                </rules>
+                <fail>true</fail>
+              </configuration>
+            </execution>
+            <execution>
+              <id>enforce-versions</id>
+              <goals>
+                <goal>enforce</goal>
+              </goals>
+              <configuration>
+                <rules>
+                  <banDuplicatePomDependencyVersions/>
+                </rules>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok-maven-plugin</artifactId>
+          <version>${maven-lombok-plugin.version}</version>
+          <executions>
+            <execution>
+              <phase>generate-sources</phase>
+              <goals>
+                <goal>delombok</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
           <groupId>pl.project13.maven</groupId>
           <artifactId>git-commit-id-plugin</artifactId>
           <version>${git-commit-id-plugin.version}</version>
@@ -491,7 +457,6 @@
             </execution>
           </executions>
           <configuration>
-            <verbose>true</verbose>
             <offline>true</offline>
             <dateFormat>yyyy-MM-dd HH:mm:ssZ</dateFormat>
             <generateGitPropertiesFile>true</generateGitPropertiesFile>
@@ -511,12 +476,11 @@
             <flattenDependencyMode>${flatten.dependency.mode}</flattenDependencyMode>
             <flattenMode>${flatten.mode}</flattenMode>
             <updatePomFile>${updatePomFile}</updatePomFile>
-            <keepCommentsInPom>true</keepCommentsInPom>
             <pomElements>
               <parent>${flatten.pomElements.parent}</parent>
-              <properties>${flatten.pomElements.properties}</properties>
-              <dependencyManagement>${flatten.pomElements.dependencyManagement}</dependencyManagement>
+              <!--                            <properties>${flatten.pomElements.properties}</properties>-->
               <dependencies>${flatten.pomElements.dependencies}</dependencies>
+              <dependencyManagement>${flatten.pomElements.dependencyManagement}</dependencyManagement>
               <distributionManagement>${flatten.pomElements.distributionManagement}
               </distributionManagement>
               <repositories>${flatten.pomElements.repositories}</repositories>
@@ -539,6 +503,39 @@
             </execution>
           </executions>
         </plugin>
+
+        <!-- https://blog.sonatype.com/2010/01/how-to-generate-pgp-signatures-with-maven/ -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>${maven-gpg-plugin.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>sign</goal>
+              </goals>
+              <phase>verify</phase>
+            </execution>
+          </executions>
+          <!--
+             注: 如果不主动指定gpg.exe的话，那么可能(因为和idea内部发生了未知冲突)报错:Cannot run program "gpg.exe": CreateProcess error=2, 系统找不到指定的文件。
+             注: 当然，如果你直接用的git bash之类的工具执行mvn，而不是用idea提供的maven功能的话，你也可以不指定executable。
+           -->
+          <configuration>
+            <executable>/opt/homebrew/bin/gpg</executable>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.sonatype.plugins</groupId>
+          <artifactId>nexus-staging-maven-plugin</artifactId>
+          <version>${nexus-staging-maven-plugin.version}</version>
+          <extensions>true</extensions>
+          <configuration>
+            <serverId>ossrh</serverId>
+            <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
 
@@ -547,15 +544,13 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
       </plugin>
-
       <plugin>
-        <groupId>pl.project13.maven</groupId>
-        <artifactId>git-commit-id-plugin</artifactId>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
       </plugin>
     </plugins>
   </build>
@@ -580,6 +575,10 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
+          </plugin>
+          <plugin>
+            <groupId>pl.project13.maven</groupId>
+            <artifactId>git-commit-id-plugin</artifactId>
           </plugin>
           <plugin>
             <groupId>org.sonatype.plugins</groupId>
@@ -662,75 +661,55 @@
         </pluginManagement>
       </build>
     </profile>
-
-    <profile>
-      <id>site</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-scm-publish-plugin</artifactId>
-          </plugin>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-site-plugin</artifactId>
-          </plugin>
-        </plugins>
-      </build>
-
-      <reporting>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-project-info-reports-plugin</artifactId>
-          </plugin>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <reportSets>
-              <reportSet>
-                <reports>
-                  <!-- 在同一个进程中生成文档 -->
-                  <report>javadoc-no-fork</report>
-                </reports>
-              </reportSet>
-            </reportSets>
-          </plugin>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-checkstyle-plugin</artifactId>
-          </plugin>
-
-          <plugin>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
-            <reportSets>
-              <reportSet>
-                <reports>
-                  <!-- select non-aggregate reports -->
-                  <report>report</report>
-                </reports>
-              </reportSet>
-            </reportSets>
-          </plugin>
-        </plugins>
-      </reporting>
-    </profile>
   </profiles>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <!-- select non-aggregate reports -->
+              <report>report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
 
   <repositories>
     <repository>
-      <id>snapshot</id>
+      <id>nexus</id>
+      <name>nexus-snapshot</name>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
       <releases>
         <enabled>false</enabled>
       </releases>
-      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
     </repository>
   </repositories>
 </project>
