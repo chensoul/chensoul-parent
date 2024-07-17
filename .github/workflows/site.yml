@@ -17,16 +17,22 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         java: [ '8' ]
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Java ${{ matrix.Java }}
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
           cache: maven
-      - name: Build with Maven
+          server-id: github
+
+      - name: Publish site to github pages
         run: mvn --batch-mode --update-snapshots --ntp -P site clean site scm-publish:publish-scm
