@@ -42,5 +42,5 @@ jobs:
           git config --global user.name "github-actions[bot]"
           mvn --ntp --batch-mode --update-snapshots -P site clean site scm-publish:publish-scm -Dscmpublish.serverId=github
         env:
-          GH_USERNAME: ${{ secrets.GH_USERNAME }}
+          GH_USERNAME: ${{ secrets.GITHUB_ACTOR }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
