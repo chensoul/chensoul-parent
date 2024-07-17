@@ -38,8 +38,8 @@ jobs:
 
       - name: Publish site to github pages
         run: |
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
           mvn --ntp --batch-mode --update-snapshots -P site clean site scm-publish:publish-scm -Dscmpublish.serverId=github
         env:
           GH_USERNAME: ${{ secrets.GH_USERNAME }}
