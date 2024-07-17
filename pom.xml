@@ -64,9 +64,10 @@
       <id>ossrh</id>
       <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
+
     <site>
       <id>github</id>
-      <url>scm:git:@${project.scm.url}</url>
+      <url>scm:git:ssh://git@github.com/chensoul/chensoul-parent.git</url>
     </site>
   </distributionManagement>
 
@@ -226,7 +227,6 @@
             </execution>
           </executions>
         </plugin>
-
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
