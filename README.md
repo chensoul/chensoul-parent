@@ -107,3 +107,4 @@ mvn -P site clean site scm-publish:publish-scm
 ## 参考文章
 
 - [GPG](https://central.sonatype.org/publish/requirements/gpg/)
+- https://medium.com/@alexander.volminger/ci-cd-for-java-maven-using-github-actions-d009a7cb4b8f
