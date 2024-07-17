@@ -69,7 +69,7 @@
     <!-- https://maven.apache.org/plugins/maven-scm-publish-plugin/various-tips.html#git-branch -->
     <site>
       <id>github</id>
-      <url>scm:git:ssh://git@github.com/chensoul/chensoul-parent.git</url>
+      <url>scm:git:ssh://git@github.com:chensoul/chensoul-parent.git</url>
     </site>
   </distributionManagement>
 
