@@ -31,4 +31,4 @@ updates:
       ignore:
         - dependency-name: "com.puppycrawl.tools:checkstyle"
           versions:
-            - ">= 10"
+            - ">= 9"
