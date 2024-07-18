@@ -108,7 +108,7 @@
     <flatten.pomElements.properties>keep</flatten.pomElements.properties>
     <flatten.pomElements.dependencyManagement>interpolate</flatten.pomElements.dependencyManagement>
     <flatten.pomElements.dependencies>resolve</flatten.pomElements.dependencies>
-    <flatten.pomElements.distributionManagement>remove</flatten.pomElements.distributionManagement>
+    <flatten.pomElements.distributionManagement>keep</flatten.pomElements.distributionManagement>
     <flatten.pomElements.repositories>keep</flatten.pomElements.repositories>
 
     <!-- Sonar -->
