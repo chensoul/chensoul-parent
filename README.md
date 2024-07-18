@@ -11,7 +11,7 @@
 </p>
 
 
-Chensoul 项目的父级 POM，用于管理项目的依赖和插件版本，目前仅适用于 JDK 1.8。
+Chensoul 项目的父级 POM，用于管理项目的依赖和插件版本，目前适用于 JDK 8、11、17、21。
 
 ## 使用
 
@@ -23,7 +23,7 @@ Chensoul 项目的父级 POM，用于管理项目的依赖和插件版本，目�
 <parent>
     <groupId>com.chensoul</groupId>
     <artifactId>chensoul-parent</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <relativePath/>
 </parent>
 ```
@@ -98,10 +98,20 @@ mvn -B -P release clean source:jar javadoc:jar deploy
 
 ## 上传网站到 github-pages
 
-参考 https://www.lorenzobettini.it/2020/01/publishing-a-maven-site-to-github-pages
+参考 [将 Maven 站点发布到 GitHub Pages](https://blog.chensoul.cc/posts/2024/07/18/publishing-a-maven-site-to-github-pages/)，首先配置 `～/.m2/settings.xml`:
 
 ```bash
-mvn -P site clean site scm-publish:publish-scm
+<server>
+    <id>github</id>
+    <username>chensoul</username>
+    <password>ghp_XXXXXXXXXXXXXXXXX</password>
+</server>
+```
+
+发布网站到 github pages：
+
+```bash
+mvn --ntp --batch-mode --update-snapshots clean site scm-publish:publish-scm -Dscmpublish.serverId=github
 ```
 
 ## 参考文章
