@@ -92,7 +92,6 @@
     <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
     <maven-javadoc-plugin.version>3.7.0</maven-javadoc-plugin.version>
     <maven-lombok-plugin.version>1.18.20.0</maven-lombok-plugin.version>
-    <maven-project-info-reports-plugin.version>3.6.2</maven-project-info-reports-plugin.version>
     <maven-release-plugin.version>3.1.1</maven-release-plugin.version>
     <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
     <maven-scm-publish-plugin.version>3.3.0</maven-scm-publish-plugin.version>
@@ -364,12 +363,6 @@
           </executions>
         </plugin>
 
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>${maven-project-info-reports-plugin.version}</version>
-        </plugin>
-
         <!-- mvn clean site scm-publish:publish-scm -->
         <!-- https://www.lorenzobettini.it/2020/01/publishing-a-maven-site-to-github-pages -->
         <plugin>
@@ -379,15 +372,6 @@
           <configuration>
             <tryUpdate>true</tryUpdate>
           </configuration>
-          <executions>
-            <execution>
-              <id>scm-publish</id>
-              <goals>
-                <goal>publish-scm</goal>
-              </goals>
-              <phase>site-deploy</phase>
-            </execution>
-          </executions>
         </plugin>
 
         <plugin>
@@ -616,63 +600,6 @@
     </profile>
 
     <profile>
-      <id>site</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-scm-publish-plugin</artifactId>
-          </plugin>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-site-plugin</artifactId>
-          </plugin>
-        </plugins>
-      </build>
-
-      <reporting>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-project-info-reports-plugin</artifactId>
-          </plugin>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <reportSets>
-              <reportSet>
-                <reports>
-                  <!-- 在同一个进程中生成文档 -->
-                  <report>javadoc-no-fork</report>
-                </reports>
-              </reportSet>
-            </reportSets>
-          </plugin>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-checkstyle-plugin</artifactId>
-          </plugin>
-
-          <plugin>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
-            <reportSets>
-              <reportSet>
-                <reports>
-                  <!-- select non-aggregate reports -->
-                  <report>report</report>
-                </reports>
-              </reportSet>
-            </reportSets>
-          </plugin>
-        </plugins>
-      </reporting>
-    </profile>
-
-    <profile>
       <id>java8</id>
       <activation>
         <jdk>[1.8,)</jdk>
@@ -723,6 +650,46 @@
       </build>
     </profile>
   </profiles>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <!-- 在同一个进程中生成文档 -->
+              <report>javadoc-no-fork</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <!-- select non-aggregate reports -->
+              <report>report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
 
   <repositories>
     <repository>
