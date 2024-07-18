@@ -109,7 +109,7 @@
     <flatten.pomElements.dependencyManagement>interpolate</flatten.pomElements.dependencyManagement>
     <flatten.pomElements.dependencies>resolve</flatten.pomElements.dependencies>
     <flatten.pomElements.distributionManagement>remove</flatten.pomElements.distributionManagement>
-    <flatten.pomElements.repositories>remove</flatten.pomElements.repositories>
+    <flatten.pomElements.repositories>keep</flatten.pomElements.repositories>
 
     <!-- Sonar -->
     <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
