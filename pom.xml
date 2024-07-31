@@ -83,20 +83,19 @@
     <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
     <maven-checkstyle-plugin.version>3.4.0</maven-checkstyle-plugin.version>
     <maven-deploy-plugin.version>3.1.2</maven-deploy-plugin.version>
-    <maven-dependency-plugin.version>3.7.1</maven-dependency-plugin.version>
     <maven-enforcer-plugin.version>3.5.0</maven-enforcer-plugin.version>
     <maven-failsafe-plugin.version>3.3.1</maven-failsafe-plugin.version>
     <maven-gpg-plugin.version>3.2.2</maven-gpg-plugin.version>
     <maven-install-plugin.version>3.1.1</maven-install-plugin.version>
     <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
-    <maven-javadoc-plugin.version>3.8.0</maven-javadoc-plugin.version>
+    <maven-javadoc-plugin.version>3.7.0</maven-javadoc-plugin.version>
     <maven-lombok-plugin.version>1.18.20.0</maven-lombok-plugin.version>
     <maven-release-plugin.version>3.1.1</maven-release-plugin.version>
     <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
     <maven-scm-publish-plugin.version>3.3.0</maven-scm-publish-plugin.version>
     <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
     <maven-surefire-plugin.version>3.3.1</maven-surefire-plugin.version>
-    <maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
+    <maven-site-plugin.version>4.0.0-M15</maven-site-plugin.version>
     <nexus-staging-maven-plugin.version>1.7.0</nexus-staging-maven-plugin.version>
 
     <!-- flatten-maven-plugin -->
@@ -107,7 +106,7 @@
     <flatten.pomElements.properties>keep</flatten.pomElements.properties>
     <flatten.pomElements.dependencyManagement>interpolate</flatten.pomElements.dependencyManagement>
     <flatten.pomElements.dependencies>resolve</flatten.pomElements.dependencies>
-    <flatten.pomElements.distributionManagement>flatten</flatten.pomElements.distributionManagement>
+    <flatten.pomElements.distributionManagement>keep</flatten.pomElements.distributionManagement>
     <flatten.pomElements.repositories>interpolate</flatten.pomElements.repositories>
 
     <!-- Sonar -->
@@ -162,7 +161,9 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>${maven-compiler-plugin.version}</version>
           <configuration>
-            <parameters>true</parameters>
+            <compilerArgs>
+              <compilerArg>-parameters</compilerArg>
+            </compilerArgs>
             <source>${maven.compiler.source}</source>
             <target>${maven.compiler.target}</target>
             <encoding>${file.encoding}</encoding>
@@ -180,6 +181,25 @@
                 <goal>jar-no-fork</goal>
               </goals>
               <phase>package</phase>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>${maven-javadoc-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>attach-javadocs</id>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+              <configuration>
+                <source>${maven.compiler.source}</source>
+                <detectJavaApiLink>false</detectJavaApiLink>
+                <encoding>${file.encoding}</encoding>
+              </configuration>
             </execution>
           </executions>
         </plugin>
@@ -206,25 +226,6 @@
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>${maven-javadoc-plugin.version}</version>
-          <executions>
-            <execution>
-              <id>attach-javadocs</id>
-              <goals>
-                <goal>jar</goal>
-              </goals>
-              <configuration>
-                <source>${maven.compiler.source}</source>
-                <detectJavaApiLink>false</detectJavaApiLink>
-                <encoding>${file.encoding}</encoding>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
           <version>${maven-resources-plugin.version}</version>
           <configuration>
@@ -235,21 +236,6 @@
               <nonFilteredFileExtension>jks</nonFilteredFileExtension>
             </nonFilteredFileExtensions>
           </configuration>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-dependency-plugin</artifactId>
-          <version>${maven-dependency-plugin.version}</version>
-          <executions>
-            <execution>
-              <id>copy</id>
-              <phase>generate-sources</phase>
-              <goals>
-                <goal>copy</goal>
-              </goals>
-            </execution>
-          </executions>
         </plugin>
 
         <!-- mvn clean deploy -P release -Dgpg.passphrase=yourpassphrase  -->
@@ -315,7 +301,7 @@
               </goals>
               <configuration>
                 <rules>
-                  <banDuplicatePomDependencyVersions />
+                  <banDuplicatePomDependencyVersions/>
                 </rules>
               </configuration>
             </execution>
@@ -342,9 +328,11 @@
           <version>${git-commit-id-plugin.version}</version>
           <executions>
             <execution>
+              <id>get-the-git-infos</id>
               <goals>
                 <goal>revision</goal>
               </goals>
+              <phase>initialize</phase>
             </execution>
           </executions>
           <configuration>
@@ -353,6 +341,18 @@
             <generateGitPropertiesFile>true</generateGitPropertiesFile>
             <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties
             </generateGitPropertiesFilename>
+            <includeOnlyProperties>
+              <includeOnlyProperty>git.tags</includeOnlyProperty>
+              <includeOnlyProperty>git.branch</includeOnlyProperty>
+              <includeOnlyProperty>git.build.time</includeOnlyProperty>
+              <includeOnlyProperty>git.build.user.email</includeOnlyProperty>
+              <includeOnlyProperty>git.build.version</includeOnlyProperty>
+              <includeOnlyProperty>git.commit.time</includeOnlyProperty>
+              <includeOnlyProperty>git.commit.id.full</includeOnlyProperty>
+              <includeOnlyProperty>git.commit.user.email</includeOnlyProperty>
+              <includeOnlyProperty>git.remote.origin.url</includeOnlyProperty>
+            </includeOnlyProperties>
+            <commitIdGenerationMode>full</commitIdGenerationMode>
           </configuration>
         </plugin>
 
@@ -416,11 +416,11 @@
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
+            <artifactId>maven-source-plugin</artifactId>
           </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-source-plugin</artifactId>
+            <artifactId>maven-javadoc-plugin</artifactId>
           </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
