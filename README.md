@@ -69,7 +69,7 @@ gpg --export xxx@xxx.com > my_key.pub
 2. 发布快照
 
 ```bash
-mvn -B -P release clean source:jar javadoc:jar deploy
+mvn -B -P release clean deploy
 ```
 
 执行成功之后，访问 https://s01.oss.sonatype.org/content/repositories/snapshots/com/chensoul/chensoul-parent/ 查看发布的 jar。
@@ -84,7 +84,7 @@ mvn versions:set -DnewVersion=1.1.0 versions:commit
 然后，执行发布命令：
 
 ```bash
-mvn -B -P release clean source:jar javadoc:jar deploy
+mvn -B -P release clean deploy
 ```
 
 执行成功之后，稍等几分钟，可以在以下仓库查看发布的 jar:
@@ -98,7 +98,7 @@ mvn -B -P release clean source:jar javadoc:jar deploy
 
 ## 上传网站到 github-pages
 
-参考 [将 Maven 站点发布到 GitHub Pages](https://blog.chensoul.cc/posts/2024/07/18/publishing-a-maven-site-to-github-pages/)，首先配置 `～/.m2/settings.xml`:
+参考 [将 Maven 站点发布到 GitHub Pages](https://blog.chensoul.cc/posts/2024/07/18/publishing-a-maven-site-to-github-pages/)，首先配置 `~/.m2/settings.xml`:
 
 ```bash
 <server>
@@ -111,7 +111,7 @@ mvn -B -P release clean source:jar javadoc:jar deploy
 发布网站到 github pages：
 
 ```bash
-mvn --ntp --batch-mode --update-snapshots clean site scm-publish:publish-scm -Dscmpublish.serverId=github
+mvn -ntp -B -U clean site scm-publish:publish-scm -Dscmpublish.serverId=github
 ```
 
 ## 参考文章
