@@ -21,15 +21,14 @@ jobs:
         env:
           JAVA_HOME: /usr/lib/jvm/java-1.8-openjdk/
         with:
-          git-release-bot-name: "release-bot"
-          git-release-bot-email: "release-bot@users.noreply.github.com"
           release-branch-name: "main"
 
           skip-perform: true
           maven-args: "-ntp -B -U -P release"
           maven-servers: ${{ secrets.MVN_REPO_SERVERS }}
 
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+#          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          access-token: ${{ secrets.GITHUB_TOKEN }}
 
           gpg-enabled: true
           gpg-key-id: ${{ secrets.MAVEN_GPG_ID }}
