@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.chensoul</groupId>
@@ -9,14 +10,14 @@
 
   <name>ChenSoul Parent</name>
   <description>${project.name}</description>
-  <url>https://chensoul.github.io/chensoul-parent/</url>
+  <url>https://chensoul.github.io/chensoul-parent.git</url>
   <inceptionYear>2023</inceptionYear>
 
   <scm>
-    <url>git@github.com:chensoul/chensoul-parent.git</url>
+    <!-- 使用 https：因为 publish-scm 插件-->
+    <url>https://chensoul.github.io/chensoul-parent.git</url>
     <connection>scm:git:${project.scm.url}</connection>
-    <!--  maven-scm-publish-plugin 插件在 github action 中使用 https 协议通过用户名和密码登录  -->
-    <developerConnection>scm:git:https://github.com/chensoul/chensoul-parent.git</developerConnection>
+    <developerConnection>scm:git:${project.scm.url}</developerConnection>
     <tag>HEAD</tag>
   </scm>
 
@@ -284,7 +285,7 @@
               </goals>
               <configuration>
                 <rules>
-                  <banDuplicatePomDependencyVersions />
+                  <banDuplicatePomDependencyVersions/>
                 </rules>
               </configuration>
             </execution>
@@ -439,6 +440,13 @@
                 <phase>verify</phase>
               </execution>
             </executions>
+            <configuration>
+              <!-- Prevent gpg from using pinentry programs -->
+              <gpgArguments>
+                <arg>--pinentry-mode</arg>
+                <arg>loopback</arg>
+              </gpgArguments>
+            </configuration>
           </plugin>
           <plugin>
             <groupId>org.sonatype.plugins</groupId>

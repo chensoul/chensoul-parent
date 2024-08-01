@@ -22,7 +22,7 @@ jobs:
           JAVA_HOME: /usr/lib/jvm/java-1.8-openjdk/
         with:
           git-release-bot-name: "release-bot"
-          git-release-bot-email: "release-bot@chensoul.cc"
+          git-release-bot-email: "release-bot@users.noreply.github.com"
           release-branch-name: "main"
 
           skip-perform: true
