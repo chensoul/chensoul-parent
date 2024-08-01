@@ -25,9 +25,9 @@ jobs:
           git-release-bot-email: "release-bot@chensoul.cc"
           release-branch-name: "main"
 
+          skip-perform: true
           maven-args: "-ntp -B -U -P release"
           maven-servers: ${{ secrets.MVN_REPO_SERVERS }}
-          skip-perform: true
 
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
