@@ -27,6 +27,7 @@ jobs:
 
           maven-args: "-ntp -B -U -P release"
           maven-servers: ${{ secrets.MVN_REPO_SERVERS }}
+          skip-perform: true
 
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
