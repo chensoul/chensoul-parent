@@ -10,12 +10,12 @@
 
   <name>ChenSoul Parent</name>
   <description>${project.name}</description>
-  <url>https://chensoul.github.io/chensoul-parent.git</url>
+  <url>https://github.com/chensoul/chensoul-parent.git</url>
   <inceptionYear>2023</inceptionYear>
 
   <scm>
     <!-- 使用 https：因为 publish-scm 插件-->
-    <url>https://chensoul.github.io/chensoul-parent.git</url>
+    <url>https://github.com/chensoul/chensoul-parent.git</url>
     <connection>scm:git:${project.scm.url}</connection>
     <developerConnection>scm:git:${project.scm.url}</developerConnection>
     <tag>HEAD</tag>
