@@ -16,25 +16,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-#      - name: Java Maven Release
-#        uses: qcastel/github-actions-maven-release@master
-#        env:
-#          JAVA_HOME: /usr/lib/jvm/java-1.8-openjdk/
-#        with:
-#          release-branch-name: "main"
-#
-#          skip-perform: true
-#          maven-args: "-ntp -B -U -P release"
-#          maven-servers: ${{ secrets.MVN_REPO_SERVERS }}
-#
-##          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-#          access-token: ${{ secrets.GITHUB_TOKEN }}
-#
-#          gpg-enabled: true
-#          gpg-key-id: ${{ secrets.MAVEN_GPG_ID }}
-#          gpg-key: ${{ secrets.MAVEN_GPG_KEY }}
-#          gpg-passphrase: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
-
       - name: Set up JDK ${{ matrix.Java }}
         uses: actions/setup-java@v4
         with:
