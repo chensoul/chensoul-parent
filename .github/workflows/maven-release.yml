@@ -23,12 +23,12 @@ jobs:
           java-version: 8
           cache: maven
           server-id: ossrh # Value of the distributionManagement/repository/id field of the pom.xml
-          server-username: MAVEN_USERNAME
-          server-password: MAVEN_TOKEN
-          gpg-passphrase: GPG_PASSPHRASE
+          server-username: MAVEN_USERNAME # 变量
+          server-password: MAVEN_TOKEN # 变量
+          gpg-passphrase: GPG_PASSPHRASE # 变量
           gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
 
-      - name: Publish to Apache Maven
+      - name: Java Maven Release
         run: mvn -ntp -B -U clean deploy -P release -DskipTests
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
