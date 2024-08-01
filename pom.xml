@@ -4,7 +4,7 @@
 
   <groupId>com.chensoul</groupId>
   <artifactId>chensoul-parent</artifactId>
-  <version>1.1.6-SNAPSHOT</version>
+  <version>1.1.6</version>
   <packaging>pom</packaging>
 
   <name>ChenSoul Parent</name>
@@ -17,7 +17,7 @@
     <connection>scm:git:${project.scm.url}</connection>
     <!--  maven-scm-publish-plugin 插件在 github action 中使用 https 协议通过用户名和密码登录  -->
     <developerConnection>scm:git:https://github.com/chensoul/chensoul-parent.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>v{version}</tag>
   </scm>
 
   <issueManagement>
