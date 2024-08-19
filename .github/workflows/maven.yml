@@ -34,7 +34,7 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        run: mvn -ntp -B -U clean package
+        run: mvn clean package -ntp -B -U
 
 #      - name: Build and Push Docker Image
 #        env:

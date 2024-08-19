@@ -1,30 +1,25 @@
+# https://github.com/marketplace/actions/setup-java-jdk
+
 name: Maven Release
 
 on:
-  push:
-    branches: [ "main" ]
-    tags: [ "*" ]
+  workflow_dispatch:
   release:
     types: [ created ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '[CI Skip]')"
-
-    strategy:
-      matrix:
-        java: [ '8' ]
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up JDK ${{ matrix.Java }}
+      - name: Set up Maven Central Repository
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: ${{ matrix.Java }}
+          java-version: 8
           cache: maven
           server-id: ossrh # Value of the distributionManagement/repository/id field of the pom.xml
           server-username: MAVEN_USERNAME # 变量
@@ -32,8 +27,8 @@ jobs:
           gpg-passphrase: GPG_PASSPHRASE # 变量
           gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
 
-      - name: Java Maven Release
-        run: mvn -ntp -B -U clean deploy -P release -DskipTests
+      - name: Publish packages
+        run: mvn deploy -ntp -B -U -P release -DskipTests -DretryFailedDeploymentCount=10
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_TOKEN: ${{ secrets.OSSRH_TOKEN }}
