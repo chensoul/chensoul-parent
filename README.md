@@ -22,7 +22,7 @@ Chensoul 项目的父级 POM，用于管理项目的依赖和插件版本，目�
 <parent>
     <groupId>com.chensoul</groupId>
     <artifactId>chensoul-parent</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.9</version>
     <relativePath/>
 </parent>
 ```
