@@ -32,7 +32,7 @@ jobs:
         if: github.repository == 'chensoul/chensoul-parent' && github.event_name == 'push'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -ntp -B initialize org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw -ntp -B initialize org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar -Dsonar.projectKey=chensoul-parent -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
       - name: Deploy to github packages
         if: github.repository == 'chensoul/chensoul-parent' && github.event_name == 'push'
