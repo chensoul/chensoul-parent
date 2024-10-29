@@ -24,7 +24,3 @@ cd chensoul-parent
 ### Sonar Analysis Result
 
 [![sonar-quality-gate](https://sonarcloud.io/api/project_badges/measure?project=chensoul-framework&metric=alert_status)](https://sonarcloud.io/dashboard?id=chensoul-framework) [![sonar-coverage](https://sonarcloud.io/api/project_badges/measure?project=chensoul-framework&metric=coverage)](https://sonarcloud.io/dashboard?id=chensoul-framework) [![sonar-bugs](https://sonarcloud.io/api/project_badges/measure?project=chensoul-framework&metric=bugs)](https://sonarcloud.io/dashboard?id=chensoul-framework) [![sonar-vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=chensoul-framework&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=chensoul-framework)
-
-### References
-
-- [https://github.com/jhipster/jhipster-bom](https://github.com/jhipster/jhipster-bom)
