@@ -2,7 +2,7 @@
 
 [![Build Status](https://github.com/chensoul/chensoul-parent/actions/workflows/maven-build.yml/badge.svg)](https://github.com/chensoul/chensoul-parent/workflows/maven-build.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.chensoul/chensoul-bom/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.chensoul/chensoul-parent)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.chensoul/chensoul-parent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.chensoul/chensoul-parent)
 
 This project houses the parent Project Object Model (POM) for most ChenSoul™ projects.
 
