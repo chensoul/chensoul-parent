@@ -1,28 +1,40 @@
-# ChenSoul Parent POM
+# chensoul-parent
 
-<p align="center">
-  <a href="https://search.maven.org/artifact/com.chensoul/chensoul-parent">
-    <img alt="maven" src="https://img.shields.io/maven-central/v/com.chensoul/chensoul-parent.svg?style=flat-square"/>
-  </a>
+[![Build Status](https://github.com/chensoul/chensoul-parent/actions/workflows/maven-build.yml/badge.svg)](https://github.com/chensoul/chensoul-parent/workflows/maven-build.yml)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Maven Central][maven-image]][maven-url]
 
-  <a href="https://www.apache.org/licenses/LICENSE-2.0">
-    <img alt="code style" src="https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square"/>
-  </a>
-</p>
+ChenSoul Parent BOM
 
-Chensoul 项目的父级 POM，用于管理项目的依赖和插件版本，目前适用于 JDK 8、11、17、21。
+## Prerequisites
 
-## 使用
+- Jdk 8+
+- Maven 3.2.5
 
-在 [Maven Central](https://search.maven.org/artifact/com.chensoul/chensoul-parent) 上可以找到 ChenSoul™ Parent POM
-的最新版本。使用 ChenSoul™ Parent POM 作为 Maven 的父级 POM：
+## How to?
 
-```xml
+```bash
+# Clone the repository
+$ git clone https://github.com/chensoul/chensoul-parent.git
+cd chensoul-parent
 
-<parent>
-    <groupId>com.chensoul</groupId>
-    <artifactId>chensoul-parent</artifactId>
-    <version>1.1.9</version>
-    <relativePath/>
-</parent>
+./mvnw install -Dgpg.skip=true
 ```
+
+## Sonar Analysis Result
+
+[![sonar-quality-gate][sonar-quality-gate]][sonar-url] [![sonar-coverage][sonar-coverage]][sonar-url] [![sonar-bugs][sonar-bugs]][sonar-url] [![sonar-vulnerabilities][sonar-vulnerabilities]][sonar-url]
+
+## References
+
+- [https://github.com/jhipster/jhipster-bom](https://github.com/jhipster/jhipster-bom)
+
+
+[maven-image]: https://maven-badges.herokuapp.com/maven-central/com.chensoul/chensoul-parent/badge.svg
+[maven-url]: https://maven-badges.herokuapp.com/maven-central/com.chensoul/chensoul-parent
+
+[sonar-url]: https://sonarcloud.io/dashboard?id=chensoul-framework
+[sonar-quality-gate]: https://sonarcloud.io/api/project_badges/measure?project=chensoul-framework&metric=alert_status
+[sonar-coverage]: https://sonarcloud.io/api/project_badges/measure?project=chensoul-framework&metric=coverage
+[sonar-bugs]: https://sonarcloud.io/api/project_badges/measure?project=chensoul-framework&metric=bugs
+[sonar-vulnerabilities]: https://sonarcloud.io/api/project_badges/measure?project=chensoul-framework&metric=vulnerabilities
