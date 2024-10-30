@@ -26,16 +26,14 @@ jobs:
           cache: 'maven'
 
       - name: Test with Maven
-        run: ./mvnw clean test -B
+        run: ./mvnw clean test -ntp -B
 
       - name: Run Sonar analysis
-        if: github.repository == 'chensoul/chensoul-parent' && github.event_name == 'push'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./mvnw -ntp -B initialize org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar -Dsonar.projectKey=chensoul-parent -Dsonar.organization=chensoul -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
       - name: Deploy to github packages
-        if: github.repository == 'chensoul/chensoul-parent' && github.event_name == 'push'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./mvnw -ntp deploy -Dgpg.skip -Dgithub
