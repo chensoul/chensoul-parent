@@ -28,7 +28,7 @@ jobs:
       - name: Test with Maven
         run: ./mvnw clean test -ntp -B
 
-      - name: Run Sonar analysis
+      - name: SonarCloud Scan
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./mvnw -ntp -B initialize org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar -Dsonar.projectKey=chensoul-parent -Dsonar.organization=chensoul -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
