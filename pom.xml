@@ -81,7 +81,7 @@
         <maven-scm-publish-plugin.version>3.3.0</maven-scm-publish-plugin.version>
         <maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
         <properties-maven-plugin.version>1.2.1</properties-maven-plugin.version>
-        <sonar-maven-plugin.version>4.0.0.4121</sonar-maven-plugin.version>
+        <sonar-maven-plugin.version>5.0.0.4389</sonar-maven-plugin.version>
 
         <jacoco.minimum.coverage>0.80</jacoco.minimum.coverage>
 
