@@ -1,21 +1,16 @@
-
-
 version: 2
-updates:
-  # Dependencies for Maven
-  - package-ecosystem: 'maven'
-    directory: '/'
-    schedule:
-      interval: 'daily'
-    open-pull-requests-limit: 15
-    groups:
-      spring-boot:
-        patterns:
-          - 'org.springframework.boot:spring-boot*'
 
-  # Dependencies for GitHub Actions
-  - package-ecosystem: 'github-actions'
-    directory: '/'
+updates:
+  - package-ecosystem: "maven"
+    target-branch: "main"
+    directory: "/"
     schedule:
-      interval: 'daily'
-    open-pull-requests-limit: 10
+      interval: "daily"
+      time: "12:50"
+      timezone: "Asia/Shanghai"
+    allow:
+      - dependency-name: "org.springframework*"
+        dependency-type: "all"
+    ignore:
+      - dependency-name: "*"
+        update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
